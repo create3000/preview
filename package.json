@@ -1,0 +1,10 @@
+{
+  "name": "preview",
+  "scripts": {
+    "predocs": "rm -f -r docs/_site/",
+    "docs": "cd docs && bundle exec jekyll serve --ssl-key ssl/server.key --ssl-cert ssl/server.crt --incremental --host=`ipconfig getifaddr en0`",
+    "docs-install": "cd docs && gem install bundler && bundle install",
+    "docs-update": "cd docs && bundle update",
+    "make-x_ite-for-preview": "sh build/make-x_ite-for-preview.sh"
+  }
+}
