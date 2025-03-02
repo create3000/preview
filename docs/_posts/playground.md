@@ -120,7 +120,7 @@ span.error {
 
 <!-- Also change version in playground.js! -->
 <script defer src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.0/min/vs/loader.js"></script>
-<script type="module" src="/test/assets/playground/playground.mjs"></script>
+<script type="module" src="/preview/assets/playground/playground.mjs"></script>
 
 <div class="playground">
    <div class="toolbar"></div>
