@@ -58,7 +58,7 @@ class Playground
       // Handle url parameter.
 
       const url = new URL (location) .searchParams .get ("url")
-         ?? "/test/assets/playground/playground.x3d";
+         ?? "/preview/assets/playground/playground.x3d";
 
       browser .baseURL = url;
 

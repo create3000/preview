@@ -4,7 +4,6 @@ date: 2025-03-02
 layout: wide
 categories: []
 tags: [Playground]
-permalink: /
 ---
 <style>
 /* Table */
