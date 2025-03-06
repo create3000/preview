@@ -1014,8 +1014,6 @@ function CollidableOffset (executionContext)
    RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableOffset);
-
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPhysics_X3DNBodyCollidableNode .prototype),
@@ -1023,8 +1021,6 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
    initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
-
-      this ._rebuild .addInterest ("set_collidable__", this);
 
       this ._enabled    .addInterest ("set_collidableGeometry__", this);
       this ._collidable .addInterest ("requestRebuild",           this);
@@ -1166,8 +1162,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
-
-      this ._rebuild .addInterest ("set_shape__", this);
 
       this ._enabled .addInterest ("set_collidableGeometry__", this);
       this ._shape   .addInterest ("requestRebuild",           this);

@@ -17920,7 +17920,7 @@ Object .assign (X3DTextContext .prototype,
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
-   registerFontFamily (font, fullName)
+   registerFontFamily (fullName, font)
    {
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fullName}.`);
@@ -18073,7 +18073,7 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
       if (!familyName)
          return;
 
-      this .getBrowser () .registerFontFamily (this .font, familyName);
+      this .getBrowser () .registerFontFamily (familyName, this .font);
    },
    async loadData ()
    {
