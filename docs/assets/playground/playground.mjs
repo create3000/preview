@@ -58,11 +58,9 @@ class Playground
       // Handle url parameter.
 
       const url = new URL (location) .searchParams .get ("url")
-         ?? "/preview/assets/playground/playground.x3d";
+         ?? "/x_ite/assets/playground/playground.x3d";
 
       browser .baseURL = url;
-
-      browser .endUpdate ();
 
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
@@ -74,8 +72,6 @@ class Playground
 
       model .setValue (browser .currentScene [`to${encoding}String`] ());
       model .onDidChangeContent (event => this .onDidChangeContent (event));
-
-      browser .beginUpdate ();
 
       // Keyboard shortcuts.
 
