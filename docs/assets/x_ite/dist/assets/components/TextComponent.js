@@ -1,5 +1,5 @@
-/* X_ITE v11.2.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.2")];
+/* X_ITE v11.2.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1609,6 +1609,7 @@ Object .defineProperties (FontStyle,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "leftToRight", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "topToBottom", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "justify",     new (external_X_ITE_X3D_Fields_default()).MFString ("BEGIN")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "fontLibrary", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -17922,15 +17923,17 @@ Object .assign (X3DTextContext .prototype,
          .flatMap (name => Object .values (name .fullName ?? { })));
 
       for (const fullName of fullNames)
-      {
-         // if (this .getBrowserOption ("Debug"))
-         //    console .info (`Registering font named ${fullName}.`);
-
-         this [_fullNameCache] .set (fullName .toLowerCase (), font);
-      }
+         this .registerFontFamily (font, fullName);
 
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
+   },
+   registerFontFamily (font, fullName)
+   {
+      // if (this .getBrowserOption ("Debug"))
+      //    console .info (`Registering font named ${fullName}.`);
+
+      this [_fullNameCache] .set (fullName .toLowerCase (), font);
    },
    async getFont (familyName, style)
    {
@@ -18064,7 +18067,21 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
       external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
+      this ._family .addInterest ("set_family__", this);
+
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_family__ ()
+   {
+      if (!this .font)
+         return;
+
+      const familyName = this ._family .getValue ();
+
+      if (!familyName)
+         return;
+
+      this .getBrowser () .registerFontFamily (this .font, familyName);
    },
    async loadData ()
    {
@@ -18072,13 +18089,17 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
          browser  = this .getBrowser (),
          fileURLs = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
 
+      this .font = null;
+
       for (const fileURL of fileURLs)
       {
          try
          {
-            await browser .loadFont (fileURL, this .getCache ());
+            this .font = await browser .loadFont (fileURL, this .getCache ());
 
             this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+
+            this .set_family__ ();
             return;
          }
          catch (error)
@@ -18105,6 +18126,7 @@ Object .defineProperties (FontLibrary,
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "family",               new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
