@@ -357,48 +357,57 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
       family .push ("SERIF");
 
+      // Clear font.
+
       this .font = null;
 
-      for (const familyName of family)
+      // Try to get font from family names.
+
+      const font = await browser .getFont (family, style);
+
+      if (font)
       {
-         const defaultFont = this .getDefaultFont (familyName, style);
+         this .font = font;
+      }
+      else
+      {
+         // Try to get default font.
 
-         if (defaultFont)
+         for (const familyName of family)
          {
-            const font = await this .loadFont (defaultFont);
+            const defaultFont = this .getDefaultFont (familyName, style);
 
-            if (font)
+            if (defaultFont)
             {
-               this .font = font;
-               break;
+               const font = await this .loadFont (defaultFont);
+
+               if (font)
+               {
+                  this .font = font;
+                  break;
+               }
             }
-         }
 
-         const font = await browser .getFont (familyName, style);
+            // DEPRECIATED: Try to get font by URL.
 
-         if (font)
-         {
-            this .font = font;
-            break;
-         }
+            const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
 
-         const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
-
-         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
-         {
-            console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
-
-            const font = await this .loadFont (fileURL);
-
-            if (font)
+            if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
             {
-               this .font = font;
-               break;
+               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+
+               const font = await this .loadFont (fileURL);
+
+               if (font)
+               {
+                  this .font = font;
+                  break;
+               }
             }
-         }
-         else
-         {
-            console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+            else
+            {
+               console .warn (`Couldn't find font family '${familyName}' with style '${style}'.`);
+            }
          }
       }
 
@@ -17927,16 +17936,43 @@ Object .assign (X3DTextContext .prototype,
 
       this [_fullNames] .set (fullName .toLowerCase (), font);
    },
-   async getFont (familyName, style)
+   async getFont (familyNames, style)
    {
-      familyName = familyName .toLowerCase ();
-      style      = style .toLowerCase () .replaceAll (" ", "");
+      try
+      {
+         while (this [_loadingFonts] .size)
+         {
+            await Promise .any (this [_loadingFonts]);
 
-      await Promise .allSettled (this [_loadingFonts]);
+            const font = this .findFont (familyNames, style);
 
-      return this [_fullNames] .get (familyName)
-         ?? this [_families] .get (familyName) ?.get (style)
-         ?? null;
+            if (font)
+               return font;
+         }
+
+         return this .findFont (familyNames, style);
+      }
+      catch
+      {
+         return null;
+      }
+   },
+   findFont (familyNames, style)
+   {
+      style = style .toLowerCase () .replaceAll (" ", "");
+
+      for (let familyName of familyNames)
+      {
+         familyName = familyName .toLowerCase ();
+
+         const font = this [_fullNames] .get (familyName)
+            ?? this [_families] .get (familyName) ?.get (style);
+
+         if (font)
+            return font;
+      }
+
+      return null;
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
