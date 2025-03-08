@@ -351,9 +351,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
       // Add default font to family array.
 
       const
-         browser = this .getBrowser (),
-         family  = this ._family .copy (),
-         style   = this ._style .getValue ();
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         family           = this ._family .copy (),
+         style            = this ._style .getValue ();
 
       family .push ("SERIF");
 
@@ -378,7 +379,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
          // Try to get font from family names
 
-         const font = await browser .getFont (familyName, style);
+         const font = await browser .getFont (executionContext, familyName, style);
 
          if (font)
          {
@@ -390,7 +391,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
          const fileURL = new URL (familyName, this .getExecutionContext () .getBaseURL ());
 
-         if (fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
 
@@ -17828,7 +17829,7 @@ const
    _fontCache        = Symbol (),
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
-   _fullNames        = Symbol (),
+   _library          = Symbol (),
    _glyphCache       = Symbol (),
    _wawoff2          = Symbol ();
 
@@ -17836,8 +17837,8 @@ function X3DTextContext ()
 {
    this [_loadingFonts] = new Set ();
    this [_fontCache]    = new Map ();
-   this [_families]     = new Map ();
-   this [_fullNames]    = new Map ();
+   this [_families]     = new WeakMap ();
+   this [_library]      = new WeakMap ();
    this [_glyphCache]   = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
@@ -17881,8 +17882,6 @@ Object .assign (X3DTextContext .prototype,
                   decompressed = decompress (buffer),
                   font         = parseBuffer (decompressed);
 
-               this .registerFont (font);
-
                resolve (font);
             }
             catch (error)
@@ -17901,8 +17900,14 @@ Object .assign (X3DTextContext .prototype,
 
       return promise;
    },
-   registerFont (font)
+   registerFont (executionContext, font)
    {
+      const
+         scene    = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         families = this [_families] .get (scene) ?? new Map ();
+
+      this [_families] .set (scene, families);
+
       // fontFamily - subfamily
 
       const fontFamilies = new Map (Object .values (font .names)
@@ -17910,9 +17915,9 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const subfamilies = this [_families] .get (fontFamily .toLowerCase ()) ?? new Map ();
+         const subfamilies = families .get (fontFamily .toLowerCase ()) ?? new Map ();
 
-         this [_families] .set (fontFamily .toLowerCase (), subfamilies);
+         families .set (fontFamily .toLowerCase (), subfamilies);
 
          for (const subfamily of new Set (Object .values (name .fontSubfamily ?? { })))
          {
@@ -17926,24 +17931,36 @@ Object .assign (X3DTextContext .prototype,
       // console .log (name .preferredFamily);
       // console .log (name .preferredSubfamily);
    },
-   registerFontFamily (fullName, font)
+   registerFontLibrary (executionContext, fullName, font)
    {
+      const
+         scene   = executionContext .isScene () ? executionContext : executionContext .getScene (),
+         library = this [_library] .get (scene) ?? new Map ();
+
+      this [_library] .set (scene, library);
+
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fullName}.`);
 
-      this [_fullNames] .set (fullName .toLowerCase (), font);
+      library .set (fullName .toLowerCase (), font);
    },
-   async getFont (familyName, style)
+   async getFont (executionContext, familyName, style)
    {
       try
       {
          familyName = familyName .toLowerCase ();
          style      = style .toLowerCase () .replaceAll (" ", "");
 
+         const scene = executionContext .isScene () ? executionContext : executionContext .getScene ();
+
          for (;;)
          {
-            const font = this [_fullNames] .get (familyName)
-               ?? this [_families] .get (familyName) ?.get (style);
+            const
+               library  = this [_library]  .get (scene),
+               families = this [_families] .get (scene);
+
+            const font = library ?.get (familyName)
+               ?? families ?.get (familyName) ?.get (style);
 
             if (font)
                return font;
@@ -18091,13 +18108,14 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
       if (!familyName)
          return;
 
-      this .getBrowser () .registerFontFamily (familyName, this .font);
+      this .getBrowser () .registerFontLibrary (this .getExecutionContext (), familyName, this .font);
    },
    async loadData ()
    {
       const
-         browser  = this .getBrowser (),
-         fileURLs = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         fileURLs         = this ._url .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
 
       this .font = null;
 
@@ -18107,9 +18125,11 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
          {
             this .font = await browser .loadFont (fileURL, this .getCache ());
 
-            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+            browser .registerFont (executionContext, this .font);
 
             this .set_family__ ();
+
+            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
             return;
          }
          catch (error)
