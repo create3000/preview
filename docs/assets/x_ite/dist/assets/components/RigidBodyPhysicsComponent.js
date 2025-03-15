@@ -1,5 +1,5 @@
-/* X_ITE v11.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.2.3")];
+/* X_ITE v11.3.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -691,6 +691,8 @@ function X3DNBodyCollidableNode (executionContext)
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "compoundShape", new (external_X_ITE_X3D_Fields_default()).SFTime (),
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild",       new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
+
+   this .setBoundedObject (true);
    this .setPointingObject (true);
    this .setCollisionObject (true);
    this .setShadowObject (true);
@@ -715,7 +717,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
-      this ._rebuild .addInterest ("set_child__", this);
+      this ._rebuild  .addInterest ("set_child__",          this);
+      this ._bboxSize .addInterest ("set_boundedObjects__", this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -724,13 +727,13 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
    getBBox (bbox, shadows)
    {
       if (this .isDefaultBBoxSize ())
-         return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
+         return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getLocalTransform: (() =>
    {
-      var
+      const
          m = new (external_X_ITE_X3D_Matrix4_default()) (),
          o = new AmmoClass .btVector3 (0, 0, 0),
          l = new AmmoClass .btTransform ();
@@ -789,6 +792,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       {
          const childNode = this .childNode;
 
+         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
          childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
          childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
          childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
@@ -805,19 +809,21 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
 
       // Clear node.
 
-      this .childNode  = null;
-      this .pointingNode    = null;
+      this .childNode       = null;
+      this .boundedObject   = null;
+      this .pointingObject  = null;
       this .cameraObject    = null;
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleNode     = null;
-      this .boundedObject   = null;
+      this .visibleObject   = null;
+      this .bboxObject      = null;
 
       // Add node.
 
       if (childNode)
       {
+         childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
          childNode ._isPointingObject  .addInterest ("requestRebuild", this);
          childNode ._isCameraObject    .addInterest ("requestRebuild", this);
          childNode ._isPickableObject  .addInterest ("requestRebuild", this);
@@ -829,8 +835,11 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
 
          if (childNode .isVisible ())
          {
+            if (childNode .isBoundedObject ())
+               this .boundedObject = childNode;
+
             if (childNode .isPointingObject ())
-               this .pointingNode = childNode;
+               this .pointingObject = childNode;
 
             if (childNode .isCameraObject ())
                this .cameraObject = childNode;
@@ -845,7 +854,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
                this .shadowObject = childNode;
 
             if (childNode .isVisibleObject ())
-               this .visibleNode = childNode;
+               this .visibleObject = childNode;
          }
 
          if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
@@ -854,7 +863,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
             childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
             if (childNode .isBBoxVisible ())
-               this .boundedObject = childNode;
+               this .bboxObject = childNode;
          }
 
          delete this .traverse;
@@ -864,12 +873,41 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          this .traverse = Function .prototype;
       }
 
-      this .setPointingObject  (this .pointingNode);
-      this .setCameraObject    (this .cameraObject);
-      this .setPickableObject  (this .pickableObject);
+      this .set_boundedObjects__ ();
+      this .set_pointingObjects__ ();
+      this .set_cameraObjects__ ();
+      this .set_pickableObjects__ ();
+      this .set_collisionObjects__ ();
+      this .set_shadowObjects__ ();
+      this .set_visibleObjects__ ();
+   },
+   set_boundedObjects__ ()
+   {
+      this .setBoundedObject (this .boundedObject || !this .isDefaultBBoxSize ());
+   },
+   set_pointingObjects__ ()
+   {
+      this .setPointingObject (this .pointingObject);
+   },
+   set_cameraObjects__ ()
+   {
+      this .setCameraObject (this .cameraObject);
+   },
+   set_pickableObjects__ ()
+   {
+      this .setPickableObject (this .pickableObject);
+   },
+   set_collisionObjects__ ()
+   {
       this .setCollisionObject (this .collisionObject);
-      this .setShadowObject    (this .shadowObject);
-      this .setVisibleObject   (this .visibleNode);
+   },
+   set_shadowObjects__ ()
+   {
+      this .setShadowObject (this .shadowObject);
+   },
+   set_visibleObjects__ ()
+   {
+      this .setVisibleObject (this .visibleObject || this .bboxObject || !this .isDefaultBBoxSize ());
    },
    requestRebuild ()
    {
@@ -896,7 +934,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
-            this .pointingNode ?.traverse (type, renderObject);
+            this .pointingObject ?.traverse (type, renderObject);
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
@@ -906,18 +944,16 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
+            // X3DNBodyCollidableNode cannot be pickTarget of a X3DPickSensorNode,
+            // so we do not need to a this node to pickingHierarchy.
 
-            pickingHierarchy .push (this);
+            const browser = this .getBrowser ();
 
             if (browser .getPickable () .at (-1))
-               this .visibleNode ?.traverse (type, renderObject);
+               this .visibleObject ?.traverse (type, renderObject);
             else
                this .pickableObject ?.traverse (type, renderObject);
 
-            pickingHierarchy .pop ();
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
@@ -932,8 +968,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            this .visibleNode   ?.traverse (type, renderObject);
-            this .boundedObject ?.displayBBox (type, renderObject);
+            this .visibleObject ?.traverse    (type, renderObject);
+            this .bboxObject    ?.displayBBox (type, renderObject);
             break;
          }
       }
