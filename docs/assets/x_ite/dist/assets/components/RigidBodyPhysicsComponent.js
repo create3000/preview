@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -536,10 +536,8 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutput)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("body1AnchorPoint");
@@ -557,7 +555,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    {
       if (this .joint)
       {
-         var
+         const
             localAnchorPoint1 = this .localAnchorPoint1,
             localAnchorPoint2 = this .localAnchorPoint2;
 
@@ -570,7 +568,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
+      const localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -580,7 +578,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    })(),
    update2: (() =>
    {
-      var localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) ();
+      const localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -1538,19 +1536,19 @@ const CollidableShape_default_ = CollidableShape;
  *
  ******************************************************************************/
 
-let i = 0;
+let AppliedParametersType_i = 0;
 
 const AppliedParametersType =
 {
-   BOUNCE:                 i ++,
-   USER_FRICTION:          i ++,
-   FRICTION_COEFFICIENT_2: i ++,
-   ERROR_REDUCTION:        i ++,
-   CONSTANT_FORCE:         i ++,
-   SPEED_1:                i ++,
-   SPEED_2:                i ++,
-   SLIP_1:                 i ++,
-   SLIP_2:                 i ++,
+   BOUNCE:                 AppliedParametersType_i ++,
+   USER_FRICTION:          AppliedParametersType_i ++,
+   FRICTION_COEFFICIENT_2: AppliedParametersType_i ++,
+   ERROR_REDUCTION:        AppliedParametersType_i ++,
+   CONSTANT_FORCE:         AppliedParametersType_i ++,
+   SPEED_1:                AppliedParametersType_i ++,
+   SPEED_2:                AppliedParametersType_i ++,
+   SLIP_1:                 AppliedParametersType_i ++,
+   SLIP_2:                 AppliedParametersType_i ++,
 };
 
 const AppliedParametersType_default_ = AppliedParametersType;
@@ -1629,7 +1627,7 @@ function CollisionCollection (executionContext)
    this ._softnessConstantForceMix .setUnit ("force");
 
    // Private properties
-   
+
    this .appliedParameters   = new Set ();
    this .collidableNodes     = [ ];
    this .collisionSpaceNodes = [ ];
@@ -1663,7 +1661,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
    },
    set_appliedParameters__: (() =>
    {
-      var appliedParametersIndex = new Map ([
+      const appliedParametersIndex = new Map ([
          ["BOUNCE",                 RigidBodyPhysics_AppliedParametersType .BOUNCE],
          ["USER_FRICTION",          RigidBodyPhysics_AppliedParametersType .USER_FRICTION],
          ["FRICTION_COEFFICIENT-2", RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2],
@@ -1679,27 +1677,27 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
       {
          this .appliedParameters .clear ();
 
-         for (var i = 0, length = this ._appliedParameters .length; i < length; ++ i)
+         for (const appliedParameter of this ._appliedParameters)
          {
-            var appliedParameter = appliedParametersIndex .get (this ._appliedParameters [i]);
+            const value = appliedParametersIndex .get (appliedParameter);
 
-            if (appliedParameter !== undefined)
-               this .appliedParameters .add (appliedParameter);
+            if (value !== undefined)
+               this .appliedParameters .add (value);
          }
       };
    })(),
    set_collidables__ ()
    {
-      var collisionSpaceNodes = this .collisionSpaceNodes;
+      const collisionSpaceNodes = this .collisionSpaceNodes;
 
-      for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-         collisionSpaceNodes [i] .removeInterest ("collect", this);
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .removeInterest ("collect", this);
 
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {
@@ -1713,16 +1711,16 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
    },
    collect ()
    {
-      var
+      const
          collidableNodes     = this .collidableNodes,
          collisionSpaceNodes = this .collisionSpaceNodes;
 
       collidableNodes     .length = 0;
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidables [i]);
+         const collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, node);
 
          if (collidableNode)
          {
@@ -1730,7 +1728,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
             continue;
          }
 
-         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {
@@ -1879,7 +1877,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (external_X_
    },
    update: (() =>
    {
-      var
+      const
          collidableNodesIndex = new Map (),
          collisionWorlds      = new Set (),
          intersectionNodes    = new Set (),
@@ -1889,24 +1887,22 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (external_X_
 
       return function ()
       {
-         var
+         const
             colliderNode    = this .colliderNode,
             collidableNodes = colliderNode .getCollidables ();
 
          collidableNodesIndex .clear ();
          collisionWorlds      .clear ();
 
-         for (var i = 0, length = collidableNodes .length; i < length; ++ i)
+         for (const collidableNode of collidableNodes)
          {
-            var
-               collidableNode = collidableNodes [i],
-               bodyNode       = collidableNodes [i] .getBody ();
+            const bodyNode = collidableNode .getBody ();
 
             if (bodyNode)
             {
                collidableNodesIndex .set (bodyNode .getRigidBody () .ptr, collidableNode);
 
-               var collection = bodyNode .getCollection ();
+               const collection = bodyNode .getCollection ();
 
                if (collection)
                   collisionWorlds .add (collection .getDynamicsWorld ());
@@ -1920,32 +1916,32 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (external_X_
          {
             //collisionWorld .performDiscreteCollisionDetection ();
 
-            var
+            const
                dispatcher   = collisionWorld .getDispatcher (),
                numManifolds = dispatcher .getNumManifolds ();
 
-            for (var i = 0; i < numManifolds; ++ i)
+            for (let i = 0; i < numManifolds; ++ i)
             {
-               var
+               const
                   contactManifold = dispatcher .getManifoldByIndexInternal (i),
                   numContacts     = contactManifold .getNumContacts ();
 
-               for (var j = 0; j < numContacts; ++ j)
+               for (let j = 0; j < numContacts; ++ j)
                {
-                  var pt = contactManifold .getContactPoint (j);
+                  const pt = contactManifold .getContactPoint (j);
 
                   if (pt .getDistance () <= 0)
                   {
-                     var
+                     const
                         collidableNode1 = collidableNodesIndex .get (contactManifold .getBody0 () .ptr),
                         collidableNode2 = collidableNodesIndex .get (contactManifold .getBody1 () .ptr);
 
                      if (! collidableNode1 && ! collidableNode2)
                         continue;
 
-                     var contactNode = this .getContact (contactNodes .length);
+                     const contactNode = this .getContact (contactNodes .length);
 
-                     var
+                     const
                         btPosition      = pt .getPositionWorldOnA (),
                         btContactNormal = pt .get_m_normalWorldOnB ();
 
@@ -1984,14 +1980,14 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (external_X_
             }
          });
 
-         var active = !! contactNodes .length;
+         const active = !! contactNodes .length;
 
          if (this ._isActive .getValue () !== active)
             this ._isActive = active;
 
          if (intersectionNodes .size)
          {
-            var i = 0;
+            let i = 0;
 
             intersectionNodes .forEach (intersectionNode => this ._intersections [i ++] = intersectionNode);
 
@@ -2000,7 +1996,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (external_X_
 
          if (contactNodes .length)
          {
-            var i = 0;
+            let i = 0;
 
             contactNodes .forEach (contactNode => this ._contacts [i ++] = contactNode);
 
@@ -2220,16 +2216,16 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
    },
    set_collidables__ ()
    {
-      var collisionSpaceNodes = this .collisionSpaceNodes;
+      const collisionSpaceNodes = this .collisionSpaceNodes;
 
-      for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-         collisionSpaceNodes [i] .removeInterest ("collect", this);
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .removeInterest ("collect", this);
 
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {
@@ -2243,16 +2239,16 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
    },
    collect ()
    {
-      var
+      const
          collidableNodes     = this .collidableNodes,
          collisionSpaceNodes = this .collisionSpaceNodes;
 
       collidableNodes     .length = 0;
       collisionSpaceNodes .length = 0;
 
-      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      for (const node of this ._collidables)
       {
-         var collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidables [i]);
+         const collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, node);
 
          if (collidableNode)
          {
@@ -2260,7 +2256,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
             continue;
          }
 
-         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
          if (collisionSpaceNode)
          {
@@ -2511,7 +2507,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    },
    addJoint: (() =>
    {
-      var
+      const
          localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) (),
          localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) (),
          localAxis1        = new (external_X_ITE_X3D_Vector3_default()) (),
@@ -2569,10 +2565,8 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutput)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("body1AnchorPoint");
@@ -2594,7 +2588,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    },
    update1: (() =>
    {
-      var
+      const
          localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) (),
          localAxis1        = new (external_X_ITE_X3D_Vector3_default()) (),
          difference        = new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -2610,7 +2604,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
          if (this .outputs .has ("hinge1Angle"))
          {
-            var lastAngle  = this ._hinge1Angle .getValue ();
+            const lastAngle  = this ._hinge1Angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
             difference .get (null, rotation);
@@ -2624,7 +2618,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    })(),
    update2: (() =>
    {
-      var
+      const
          localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) (),
          localAxis2        = new (external_X_ITE_X3D_Vector3_default()) (),
          difference        = new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -2640,7 +2634,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
          if (this .outputs .has ("hinge2Angle"))
          {
-            var lastAngle  = this ._hinge2Angle .getValue ();
+            const lastAngle  = this ._hinge2Angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
             difference .get (null, rotation);
@@ -2982,17 +2976,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    },
    set_position__ ()
    {
-      for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         this .geometryNodes [i] ._translation = this ._position;
+      for (const geometryNode of this .geometryNodes)
+         geometryNode ._translation = this ._position;
    },
    set_orientation__ ()
    {
-      for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         this .geometryNodes [i] ._rotation = this ._orientation;
+      for (const geometryNode of this .geometryNodes)
+         geometryNode ._rotation = this ._orientation;
    },
    set_transform__: (() =>
    {
-      var
+      const
          o  = new AmmoClass .btVector3 (0, 0, 0),
          t  = new AmmoClass .btTransform (),
          im = new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -3001,7 +2995,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
 
       return function ()
       {
-         var m = this .matrix;
+         const m = this .matrix;
 
          m .set (this ._position .getValue (), this ._orientation .getValue ());
 
@@ -3030,9 +3024,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
 
          it .setOrigin (io);
 
-         var compoundShape = this .compoundShape;
+         const compoundShape = this .compoundShape;
 
-         for (var i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
+         for (let i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
             compoundShape .updateChildTransform (i, it, false);
 
          this .compoundShape .recalculateLocalAabb ();
@@ -3043,7 +3037,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    })(),
    set_linearVelocity__: (() =>
    {
-      var lv = new AmmoClass .btVector3 (0, 0, 0);
+      const lv = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3058,7 +3052,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    }) (),
    set_angularVelocity__: (() =>
    {
-      var av = new AmmoClass .btVector3 (0, 0, 0);
+      const av = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3073,7 +3067,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    })(),
    set_finiteRotationAxis__: (() =>
    {
-      var angularFactor = new AmmoClass .btVector3 (1, 1, 1);
+      const angularFactor = new AmmoClass .btVector3 (1, 1, 1);
 
       return function ()
       {
@@ -3096,7 +3090,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    },
    set_centerOfMass__: (() =>
    {
-      var
+      const
          rotation     = new AmmoClass .btQuaternion (0, 0, 0, 1),
          origin       = new AmmoClass .btVector3 (0, 0, 0),
          centerOfMass = new AmmoClass .btTransform (rotation, origin);
@@ -3111,11 +3105,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    })(),
    set_massProps__: (() =>
    {
-      var localInertia = new AmmoClass .btVector3 (0, 0, 0);
+      const localInertia = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
-         var inertia = this ._inertia;
+         const inertia = this ._inertia;
 
          localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
                                  inertia [3] + inertia [4] + inertia [5],
@@ -3130,15 +3124,15 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    {
       this .force .set (0, 0, 0);
 
-      for (var i = 0, length = this ._forces .length; i < length; ++ i)
-         this .force .add (this ._forces [i] .getValue ());
+      for (const force of this ._forces)
+         this .force .add (force .getValue ());
    },
    set_torques__ ()
    {
       this .torque .set (0, 0, 0);
 
-      for (var i = 0, length = this ._torques .length; i < length; ++ i)
-         this .torque .add (this ._torques [i] .getValue ());
+      for (const torque of this ._torques)
+         this .torque .add (torque .getValue ());
    },
    set_disable__ ()
    {
@@ -3153,12 +3147,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    },
    set_geometry__ ()
    {
-      var geometryNodes = this .geometryNodes;
+      const geometryNodes = this .geometryNodes;
 
-      for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+      for (const geometryNode of geometryNodes)
       {
-         var geometryNode = geometryNodes [i];
-
          geometryNode .removeInterest ("addEvent", this ._transform);
          geometryNode ._compoundShape .removeInterest ("set_compoundShape__", this);
 
@@ -3171,16 +3163,16 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
       }
 
-      for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
-         this .otherGeometryNodes [i] ._body .removeInterest ("set_body__", this);
+      for (const otherGeometryNode of this .otherGeometryNodes)
+         otherGeometryNode ._body .removeInterest ("set_body__", this);
 
       geometryNodes .length = 0;
 
-      for (var i = 0, length = this ._geometry .length; i < length; ++ i)
+      for (const node of this ._geometry)
       {
-         var geometryNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._geometry [i]);
+         const geometryNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, node);
 
-         if (! geometryNode)
+         if (!geometryNode)
             continue;
 
          if (geometryNode .getBody ())
@@ -3195,10 +3187,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
          geometryNodes .push (geometryNode);
       }
 
-      for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+      for (const geometryNode of geometryNodes)
       {
-         var geometryNode = geometryNodes [i];
-
          geometryNode .addInterest ("addEvent", this ._transform);
          geometryNode ._compoundShape .addInterest ("set_compoundShape__", this);
 
@@ -3217,17 +3207,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    },
    set_compoundShape__: (() =>
    {
-      var transform = new AmmoClass .btTransform ();
+      const transform = new AmmoClass .btTransform ();
 
       return function ()
       {
-         var compoundShape = this .compoundShape;
+         const compoundShape = this .compoundShape;
 
-         for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
+         for (let i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
             compoundShape .removeChildShapeByIndex (i);
 
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            compoundShape .addChildShape (transform, this .geometryNodes [i] .getCompoundShape ());
+         for (const geometryNode of this .geometryNodes)
+            compoundShape .addChildShape (transform, geometryNode .getCompoundShape ());
 
          this .set_position__ ();
          this .set_orientation__ ();
@@ -3243,7 +3233,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    })(),
    applyForces: (() =>
    {
-      var
+      const
          g = new AmmoClass .btVector3 (0, 0, 0),
          f = new AmmoClass .btVector3 (0, 0, 0),
          t = new AmmoClass .btVector3 (0, 0, 0),
@@ -3269,7 +3259,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
    })(),
    update: (() =>
    {
-      var
+      const
          transform       = new AmmoClass .btTransform (),
          position        = new (external_X_ITE_X3D_Vector3_default()) (),
          quaternion      = new (external_X_ITE_X3D_Quaternion_default()) (),
@@ -3281,7 +3271,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
       {
          this .motionState .getWorldTransform (transform);
 
-         var
+         const
             btOrigin          = transform .getOrigin (),
             btQuaternion      = transform .getRotation (),
             btLinearVeloctity = this .rigidBody .getLinearVelocity (),
@@ -3475,7 +3465,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    {
       const DELAY = 15; // Delay in frames when dt full applies.
 
-      var
+      const
          dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
          deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
 
@@ -3493,7 +3483,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    },
    set_gravity__: (() =>
    {
-      var gravity = new AmmoClass .btVector3 (0, 0, 0);
+      const gravity = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3506,8 +3496,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    })(),
    set_contactSurfaceThickness__ ()
    {
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-         this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
+      for (const bodyNode of this .bodyNodes)
+         bodyNode .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
    },
    set_collider__ ()
    {
@@ -3515,7 +3505,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    },
    set_bounce__ ()
    {
-      var
+      const
          colliderNode = this .colliderNode,
          bodyNodes    = this .bodyNodes;
 
@@ -3523,9 +3513,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
       {
          if (colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType .BOUNCE))
          {
-            for (var i = 0, length = bodyNodes .length; i < length; ++ i)
+            for (const bodyNode of bodyNodes)
             {
-               var rigidBody = bodyNodes [i] .getRigidBody ();
+               const rigidBody = bodyNode .getRigidBody ();
 
                if (rigidBody .getLinearVelocity () .length () >= colliderNode ._minBounceSpeed .getValue ())
                   rigidBody .setRestitution (colliderNode ._bounce .getValue ());
@@ -3537,8 +3527,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
          }
       }
 
-      for (var i = 0, length = bodyNodes .length; i < length; ++ i)
-         bodyNodes [i] .getRigidBody () .setRestitution (0);
+      for (const bodyNode of bodyNodes)
+         bodyNode .getRigidBody () .setRestitution (0);
    },
    set_frictionCoefficients__ ()
    {
@@ -3546,9 +3536,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
       {
          if (this .colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2))
          {
-            for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+            for (const bodyNode of this .bodyNodes)
             {
-               var rigidBody = this .bodyNodes [i] .getRigidBody ();
+               const rigidBody = bodyNode .getRigidBody ();
 
                rigidBody .setFriction (this .colliderNode ._frictionCoefficients .x);
                rigidBody .setRollingFriction (this .colliderNode ._frictionCoefficients .y);
@@ -3558,9 +3548,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
          }
       }
 
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+      for (const bodyNode of this .bodyNodes)
       {
-         var rigidBody = this .bodyNodes [i] .getRigidBody ();
+         const rigidBody = bodyNode .getRigidBody ();
 
          rigidBody .setFriction (0.5);
          rigidBody .setRollingFriction (0);
@@ -3568,22 +3558,20 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    },
    set_bodies__ ()
    {
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+      for (const bodyNode of this .bodyNodes)
       {
-         var bodyNode = this .bodyNodes [i];
-
          bodyNode ._enabled .removeInterest ("set_dynamicsWorld__", this);
          bodyNode .setCollection (null);
       }
 
-      for (var i = 0, length = this .otherBodyNodes .length; i < length; ++ i)
-         this .otherBodyNodes [i] ._collection .removeInterest ("set_bodies__", this);
+      for (const otherBodyNode of this .otherBodyNodes)
+         otherBodyNode ._collection .removeInterest ("set_bodies__", this);
 
       this .bodyNodes .length = 0;
 
-      for (var i = 0, length = this ._bodies .length; i < length; ++ i)
+      for (const node of this ._bodies)
       {
-         var bodyNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).RigidBody, this ._bodies [i]);
+         const bodyNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).RigidBody, node);
 
          if (! bodyNode)
             continue;
@@ -3600,8 +3588,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
          this .bodyNodes .push (bodyNode);
       }
 
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-         this .bodyNodes [i] ._enabled .addInterest ("set_dynamicsWorld__", this);
+      for (const bodyNode of this .bodyNodes)
+         bodyNode ._enabled .addInterest ("set_dynamicsWorld__", this);
 
       this .set_contactSurfaceThickness__ ();
       this .set_dynamicsWorld__ ();
@@ -3609,39 +3597,37 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    },
    set_dynamicsWorld__ ()
    {
-      for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
-         this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
+      for (const rigidBody of this .rigidBodies)
+         this .dynamicsWorld .removeRigidBody (rigidBody);
 
       this .rigidBodies .length = 0;
 
-      for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+      for (const bodyNode of this .bodyNodes)
       {
-         var bodyNode = this .bodyNodes [i];
-
          if (! bodyNode ._enabled .getValue ())
             continue;
 
          this .rigidBodies .push (bodyNode .getRigidBody ());
       }
 
-      for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
-         this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
+      for (const rigidBody of this .rigidBodies)
+         this .dynamicsWorld .addRigidBody (rigidBody);
    },
    set_joints__ ()
    {
-      for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
-         this .jointNodes [i] .setCollection (null);
+      for (const jointNode of this .jointNodes)
+         jointNode .setCollection (null);
 
       this .jointNodes .length = 0;
 
-      for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
-         this .otherJointNodes [i] ._collection .removeInterest ("set_joints__", this);
+      for (const otherJointNode of this .otherJointNodes)
+         otherJointNode ._collection .removeInterest ("set_joints__", this);
 
       this .otherJointNodes .length = 0;
 
-      for (var i = 0, length = this ._joints .length; i < length; ++ i)
+      for (const node of this ._joints)
       {
-         var jointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DRigidJointNode, this ._joints [i]);
+         const jointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DRigidJointNode, node);
 
          if (! jointNode)
             continue;
@@ -3662,8 +3648,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    {
       try
       {
-         var
-            deltaTime  = this .getTimeStep (),
+         const
             iterations = this ._iterations .getValue (),
             gravity    = this ._gravity .getValue ();
 
@@ -3672,26 +3657,28 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
 
          if (this ._preferAccuracy .getValue ())
          {
-            deltaTime /= iterations;
+            const deltaTime = this .getTimeStep () / iterations;
 
-            for (var i = 0; i < iterations; ++ i)
+            for (let i = 0; i < iterations; ++ i)
             {
-               for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-                  this .bodyNodes [i] .applyForces (gravity);
+               for (const bodyNode of this .bodyNodes)
+                  bodyNode .applyForces (gravity);
 
                this .dynamicsWorld .stepSimulation (deltaTime, 0);
             }
          }
          else
          {
-            for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-               this .bodyNodes [i] .applyForces (gravity);
+            const deltaTime = this .getTimeStep ();
+
+            for (const bodyNode of this .bodyNodes)
+               bodyNode .applyForces (gravity);
 
             this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
          }
 
-         for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-            this .bodyNodes [i] .update ();
+         for (const bodyNode of this .bodyNodes)
+            bodyNode .update ();
       }
       catch (error)
       {
@@ -3840,7 +3827,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    },
    addJoint: (() =>
    {
-      var
+      const
          localAxis1 = new (external_X_ITE_X3D_Vector3_default()) (),
          localAxis2 = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -3861,7 +3848,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
          if (this .getBody2 () .getCollection () !== this .getCollection ())
             return;
 
-         var
+         const
             localAnchorPoint1 = this .localAnchorPoint1,
             localAnchorPoint2 = this .localAnchorPoint2;
 
@@ -3900,10 +3887,8 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutput)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("body1AnchorPoint");
@@ -3921,7 +3906,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
+      const localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -3931,7 +3916,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    })(),
    update2: (() =>
    {
-      var
+      const
          localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) (),
          difference        = new (external_X_ITE_X3D_Matrix4_default()) (),
          rotation          = new (external_X_ITE_X3D_Rotation4_default()) ();
@@ -3943,7 +3928,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
          if (this .outputs .has ("angle"))
          {
-            var lastAngle  = this ._angle .getValue ();
+            const lastAngle  = this ._angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
             difference .get (null, rotation);
@@ -4060,7 +4045,7 @@ function SliderJoint (executionContext)
    this ._separationRate .setUnit ("speed");
 
    // Private properties
-   
+
    this .joint   = null;
    this .outputs = new Set ();
 }
@@ -4077,7 +4062,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
    },
    addJoint: (() =>
    {
-      var
+      const
          axisRotation = new (external_X_ITE_X3D_Rotation4_default()) (),
          matrixA      = new (external_X_ITE_X3D_Matrix4_default()) (),
          matrixB      = new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -4151,10 +4136,8 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
    {
       this .outputs .clear ();
 
-      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+      for (const value of this ._forceOutput)
       {
-         var value = this ._forceOutput [i];
-
          if (value == "ALL")
          {
             this .outputs .add ("separation");

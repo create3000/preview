@@ -1,5 +1,5 @@
-/* X_ITE v11.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.1")];
+/* X_ITE v11.3.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -304,6 +304,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
          return family .get (style) ?? family .get ("PLAIN");
 
       return;
+   },
+   getAllowEmptyUrl ()
+   {
+      return true;
    },
    getMajorAlignment ()
    {
