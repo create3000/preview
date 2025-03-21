@@ -252,12 +252,10 @@ function X3DFontStyleNode (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DFontStyleNode);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString (),
-                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  this ._family,
+                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString (),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600));
-
-   this ._family .setName ("family");
 
    this .alignments = [ ];
 }
@@ -283,14 +281,18 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
       const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
 
       this .alignments [0] = this ._justify .length > 0
-                             ? this .getAlignment (0, majorNormal)
-                             : majorNormal ? Text_TextAlignment .BEGIN : Text_TextAlignment .END;
+         ? this .getAlignment (0, majorNormal)
+         : majorNormal ? Text_TextAlignment .BEGIN : Text_TextAlignment .END;
 
       const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
 
       this .alignments [1] = this ._justify .length > 1
-                             ? this .getAlignment (1, minorNormal)
-                             : minorNormal ? Text_TextAlignment .FIRST : Text_TextAlignment .END;
+         ? this .getAlignment (1, minorNormal)
+         : minorNormal ? Text_TextAlignment .FIRST : Text_TextAlignment .END;
+   },
+   getAllowEmptyUrl ()
+   {
+      return true;
    },
    getFont ()
    {
@@ -304,10 +306,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
          return family .get (style) ?? family .get ("PLAIN");
 
       return;
-   },
-   getAllowEmptyUrl ()
-   {
-      return true;
    },
    getMajorAlignment ()
    {
@@ -17877,13 +17875,9 @@ Object .assign (X3DTextContext .prototype,
                if (!response .ok)
                   throw new Error (response .statusText || response .status);
 
-               const decompress = url .includes (".woff2")
-                  ? await this .getWebAssemblyWoff2 ()
-                  : buffer => buffer;
-
                const
-                  buffer       = await response .arrayBuffer (),
-                  decompressed = decompress (buffer),
+                  arrayBuffer  = await response .arrayBuffer (),
+                  decompressed = await this .decompressFont (arrayBuffer),
                   font         = parseBuffer (decompressed);
 
                resolve (font);
@@ -17996,9 +17990,31 @@ Object .assign (X3DTextContext .prototype,
 
       return cachedGlyph;
    },
-   getWebAssemblyWoff2 ()
+   async decompressFont (arrayBuffer)
    {
-      return this [_wawoff2] ??= this .loadWebAssemblyWoff2 ();
+      if (this .isWoff2 (arrayBuffer))
+      {
+         const decompress = await this .getWebAssemblyWoff2 ();
+
+         return decompress (arrayBuffer);
+      }
+
+      return arrayBuffer;
+   },
+   isWoff2 (arrayBuffer)
+   {
+      if (arrayBuffer .byteLength < 4)
+         return false;
+
+      const
+         dataView = new DataView (arrayBuffer),
+         magic    = dataView .getUint32 (0, false);
+
+      return magic === 0x774F4632; // 'wOF2'
+   },
+   async getWebAssemblyWoff2 ()
+   {
+      return this [_wawoff2] ??= await this .loadWebAssemblyWoff2 ();
    },
    async loadWebAssemblyWoff2 ()
    {
@@ -18015,7 +18031,7 @@ Object .assign (X3DTextContext .prototype,
 
       await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
 
-      return buffer => wawoff2 .decompress (buffer);
+      return arrayBuffer => wawoff2 .decompress (arrayBuffer);
    },
 });
 
