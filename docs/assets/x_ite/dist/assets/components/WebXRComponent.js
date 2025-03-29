@@ -1,10 +1,10 @@
-/* X_ITE v11.3.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
+/* X_ITE v11.4.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 873:
+/***/ 254:
 /***/ ((module) => {
 
 module.exports = __X_ITE_X3D__ .jquery;
@@ -460,7 +460,7 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 });
 
 ;// ./src/x_ite/Browser/WebXR/X3DWebXRContext.js
-/* provided dependency */ var $ = __webpack_require__(873);
+/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

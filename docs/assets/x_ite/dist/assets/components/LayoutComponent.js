@@ -1,5 +1,5 @@
-/* X_ITE v11.3.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.3.2")];
+/* X_ITE v11.4.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1772,7 +1772,6 @@ Object .defineProperties (ScreenFontStyle,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "leftToRight", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "topToBottom", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "justify",     new (external_X_ITE_X3D_Fields_default()).MFString ("BEGIN")),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "fontLibrary", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
