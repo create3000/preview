@@ -1,5 +1,5 @@
-/* X_ITE v11.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.4.1")];
+/* X_ITE v12.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -93,53 +93,6 @@ var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Browser/Text/TextAlignment.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 let i = 0;
 
 const TextAlignment =
@@ -162,53 +115,6 @@ const external_X_ITE_X3D_URLs_namespaceObject = __X_ITE_X3D__ .URLs;
 var external_X_ITE_X3D_URLs_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_URLs_namespaceObject);
 ;// ./src/x_ite/Components/Text/X3DFontStyleNode.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -448,53 +354,6 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Matrix3_namespaceObject = __X_ITE_X3D__ .Matrix3;
 var external_X_ITE_X3D_Matrix3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix3_namespaceObject);
 ;// ./src/x_ite/Browser/Text/X3DTextGeometry.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -628,7 +487,7 @@ Object .assign (X3DTextGeometry .prototype,
    {
       // Resize array in grow only fashion.
 
-      for (var i = array .length; i < size; ++ i)
+      for (let i = array .length; i < size; ++ i)
          array .push (new (external_X_ITE_X3D_Vector2_default()) ());
 
       array .length = size;
@@ -776,7 +635,7 @@ Object .assign (X3DTextGeometry .prototype,
             this .minorAlignment .assign (this .bearing);
             break;
          case Text_TextAlignment .FIRST:
-            this .minorAlignment .set (0, 0);
+            this .minorAlignment .set (0);
             break;
          case Text_TextAlignment .MIDDLE:
             this .minorAlignment .set (0, size .y / 2 - max .y);
@@ -1137,53 +996,6 @@ var external_X_ITE_X3D_Bezier_default = /*#__PURE__*/__webpack_require__.n(exter
 const external_X_ITE_X3D_libtess_namespaceObject = __X_ITE_X3D__ .libtess;
 var external_X_ITE_X3D_libtess_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_libtess_namespaceObject);
 ;// ./src/x_ite/Browser/Text/PolygonText.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1204,7 +1016,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
 {
    getMatrix ()
    {
-      return (external_X_ITE_X3D_Matrix4_default()).Identity;
+      return (external_X_ITE_X3D_Matrix4_default()).IDENTITY;
    },
    build: (() =>
    {
@@ -1359,8 +1171,8 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
          }
          else
          {
-            min .set (0, 0, 0);
-            max .set (0, 0, 0);
+            min .set (0);
+            max .set (0);
          }
 
          const extents = glyphCache .extents = { };
@@ -1502,53 +1314,6 @@ const PolygonText_default_ = PolygonText;
 
 /* harmony default export */ const Text_PolygonText = (external_X_ITE_X3D_Namespace_default().add ("PolygonText", PolygonText_default_));
 ;// ./src/x_ite/Components/Text/FontStyle.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1570,7 +1335,7 @@ function FontStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (FontStyle .prototype, Text_X3DFontStyleNode .prototype),
 {
-   createTextGeometry (text)
+   getTextGeometry (text)
    {
       return new Text_PolygonText (text, this);
    },
@@ -13611,7 +13376,8 @@ Hinting.prototype.exec = function(glyph, ppem) {
       fpgmState = this._fpgmState = new State("fpgm", font.tables.fpgm);
       fpgmState.funcs = [];
       fpgmState.font = font;
-      if (false) {}
+      if (false) // removed by dead control flow
+{}
       try {
         exec(fpgmState);
       } catch (e) {
@@ -13633,7 +13399,8 @@ Hinting.prototype.exec = function(glyph, ppem) {
     } else {
       prepState.cvt = [];
     }
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     try {
       exec(prepState);
     } catch (e) {
@@ -13665,7 +13432,8 @@ execGlyph = function(glyph, prepState) {
   State.prototype = prepState;
   if (!components) {
     state = new State("glyf", glyph.instructions);
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     execComponent(glyph, state, xScale, yScale);
     gZone = state.gZone;
   } else {
@@ -13676,7 +13444,8 @@ execGlyph = function(glyph, prepState) {
       const c = components[i];
       const cg = font.glyphs.get(c.glyphIndex);
       state = new State("glyf", cg.instructions);
-      if (false) {}
+      if (false) // removed by dead control flow
+{}
       execComponent(cg, state, xScale, yScale);
       const dx = Math.round(c.dx * xScale);
       const dy = Math.round(c.dy * yScale);
@@ -13702,7 +13471,8 @@ execGlyph = function(glyph, prepState) {
         new HPoint(0, 0),
         new HPoint(Math.round(glyph.advanceWidth * xScale), 0)
       );
-      if (false) {}
+      if (false) // removed by dead control flow
+{}
       exec(state);
       gZone.length -= 2;
     }
@@ -13743,14 +13513,16 @@ execComponent = function(glyph, state, xScale, yScale) {
     }
   }
   if (state.inhibitGridFit) return;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   gZone.push(
     new HPoint(0, 0),
     new HPoint(Math.round(glyph.advanceWidth * xScale), 0)
   );
   exec(state);
   gZone.length -= 2;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 };
 exec = function(state) {
   let prog = state.prog;
@@ -13758,7 +13530,8 @@ exec = function(state) {
   const pLen = prog.length;
   let ins;
   for (state.ip = 0; state.ip < pLen; state.ip++) {
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     ins = instructionTable[prog[state.ip]];
     if (!ins) {
       throw new Error(
@@ -13799,15 +13572,18 @@ function skip(state, handleElse) {
   state.ip = ip;
 }
 function SVTCA(v, state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.fv = state.pv = state.dpv = v;
 }
 function SPVTCA(v, state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.pv = state.dpv = v;
 }
 function SFVTCA(v, state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.fv = v;
 }
 function SPVTL(a, state) {
@@ -13816,7 +13592,8 @@ function SPVTL(a, state) {
   const p1i = stack.pop();
   const p2 = state.z2[p2i];
   const p1 = state.z1[p1i];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   let dx;
   let dy;
   if (!a) {
@@ -13834,7 +13611,8 @@ function SFVTL(a, state) {
   const p1i = stack.pop();
   const p2 = state.z2[p2i];
   const p1 = state.z1[p1i];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   let dx;
   let dy;
   if (!a) {
@@ -13850,33 +13628,38 @@ function SPVFS(state) {
   const stack = state.stack;
   const y = stack.pop();
   const x = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.pv = state.dpv = getUnitVector(x, y);
 }
 function SFVFS(state) {
   const stack = state.stack;
   const y = stack.pop();
   const x = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.fv = getUnitVector(x, y);
 }
 function GPV(state) {
   const stack = state.stack;
   const pv = state.pv;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(pv.x * 16384);
   stack.push(pv.y * 16384);
 }
 function GFV(state) {
   const stack = state.stack;
   const fv = state.fv;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(fv.x * 16384);
   stack.push(fv.y * 16384);
 }
 function SFVTPV(state) {
   state.fv = state.pv;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function ISECT(state) {
   const stack = state.stack;
@@ -13892,7 +13675,8 @@ function ISECT(state) {
   const pb0 = z1[pb0i];
   const pb1 = z1[pb1i];
   const p = state.z2[pi];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   const x1 = pa0.x;
   const y1 = pa0.y;
   const x2 = pa1.x;
@@ -13909,19 +13693,23 @@ function ISECT(state) {
 }
 function SRP0(state) {
   state.rp0 = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function SRP1(state) {
   state.rp1 = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function SRP2(state) {
   state.rp2 = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function SZP0(state) {
   const n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.zp0 = n;
   switch (n) {
     case 0:
@@ -13937,7 +13725,8 @@ function SZP0(state) {
 }
 function SZP1(state) {
   const n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.zp1 = n;
   switch (n) {
     case 0:
@@ -13953,7 +13742,8 @@ function SZP1(state) {
 }
 function SZP2(state) {
   const n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.zp2 = n;
   switch (n) {
     case 0:
@@ -13969,7 +13759,8 @@ function SZP2(state) {
 }
 function SZPS(state) {
   const n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.zp0 = state.zp1 = state.zp2 = n;
   switch (n) {
     case 0:
@@ -13985,97 +13776,115 @@ function SZPS(state) {
 }
 function SLOOP(state) {
   state.loop = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function RTG(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundToGrid;
 }
 function RTHG(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundToHalfGrid;
 }
 function SMD(state) {
   const d = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.minDis = d / 64;
 }
 function ELSE(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   skip(state, false);
 }
 function JMPR(state) {
   const o = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.ip += o - 1;
 }
 function SCVTCI(state) {
   const n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.cvCutIn = n / 64;
 }
 function DUP(state) {
   const stack = state.stack;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(stack[stack.length - 1]);
 }
 function POP(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.stack.pop();
 }
 function CLEAR(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.stack.length = 0;
 }
 function SWAP(state) {
   const stack = state.stack;
   const a = stack.pop();
   const b = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(a);
   stack.push(b);
 }
 function DEPTH(state) {
   const stack = state.stack;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(stack.length);
 }
 function LOOPCALL(state) {
   const stack = state.stack;
   const fn = stack.pop();
   const c = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   const cip = state.ip;
   const cprog = state.prog;
   state.prog = state.funcs[fn];
   for (let i = 0; i < c; i++) {
     exec(state);
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
   }
   state.ip = cip;
   state.prog = cprog;
 }
 function CALL(state) {
   const fn = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   const cip = state.ip;
   const cprog = state.prog;
   state.prog = state.funcs[fn];
   exec(state);
   state.ip = cip;
   state.prog = cprog;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function CINDEX(state) {
   const stack = state.stack;
   const k = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(stack[stack.length - k]);
 }
 function MINDEX(state) {
   const stack = state.stack;
   const k = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(stack.splice(stack.length - k, 1)[0]);
 }
 function FDEF(state) {
@@ -14085,7 +13894,8 @@ function FDEF(state) {
   let ip = state.ip;
   const fn = stack.pop();
   const ipBegin = ip;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   while (prog[++ip] !== 45) ;
   state.ip = ip;
   state.funcs[fn] = prog.slice(ipBegin + 1, ip);
@@ -14095,7 +13905,8 @@ function MDAP(round, state) {
   const p = state.z0[pi];
   const fv = state.fv;
   const pv = state.pv;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   let d = pv.distance(p, HPZero);
   if (round) d = state.round(d);
   fv.setRelative(p, HPZero, d, pv);
@@ -14108,7 +13919,8 @@ function IUP(v, state) {
   let cp;
   let pp;
   let np;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   for (let i = 0; i < pLen; i++) {
     cp = z2[i];
     if (v.touched(cp)) continue;
@@ -14135,7 +13947,8 @@ function SHP(a, state) {
     const d = pv.distance(rp, rp, false, true);
     fv.setRelative(p, p, d, pv);
     fv.touch(p);
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
   }
   state.loop = 1;
 }
@@ -14148,7 +13961,8 @@ function SHC(a, state) {
   const ci = stack.pop();
   const sp = state.z2[state.contours[ci]];
   let p = sp;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   const d = pv.distance(rp, rp, false, true);
   do {
     if (p !== rp) fv.setRelative(p, p, d, pv);
@@ -14162,7 +13976,8 @@ function SHZ(a, state) {
   const fv = state.fv;
   const pv = state.pv;
   const e = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   let z;
   switch (e) {
     case 0:
@@ -14191,7 +14006,8 @@ function SHPIX(state) {
   while (loop--) {
     const pi = stack.pop();
     const p = z2[pi];
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     fv.setRelative(p, p, d);
     fv.touch(p);
   }
@@ -14210,7 +14026,8 @@ function IP(state) {
   while (loop--) {
     const pi = stack.pop();
     const p = z2[pi];
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     fv.interpolate(p, rp1, rp2, pv);
     fv.touch(p);
   }
@@ -14226,7 +14043,8 @@ function MSIRP(a, state) {
   const pv = state.pv;
   fv.setRelative(p, rp0, d, pv);
   fv.touch(p);
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.rp1 = state.rp0;
   state.rp2 = pi;
   if (a) state.rp0 = pi;
@@ -14242,14 +14060,16 @@ function ALIGNRP(state) {
   while (loop--) {
     const pi = stack.pop();
     const p = z1[pi];
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     fv.setRelative(p, rp0, 0, pv);
     fv.touch(p);
   }
   state.loop = 1;
 }
 function RTDG(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundToDoubleGrid;
 }
 function MIAP(round, state) {
@@ -14260,7 +14080,8 @@ function MIAP(round, state) {
   const fv = state.fv;
   const pv = state.pv;
   let cv = state.cvt[n];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   let d = pv.distance(p, HPZero);
   if (round) {
     if (Math.abs(d - cv) < state.cvCutIn) d = cv;
@@ -14279,7 +14100,8 @@ function NPUSHB(state) {
   let ip = state.ip;
   const stack = state.stack;
   const n = prog[++ip];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   for (let i = 0; i < n; i++) stack.push(prog[++ip]);
   state.ip = ip;
 }
@@ -14288,7 +14110,8 @@ function NPUSHW(state) {
   const prog = state.prog;
   const stack = state.stack;
   const n = prog[++ip];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   for (let i = 0; i < n; i++) {
     let w = prog[++ip] << 8 | prog[++ip];
     if (w & 32768) w = -((w ^ 65535) + 1);
@@ -14302,14 +14125,16 @@ function WS(state) {
   if (!store) store = state.store = [];
   const v = stack.pop();
   const l = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   store[l] = v;
 }
 function RS(state) {
   const stack = state.stack;
   const store = state.store;
   const l = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   const v = store && store[l] || 0;
   stack.push(v);
 }
@@ -14317,20 +14142,23 @@ function WCVTP(state) {
   const stack = state.stack;
   const v = stack.pop();
   const l = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.cvt[l] = v / 64;
 }
 function RCVT(state) {
   const stack = state.stack;
   const cvte = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(state.cvt[cvte] * 64);
 }
 function GC(a, state) {
   const stack = state.stack;
   const pi = stack.pop();
   const p = state.z2[pi];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(state.dpv.distance(p, HPZero, a, false) * 64);
 }
 function MD(a, state) {
@@ -14340,101 +14168,118 @@ function MD(a, state) {
   const p2 = state.z1[pi2];
   const p1 = state.z0[pi1];
   const d = state.dpv.distance(p1, p2, a, a);
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.stack.push(Math.round(d * 64));
 }
 function MPPEM(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.stack.push(state.ppem);
 }
 function FLIPON(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.autoFlip = true;
 }
 function LT(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e1 < e2 ? 1 : 0);
 }
 function LTEQ(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e1 <= e2 ? 1 : 0);
 }
 function GT(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e1 > e2 ? 1 : 0);
 }
 function GTEQ(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e1 >= e2 ? 1 : 0);
 }
 function EQ(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e2 === e1 ? 1 : 0);
 }
 function NEQ(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e2 !== e1 ? 1 : 0);
 }
 function ODD(state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(Math.trunc(n) & 1 ? 1 : 0);
 }
 function EVEN(state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(Math.trunc(n) & 1 ? 0 : 1);
 }
 function IF(state) {
   let test = state.stack.pop();
   let ins;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   if (!test) {
     skip(state, true);
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
   }
 }
 function EIF(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function AND(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e2 && e1 ? 1 : 0);
 }
 function OR(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e2 || e1 ? 1 : 0);
 }
 function NOT(state) {
   const stack = state.stack;
   const e = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(e ? 0 : 1);
 }
 function DELTAP123(b, state) {
@@ -14446,7 +14291,8 @@ function DELTAP123(b, state) {
   const base = state.deltaBase + (b - 1) * 16;
   const ds = state.deltaShift;
   const z0 = state.z0;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   for (let i = 0; i < n; i++) {
     const pi = stack.pop();
     const arg = stack.pop();
@@ -14454,7 +14300,8 @@ function DELTAP123(b, state) {
     if (appem !== ppem) continue;
     let mag = (arg & 15) - 8;
     if (mag >= 0) mag++;
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     const p = z0[pi];
     fv.setRelative(p, p, mag * ds, pv);
   }
@@ -14462,78 +14309,90 @@ function DELTAP123(b, state) {
 function SDB(state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.deltaBase = n;
 }
 function SDS(state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.deltaShift = Math.pow(0.5, n);
 }
 function ADD(state) {
   const stack = state.stack;
   const n2 = stack.pop();
   const n1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(n1 + n2);
 }
 function SUB(state) {
   const stack = state.stack;
   const n2 = stack.pop();
   const n1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(n1 - n2);
 }
 function DIV(state) {
   const stack = state.stack;
   const n2 = stack.pop();
   const n1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(n1 * 64 / n2);
 }
 function MUL(state) {
   const stack = state.stack;
   const n2 = stack.pop();
   const n1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(n1 * n2 / 64);
 }
 function ABS(state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(Math.abs(n));
 }
 function NEG(state) {
   const stack = state.stack;
   let n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(-n);
 }
 function FLOOR(state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(Math.floor(n / 64) * 64);
 }
 function CEILING(state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(Math.ceil(n / 64) * 64);
 }
 function ROUND(dt, state) {
   const stack = state.stack;
   const n = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(state.round(n / 64) * 64);
 }
 function WCVTF(state) {
   const stack = state.stack;
   const v = stack.pop();
   const l = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.cvt[l] = v * state.ppem / state.font.unitsPerEm;
 }
 function DELTAC123(b, state) {
@@ -14542,7 +14401,8 @@ function DELTAC123(b, state) {
   const ppem = state.ppem;
   const base = state.deltaBase + (b - 1) * 16;
   const ds = state.deltaShift;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   for (let i = 0; i < n; i++) {
     const c = stack.pop();
     const arg = stack.pop();
@@ -14551,13 +14411,15 @@ function DELTAC123(b, state) {
     let mag = (arg & 15) - 8;
     if (mag >= 0) mag++;
     const delta = mag * ds;
-    if (false) {}
+    if (false) // removed by dead control flow
+{}
     state.cvt[c] += delta;
   }
 }
 function SROUND(state) {
   let n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundSuper;
   let period;
   switch (n & 192) {
@@ -14596,7 +14458,8 @@ function SROUND(state) {
 }
 function S45ROUND(state) {
   let n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundSuper;
   let period;
   switch (n & 192) {
@@ -14634,20 +14497,24 @@ function S45ROUND(state) {
   else state.srThreshold = (n / 8 - 0.5) * period;
 }
 function ROFF(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundOff;
 }
 function RUTG(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundUpToGrid;
 }
 function RDTG(state) {
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.round = roundDownToGrid;
 }
 function SCANCTRL(state) {
   const n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function SDPVTL(a, state) {
   const stack = state.stack;
@@ -14655,7 +14522,8 @@ function SDPVTL(a, state) {
   const p1i = stack.pop();
   const p2 = state.z2[p2i];
   const p1 = state.z1[p1i];
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   let dx;
   let dy;
   if (!a) {
@@ -14671,7 +14539,8 @@ function GETINFO(state) {
   const stack = state.stack;
   const sel = stack.pop();
   let r = 0;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   if (sel & 1) r = 35;
   if (sel & 32) r |= 4096;
   stack.push(r);
@@ -14681,7 +14550,8 @@ function ROLL(state) {
   const a = stack.pop();
   const b = stack.pop();
   const c = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(b);
   stack.push(a);
   stack.push(c);
@@ -14690,24 +14560,28 @@ function MAX(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(Math.max(e1, e2));
 }
 function MIN(state) {
   const stack = state.stack;
   const e2 = stack.pop();
   const e1 = stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   stack.push(Math.min(e1, e2));
 }
 function SCANTYPE(state) {
   const n = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
 }
 function INSTCTRL(state) {
   const s = state.stack.pop();
   let v = state.stack.pop();
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   switch (s) {
     case 1:
       state.inhibitGridFit = !!v;
@@ -14723,7 +14597,8 @@ function PUSHB(n, state) {
   const stack = state.stack;
   const prog = state.prog;
   let ip = state.ip;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   for (let i = 0; i < n; i++) stack.push(prog[++ip]);
   state.ip = ip;
 }
@@ -14731,7 +14606,8 @@ function PUSHW(n, state) {
   let ip = state.ip;
   const prog = state.prog;
   const stack = state.stack;
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   for (let i = 0; i < n; i++) {
     let w = prog[++ip] << 8 | prog[++ip];
     if (w & 32768) w = -((w ^ 65535) + 1);
@@ -14764,7 +14640,8 @@ function MDRP_MIRP(indirect, setRp0, keepD, ro, dt, state) {
   if (ro) d = state.round(d);
   fv.setRelative(p, rp, sign * d, pv);
   fv.touch(p);
-  if (false) {}
+  if (false) // removed by dead control flow
+{}
   state.rp1 = state.rp0;
   state.rp2 = pi;
   if (setRp0) state.rp0 = pi;
@@ -17759,53 +17636,6 @@ function loadSync() {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Text/X3DTextContext.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -17817,7 +17647,7 @@ const
    _loadingFonts     = Symbol (),
    _families         = Symbol (),
    _library          = Symbol (),
-   _wawoff2          = Symbol ();
+   _woff2Decoder     = Symbol ();
 
 function X3DTextContext ()
 {
@@ -17835,7 +17665,6 @@ Object .assign (X3DTextContext .prototype,
       {
          const defaultFontStyle = new Text_FontStyle (this .getPrivateScene ());
 
-         defaultFontStyle .setPrivate (true);
          defaultFontStyle .setup ();
 
          return defaultFontStyle;
@@ -17898,11 +17727,7 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFont (executionContext, font)
    {
-      const
-         scene    = executionContext .getLocalScene (),
-         families = this [_families] .get (scene) ?? new Map ();
-
-      this [_families] .set (scene, families);
+      const families = this [_families] .getOrInsertComputed (executionContext, () => new Map ());
 
       // fontFamily - fontStyle
 
@@ -17911,9 +17736,7 @@ Object .assign (X3DTextContext .prototype,
 
       for (const [fontFamily, name] of fontFamilies)
       {
-         const fontStyles = families .get (fontFamily .toUpperCase ()) ?? new Map ();
-
-         families .set (fontFamily .toUpperCase (), fontStyles);
+         const fontStyles = families .getOrInsertComputed (fontFamily .toUpperCase (), () => new Map ());
 
          for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
          {
@@ -17929,11 +17752,7 @@ Object .assign (X3DTextContext .prototype,
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
-      const
-         scene   = executionContext .getLocalScene (),
-         library = this [_library] .get (scene) ?? new Map ();
-
-      this [_library] .set (scene, library);
+      const library = this [_library] .getOrInsertComputed (executionContext, () => new Map ());
 
       // if (this .getBrowserOption ("Debug"))
       //    console .info (`Registering font named ${fontFamily}.`);
@@ -17947,13 +17766,11 @@ Object .assign (X3DTextContext .prototype,
          fontFamily = fontFamily .toUpperCase ();
          fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
 
-         const scene = executionContext .getLocalScene ();
-
          for (;;)
          {
             const
-               library  = this [_library]  .get (scene),
-               families = this [_families] .get (scene);
+               library  = this [_library]  .get (executionContext),
+               families = this [_families] .get (executionContext);
 
             const font = library ?.get (fontFamily)
                ?? families ?.get (fontFamily) ?.get (fontStyle);
@@ -17973,9 +17790,9 @@ Object .assign (X3DTextContext .prototype,
    {
       if (this .isWoff2 (arrayBuffer))
       {
-         const decompress = await this .getWoff2Decompressor ();
+         const decompress = await this .getWoff2Decoder ();
 
-         return decompress (arrayBuffer);
+         return await decompress (arrayBuffer);
       }
 
       return arrayBuffer;
@@ -17991,16 +17808,16 @@ Object .assign (X3DTextContext .prototype,
 
       return magic === 0x774F4632; // 'wOF2'
    },
-   async getWoff2Decompressor ()
+   async getWoff2Decoder ()
    {
-      return this [_wawoff2] ??= await this .loadWoff2Decompressor ();
+      return this [_woff2Decoder] ??= await this .loadWoff2Decoder ();
    },
-   async loadWoff2Decompressor ()
+   async loadWoff2Decoder ()
    {
-      // https://www.npmjs.com/package/wawoff2
+      // https://www.npmjs.com/package/woff2-encoder
 
       const
-         fileURL  = external_X_ITE_X3D_URLs_default().getLibraryURL ("decompress_binding.js"),
+         fileURL  = external_X_ITE_X3D_URLs_default().getLibraryURL ("woff2_decoder.js"),
          response = await fetch (fileURL);
 
       if (!response .ok)
@@ -18008,11 +17825,9 @@ Object .assign (X3DTextContext .prototype,
 
       const
          text    = await response .text (),
-         wawoff2 = (new Function (text)) ();
+         decoder = (new Function (text)) ();
 
-      await new Promise (resolve => wawoff2 .onRuntimeInitialized = resolve);
-
-      return arrayBuffer => wawoff2 .decompress (arrayBuffer);
+      return decoder;
    },
 });
 
@@ -18020,152 +17835,6 @@ const X3DTextContext_default_ = X3DTextContext;
 ;
 
 /* harmony default export */ const Text_X3DTextContext = (external_X_ITE_X3D_Namespace_default().add ("X3DTextContext", X3DTextContext_default_));
-;// ./src/x_ite/Components/Text/FontLibrary.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
-
-function FontLibrary (executionContext)
-{
-   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
-   external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
-
-   this .addType ((external_X_ITE_X3D_X3DConstants_default()).FontLibrary);
-}
-
-Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
-   (external_X_ITE_X3D_X3DUrlObject_default()).prototype,
-{
-   initialize ()
-   {
-      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
-      external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
-
-      this ._family .addInterest ("set_family__", this);
-
-      this .requestImmediateLoad () .catch (Function .prototype);
-   },
-   set_family__ ()
-   {
-      if (!this .font)
-         return;
-
-      const familyName = this ._family .getValue ();
-
-      if (!familyName)
-         return;
-
-      this .getBrowser () .registerFontLibrary (this .getExecutionContext (), familyName, this .font);
-   },
-   async loadData ()
-   {
-      const
-         browser          = this .getBrowser (),
-         executionContext = this .getExecutionContext (),
-         fileURLs         = Array .from (this ._url) .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
-
-      this .font = null;
-
-      for (const fileURL of fileURLs)
-      {
-         this .font = await browser .loadFont (fileURL, this .getCache ());
-
-         if (!this .font)
-            continue;
-
-         browser .registerFont (executionContext, this .font);
-
-         this .set_family__ ();
-
-         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
-         return;
-      }
-
-      this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
-   },
-   dispose ()
-   {
-      external_X_ITE_X3D_X3DUrlObject_default().prototype .dispose .call (this);
-      external_X_ITE_X3D_X3DNode_default().prototype .dispose .call (this);
-   },
-});
-
-Object .defineProperties (FontLibrary,
-{
-   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("FontLibrary", "Text", 2, "FontLibrary", "4.1"),
-   fieldDefinitions:
-   {
-      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "family",               new (external_X_ITE_X3D_Fields_default()).SFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
-      ]),
-      enumerable: true,
-   },
-});
-
-const FontLibrary_default_ = FontLibrary;
-;
-
-/* harmony default export */ const Text_FontLibrary = (external_X_ITE_X3D_Namespace_default().add ("FontLibrary", FontLibrary_default_));
 ;// external "__X_ITE_X3D__ .X3DGeometryNode"
 const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
 var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
@@ -18173,53 +17842,6 @@ var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require_
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// ./src/x_ite/Components/Text/Text.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -18266,8 +17888,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
    },
    set_live__ ()
    {
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
-
       const
          browser      = this .getBrowser (),
          alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
@@ -18276,6 +17896,8 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
       {
          browser .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
          browser .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
+
+         this .requestRebuild ();
       }
       else
       {
@@ -18292,7 +17914,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
-      this .textGeometry = this .fontStyleNode .createTextGeometry (this);
+      this .textGeometry = this .fontStyleNode .getTextGeometry (this);
    },
    build ()
    {
@@ -18358,54 +17980,6 @@ const Text_default_ = Text;
 
 /* harmony default export */ const Text_Text = (external_X_ITE_X3D_Namespace_default().add ("Text", Text_default_));
 ;// ./src/assets/components/TextComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 
 
 
@@ -18416,7 +17990,6 @@ external_X_ITE_X3D_Components_default().add ({
    name: "Text",
    concreteNodes:
    [
-      Text_FontLibrary,
       Text_FontStyle,
       Text_Text,
    ],
