@@ -1,5 +1,5 @@
-/* X_ITE v12.0.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.8")];
+/* X_ITE v12.1.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -10,15 +10,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.8")];
 
 /***/ }),
 
-/***/ 254:
-/***/ ((module) => {
-
-"use strict";
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }),
-
-/***/ 357:
+/***/ 93:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -1174,7 +1166,29 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 483:
+/***/ 254:
+/***/ ((module) => {
+
+"use strict";
+module.exports = __X_ITE_X3D__ .jquery;
+
+/***/ }),
+
+/***/ 497:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 559:
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 571:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -1211,28 +1225,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 497:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 559:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 722:
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 897:
+/***/ 673:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -5190,14 +5183,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 978:
+/***/ 722:
 /***/ (() => {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 989:
+/***/ 725:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -5231,6 +5224,13 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
   return Module;
 };
 
+
+/***/ }),
+
+/***/ 978:
+/***/ (() => {
+
+/* (ignored) */
 
 /***/ })
 
@@ -5433,7 +5433,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X
                                                                       this ._repeatT .getValue (),
                                                                       this ._repeatR .getValue ());
    },
-   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, channel)
    {
       const textureUnit = this .getBrowser () .getTextureUnit ();
 
@@ -7179,10 +7179,10 @@ var Decoder = class _Decoder {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(897);
-/* provided dependency */ var jpegDecode = __webpack_require__(357);
-/* provided dependency */ var CharLS = __webpack_require__(483);
-/* provided dependency */ var OpenJPEG = __webpack_require__(989);
+/* provided dependency */ var dicomParser = __webpack_require__(673);
+/* provided dependency */ var jpegDecode = __webpack_require__(93);
+/* provided dependency */ var CharLS = __webpack_require__(571);
+/* provided dependency */ var OpenJPEG = __webpack_require__(725);
 
 
 

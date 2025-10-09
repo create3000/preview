@@ -534,7 +534,7 @@ declare namespace X3D
       /**
        * Adds the metadata with *name* and *value.*
        */
-      addMetaData (name: string, value: string): void;
+      addMetaData (name: string, value: string | string []): void;
       /**
        * Removes the metadata *name.*
        */
@@ -1408,6 +1408,7 @@ declare namespace X3D
       readonly VolumeEmitter: number;
       readonly VolumeMaterialExtension: number;
       readonly VolumePickSensor: number;
+      readonly VolumeScatterMaterialExtension: number;
       readonly WaveShaper: number;
       readonly WindPhysicsModel: number;
       readonly WorldInfo: number;
@@ -13879,6 +13880,12 @@ declare namespace X3D
        */
       pauseTime: number;
       /**
+       * The periodicWave field is an optional PeriodicWave node providing a regular or arbitrary periodic waveform.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      periodicWave: PeriodicWaveProxy | null;
+      /**
        * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
        *
        * This field is of access type 'inputOutput' and type SFTime.
@@ -18857,7 +18864,7 @@ declare namespace X3D
    }
 
    /** TextureTransform shifts 2D texture coordinates for positioning, orienting and scaling image textures on geometry. */
-   interface TextureTransformProxy extends X3DTextureTransformNodeProxy
+   interface TextureTransformProxy extends X3DSingleTextureTransformNodeProxy
    {
       /**
        * center point in 2D (s,t) texture coordinates for rotation and scaling.
@@ -18898,7 +18905,7 @@ declare namespace X3D
    }
 
    /** TextureTransform3D applies a 3D transformation to texture coordinates. */
-   interface TextureTransform3DProxy extends X3DTextureTransformNodeProxy
+   interface TextureTransform3DProxy extends X3DSingleTextureTransformNodeProxy
    {
       /**
        * center point in 2D (s,t) texture coordinates for rotation and scaling.
@@ -18939,7 +18946,7 @@ declare namespace X3D
    }
 
    /** TextureTransformMatrix3D applies a 3D transformation to texture coordinates. */
-   interface TextureTransformMatrix3DProxy extends X3DTextureTransformNodeProxy
+   interface TextureTransformMatrix3DProxy extends X3DSingleTextureTransformNodeProxy
    {
       /**
        * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
@@ -20642,6 +20649,29 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFString.
        */
       sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED";
+   }
+
+   /** VolumeScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
+   interface VolumeScatterMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+   {
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * The multi-scatter albedo.
+       *
+       * This field is of access type 'inputOutput' and type SFColor.
+       */
+      multiscatterColor: SFColor;
+      /**
+       * The anisotropy of scatter events. Range is (-1, 1).
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterAnisotropy: number;
    }
 
    /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
@@ -22835,6 +22865,7 @@ declare namespace X3D
       VolumeEmitter: VolumeEmitterProxy,
       VolumeMaterialExtension: VolumeMaterialExtensionProxy,
       VolumePickSensor: VolumePickSensorProxy,
+      VolumeScatterMaterialExtension: VolumeScatterMaterialExtensionProxy,
       WaveShaper: WaveShaperProxy,
       WindPhysicsModel: WindPhysicsModelProxy,
       WorldInfo: WorldInfoProxy,

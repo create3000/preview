@@ -1,5 +1,5 @@
-/* X_ITE v12.0.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.8")];
+/* X_ITE v12.1.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -453,9 +453,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
             continue;
 
          const
-            t = numJointBindingPositions ? jointBindingPositions [Math .min (i, numJointBindingPositions- 1)] .getValue () : null,
-            r = numJointBindingRotations ? jointBindingRotations [Math .min (i, numJointBindingRotations - 1)] .getValue () : null,
-            s = numJointBindingScales ? jointBindingScales [Math .min (i, numJointBindingScales - 1)] .getValue () : null;
+            t = i < numJointBindingPositions ? jointBindingPositions [i] .getValue () : null,
+            r = i < numJointBindingRotations ? jointBindingRotations [i] .getValue () : null,
+            s = i < numJointBindingScales    ? jointBindingScales    [i] .getValue () : null;
 
          jointNodes           .push (jointNode);
          jointBindingMatrices .push (new (external_X_ITE_X3D_Matrix4_default()) () .set (t, r, s));
@@ -1318,8 +1318,8 @@ Object .defineProperties (HAnimMotion,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",     new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "name",            new (external_X_ITE_X3D_Fields_default()).SFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",         new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "loa",             new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",         new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "joints",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "channelsEnabled", new (external_X_ITE_X3D_Fields_default()).MFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "channels",        new (external_X_ITE_X3D_Fields_default()).SFString ()),
