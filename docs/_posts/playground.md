@@ -131,6 +131,11 @@ span.error {
 
 body {
   border-top: 2px solid var(--system-green);
+  animation: border-top-color 2s infinite alternate linear;
+}
+
+@keyframes border-top-color {
+  100% { border-top-color: transparent; }
 }
 
 #topbar #breadcrumb {
