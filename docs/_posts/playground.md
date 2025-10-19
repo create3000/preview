@@ -128,6 +128,14 @@ span.warn {
 span.error {
   color: var(--system-red);
 }
+
+body {
+  border-top: 2px solid var(--system-green);
+}
+
+#topbar #breadcrumb {
+  color: var(--system-green);
+}
 </style>
 
 <!-- Also change version in playground.js! -->
