@@ -1,5 +1,6 @@
 {
   "name": "preview",
+  "description": "Early Previews of X_ITE to Test in Playground",
   "scripts": {
     "predocs": "rm -f -r docs/_site/",
     "docs": "cd docs && bundle exec jekyll serve --ssl-key ssl/server.key --ssl-cert ssl/server.crt --incremental --host=`ipconfig getifaddr en0`",
