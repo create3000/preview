@@ -1,5 +1,5 @@
-/* X_ITE v12.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
+/* X_ITE v15.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -773,9 +773,9 @@ Object .assign (X3DGeospatialObject .prototype,
          z .normalize ();
 
          this .originMatrix .set (x .x, x .y, x .z, 0,
-                                    y .x, y .y, y .z, 0,
-                                    z .x, z .y, z .z, 0,
-                                    t .x, t .y, t .z, 1);
+                                  y .x, y .y, y .z, 0,
+                                  z .x, z .y, z .z, 0,
+                                  t .x, t .y, t .z, 1);
 
          this .invOriginMatrix .assign (this .originMatrix) .inverse ();
       }
@@ -1489,6 +1489,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
       this .rootGroupNode ._children = this ._rootNode;
       this .rootGroupNode .setPrivate (true);
+      this .rootGroupNode .setup ();
 
       this .rootInlineNode ._loadState .addInterest ("set_rootLoadState__", this);
 
@@ -2322,10 +2323,10 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, (external_X_ITE
       {
          this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-         matrix .set (this ._translation        .getValue (),
-                        this ._rotation         .getValue (),
-                        this ._scale            .getValue (),
-                        this ._scaleOrientation .getValue ());
+         matrix .setTransform (this ._translation      .getValue (),
+                               this ._rotation         .getValue (),
+                               this ._scale            .getValue (),
+                               this ._scaleOrientation .getValue ());
 
          this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
       };
