@@ -1037,7 +1037,7 @@ var external_X_ITE_X3D_ShaderRegistry_default = /*#__PURE__*/__webpack_require__
 // https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
 
 const vs = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler2DArray;uniform ivec4 x3d_Viewport;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
+precision highp int;precision mediump float;precision mediump sampler2D;precision mediump sampler2DArray;uniform ivec4 x3d_Viewport;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;
 #endif
@@ -1054,15 +1054,7 @@ const float SH_C3_0=-.5900435899266435;const float SH_C3_1=2.890611442640554;con
 #endif
 #endif
 #endif
-mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(0.);S[0][0]=scale.x;S[1][1]=scale.y;S[2][2]=scale.z;mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec4 viewSplatCenter,const in mat3 cov3D,const in mat4 modelViewMatrix){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;mat3 J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/(z*z),0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/(z*z),0.,0.,0.);mat3 W=transpose(mat3(modelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*transpose(cov3D)*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}void main(){uint textureWidth=uint(textureSize(x3d_PositionsTexture,0).x);ivec2 texelCoord=ivec2(x3d_SplatIndex % textureWidth,x3d_SplatIndex/textureWidth);vec4 splatCenter=vec4(texelFetch(x3d_PositionsTexture,texelCoord,0).xyz,1.);vec4 viewSplatCenter=x3d_ModelViewMatrix*splatCenter;
-#if defined(X3D_XR_SESSION)
-viewSplatCenter=x3d_EyeMatrix*viewSplatCenter;
-#endif
-vec4 clipSplatCenter=x3d_ProjectionMatrix*viewSplatCenter;clipSplatCenter/=clipSplatCenter.w;if(any(greaterThan(abs(clipSplatCenter.xyz),vec3(1.3)))){gl_Position=vec4(0);return;}vec4 splatOrientation=texelFetch(x3d_OrientationsTexture,texelCoord,0);vec3 splatScale=texelFetch(x3d_ScalesTexture,texelCoord,0).xyz;float opacity=texelFetch(x3d_OpacitiesTexture,texelCoord,0).r;mat3 cov3d=computeCov3D(normalize(splatOrientation),splatScale);vec3 cov2d=computeCov2D(viewSplatCenter,cov3d,x3d_ModelViewMatrix);float a=cov2d.x;float b=cov2d.y;float c=cov2d.z;float det=(a*c-b*b);if(det==0.){gl_Position=vec4(0);return;}float detInv=1./det;conic=vec3(c*detInv,-b*detInv,a*detInv);vec2 quadPixelSize=vec2(3.4*sqrt(a),3.4*sqrt(c));vec2 quadNdcSize=quadPixelSize/vec2(x3d_Viewport.zw)*2.;clipSplatCenter.xy+=x3d_Vertex.xy*quadNdcSize;float minScreen=float(min(x3d_Viewport.z,x3d_Viewport.w));float maxQuadSize=max(quadPixelSize.x,quadPixelSize.y);if(maxQuadSize>minScreen){gl_Position=vec4(0);return;}texCoord=x3d_Vertex.xy*quadPixelSize;gl_Position=clipSplatCenter;
-#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
-logarithmic(gl_Position);
-#endif
-vec3 sh0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,0),0).rgb;
+mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec3 viewSplatCenter,const in mat3 cov3D){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;float zz=z*z;mat3 J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/zz,0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/zz,0.,0.,0.);mat3 W=transpose(mat3(x3d_ModelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*cov3D*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}vec3 computeColorFromSH(const in ivec2 texelCoord,const in vec3 splatCenter){vec3 sh0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,0),0).rgb;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
 vec3 sh1_0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,1),0).rgb;vec3 sh1_1=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,2),0).rgb;vec3 sh1_2=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,3),0).rgb;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
@@ -1072,24 +1064,32 @@ vec3 sh3_0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,9),0).rgb;v
 #endif
 #endif
 #endif
-vec3 finalColor=sh0*SH_C0;
+vec3 color=sh0*SH_C0;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
-vec3 x3d_Camera=inverse(x3d_ModelViewMatrix)[3].xyz;vec3 viewDir=normalize(splatCenter.xyz-x3d_Camera);float x=viewDir.x;float y=viewDir.y;float z=viewDir.z;finalColor+=SH_C1_0*y*sh1_0+SH_C1_1*z*sh1_1+SH_C1_2*x*sh1_2;
+vec3 x3d_Camera=inverse(x3d_ModelViewMatrix)[3].xyz;vec3 viewDir=normalize(splatCenter-x3d_Camera);float x=viewDir.x;float y=viewDir.y;float z=viewDir.z;color+=SH_C1_1*(-y*sh1_0+z*sh1_1-x*sh1_2);
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
-float xx=x*x;float yy=y*y;float zz=z*z;float xy=x*y;float yz=y*z;float xz=x*z;finalColor+=SH_C2_0*xy*sh2_0+SH_C2_1*yz*sh2_1+SH_C2_2*(2.*zz-xx-yy)*sh2_2+SH_C2_3*xz*sh2_3+SH_C2_4*(xx-yy)*sh2_4;
+float xx=x*x;float yy=y*y;float zz=z*z;float xy=x*y;float yz=y*z;float xz=x*z;color+=SH_C2_0*xy*sh2_0+SH_C2_1*yz*sh2_1+SH_C2_2*(2.*zz-xx-yy)*sh2_2+SH_C2_3*xz*sh2_3+SH_C2_4*(xx-yy)*sh2_4;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
-finalColor+=SH_C3_0*y*(3.*xx-yy)*sh3_0+SH_C3_1*xy*z*sh3_1+SH_C3_2*y*(4.*zz-xx-yy)*sh3_2+SH_C3_3*z*(2.*zz-3.*xx-3.*yy)*sh3_3+SH_C3_4*x*(4.*zz-xx-yy)*sh3_4+SH_C3_5*z*(xx-yy)*sh3_5+SH_C3_6*x*(xx-3.*yy)*sh3_6;
+color+=SH_C3_0*y*(3.*xx-yy)*sh3_0+SH_C3_1*xy*z*sh3_1+SH_C3_2*y*(4.*zz-xx-yy)*sh3_2+SH_C3_3*z*(2.*zz-3.*xx-3.*yy)*sh3_3+SH_C3_4*x*(4.*zz-xx-yy)*sh3_4+SH_C3_5*z*(xx-yy)*sh3_5+SH_C3_6*x*(xx-3.*yy)*sh3_6;
 #endif
 #endif
 #endif
-finalColor+=.5;color=vec4(finalColor,opacity);
+color+=.5;return color;}void main(){uint textureWidth=uint(textureSize(x3d_PositionsTexture,0).x);ivec2 texelCoord=ivec2(x3d_SplatIndex % textureWidth,x3d_SplatIndex/textureWidth);vec3 splatCenter=texelFetch(x3d_PositionsTexture,texelCoord,0).xyz;vec4 viewSplatCenter=x3d_ModelViewMatrix*vec4(splatCenter,1.);
+#if defined(X3D_XR_SESSION)
+viewSplatCenter=x3d_EyeMatrix*viewSplatCenter;
+#endif
+vec4 clipSplatCenter=x3d_ProjectionMatrix*viewSplatCenter;clipSplatCenter/=clipSplatCenter.w;if(any(greaterThan(abs(clipSplatCenter.xyz),vec3(1.3)))){gl_Position=vec4(0);return;}vec4 splatOrientation=texelFetch(x3d_OrientationsTexture,texelCoord,0);vec3 splatScale=texelFetch(x3d_ScalesTexture,texelCoord,0).xyz;float opacity=texelFetch(x3d_OpacitiesTexture,texelCoord,0).r;mat3 cov3d=computeCov3D(normalize(splatOrientation),splatScale);vec3 cov2d=computeCov2D(viewSplatCenter.xyz/viewSplatCenter.w,cov3d);float a=cov2d.x;float b=cov2d.y;float c=cov2d.z;float det=(a*c-b*b);if(det==0.){gl_Position=vec4(0);return;}conic=vec3(c,-b,a)/det;vec2 quadPixelSize=3.4*sqrt(vec2(a,c));vec2 quadNdcSize=quadPixelSize/vec2(x3d_Viewport.zw)*2.;clipSplatCenter.xy+=x3d_Vertex.xy*quadNdcSize;float minScreen=float(min(x3d_Viewport.z,x3d_Viewport.w));float maxQuadSize=max(quadPixelSize.x,quadPixelSize.y);if(maxQuadSize>minScreen){gl_Position=vec4(0);return;}texCoord=x3d_Vertex.xy*quadPixelSize;gl_Position=clipSplatCenter;
+#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
+logarithmic(gl_Position);
+#endif
+color=vec4(computeColorFromSH(texelCoord,splatCenter),opacity);
 #if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
 fog();
 #endif
 }`
 
 const fs = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;in vec4 color;in vec2 texCoord;in vec3 conic;
+precision highp int;precision mediump float;precision mediump sampler2D;in vec4 color;in vec2 texCoord;in vec3 conic;
 #if!defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 out vec4 x3d_FragColor;
 #endif
@@ -1151,10 +1151,10 @@ function GaussianSplatsShape (executionContext, node)
 
    // Private Properties
 
-   this .node              = node;
-   this .shaderCache       = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
-   this .currentViewMatrix = new Float32Array (16);
-   this .sortViewMatrix    = new Float32Array (16);
+   this .node                   = node;
+   this .shaderCache            = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
+   this .currentModelViewMatrix = new Float32Array (16);
+   this .sortModelViewMatrix    = new Float32Array (16);
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (external_X_ITE_X3D_X3DShapeNode_default()).prototype),
@@ -1171,9 +1171,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       this .geometryContext = new (external_X_ITE_X3D_GeometryContext_default()) ();
 
-      this .geometryBuffer       = gl .createBuffer ();
-      this .positionsIndexBuffer = gl .createBuffer ();
-      this .vertexArrayObject    = new (external_X_ITE_X3D_VertexArray_default()) (gl);
+      this .geometryBuffer    = gl .createBuffer ();
+      this .splatsIndexBuffer = gl .createBuffer ();
+      this .vertexArrayObject = new (external_X_ITE_X3D_VertexArray_default()) (gl);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
@@ -1288,7 +1288,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // Indices
 
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, new Uint32Array (Array (numSplats) .keys ()), gl .DYNAMIC_DRAW);
 
       // Positions
@@ -1303,7 +1303,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             orientations       = new Float32Array (textureSize * 4),
             scales             = new Float32Array (textureSize * 3),
             opacities          = new Float32Array (textureSize),
-            sphericalHarmonics = new Float32Array (textureSize * (1 + 3 + 5 + 7) * 3);
+            sphericalHarmonics = new Float32Array (textureSize * 16 * 3);
 
          positions    .set (this .node ._positions    .getValue () .subarray (0, numSplats * 3));
          orientations .set (this .node ._orientations .getValue () .subarray (0, numSplats * 4));
@@ -1311,9 +1311,15 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
          sphericalHarmonics .set (this .node ._sphericalHarmonics0 .getValue () .subarray (0, numSplats * 3));
-         sphericalHarmonics .set (this .node ._sphericalHarmonics1 .getValue () .subarray (0, numSplats * 3 * 3), textureSize * 3 * 1);
-         sphericalHarmonics .set (this .node ._sphericalHarmonics2 .getValue () .subarray (0, numSplats * 3 * 5), textureSize * 3 * 4);
-         sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (0, numSplats * 3 * 7), textureSize * 3 * 9);
+
+         for (let d = 0; d < 3; ++ d)
+            sphericalHarmonics .set (this .node ._sphericalHarmonics1 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 1));
+
+         for (let d = 0; d < 5; ++ d)
+            sphericalHarmonics .set (this .node ._sphericalHarmonics2 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 4));
+
+         for (let d = 0; d < 7; ++ d)
+            sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 9));
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
@@ -1337,8 +1343,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       let key = "";
 
       key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
       key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
+      key += this .node ._sphericalHarmonics3 .length ? 1 : 0;
 
       this .key       = key;
       this .numSplats = numSplats;
@@ -1375,9 +1381,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
-      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrix);
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
@@ -1406,7 +1412,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
          gl .enableVertexAttribArray (shaderNode .x3d_SplatIndex);
          gl .vertexAttribIPointer (shaderNode .x3d_SplatIndex, 1, gl .UNSIGNED_INT, 0, 0);
          gl .vertexAttribDivisor (shaderNode .x3d_SplatIndex, 1);
@@ -1415,7 +1421,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       }
 
       // Sort splats.
-      this .sortIndices (renderObject .getViewMatrixArray ());
+      this .sortIndices (modelViewMatrix);
 
       // gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .frontFace (gl .CCW);
@@ -1562,7 +1568,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             {
                this .sortPending = false;
 
-               this .sortViewMatrix .fill (0);
+               this .sortModelViewMatrix .fill (0);
 
                browser .addBrowserEvent ();
                break;
@@ -1571,7 +1577,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             {
                this .sortPending = false;
 
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
 
                browser .addBrowserEvent ();
@@ -1606,19 +1612,19 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    },
    sortIndices (viewMatrix)
    {
-      this .currentViewMatrix .set (viewMatrix);
+      this .currentModelViewMatrix .set (viewMatrix);
 
       if (this .sortPending)
          return;
 
-      if (external_X_ITE_X3D_Matrix4_default().prototype .equals .call (this .currentViewMatrix, this .sortViewMatrix))
+      if (external_X_ITE_X3D_Matrix4_default().prototype .equals .call (this .currentModelViewMatrix, this .sortModelViewMatrix))
          return;
 
-      this .sortViewMatrix .set (viewMatrix);
+      this .sortModelViewMatrix .set (viewMatrix);
 
       this .sortWorker .postMessage ({
          type: "sort",
-         viewMatrix: this .sortViewMatrix,
+         viewMatrix: this .sortModelViewMatrix,
       });
    },
 });
