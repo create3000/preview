@@ -1,4 +1,4 @@
-/* X_ITE v15.0.3 */
+/* X_ITE v15.1.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1004,47 +1004,29 @@ var external_X_ITE_X3D_AlphaMode_default = /*#__PURE__*/__webpack_require__.n(ex
 ;// external "__X_ITE_X3D__ .VertexArray"
 const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
-;// external "__X_ITE_X3D__ .RenderPass"
-const external_X_ITE_X3D_RenderPass_namespaceObject = __X_ITE_X3D__ .RenderPass;
-var external_X_ITE_X3D_RenderPass_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_RenderPass_namespaceObject);
-;// external "__X_ITE_X3D__ .Vector3"
-const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
-var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// external "__X_ITE_X3D__ .ShaderRegistry"
 const external_X_ITE_X3D_ShaderRegistry_namespaceObject = __X_ITE_X3D__ .ShaderRegistry;
 var external_X_ITE_X3D_ShaderRegistry_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ShaderRegistry_namespaceObject);
-;// ./src/x_ite/Components/X_ITE/GaussianSplats.js
+;// ./src/x_ite/Browser/X_ITE/GaussianSplats.vs.js
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
+// https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/59f5f77e3ddbac3ed9db93ec2cfe99ed6c5d121d/cuda_rasterizer/forward.cu
+// https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-viewer-lwjgl/src/main/resources/vertexShaderSource.glsl
 
 const vs = () => /* glsl */ `#version 300 es
-precision highp int;precision mediump float;precision mediump sampler2D;precision mediump sampler2DArray;uniform ivec4 x3d_Viewport;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler2DArray;uniform ivec4 x3d_Viewport;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;
 #endif
-uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_OrientationsTexture;uniform sampler2D x3d_ScalesTexture;uniform sampler2D x3d_OpacitiesTexture;uniform sampler2DArray x3d_SphericalHarmonicsTexture;in vec4 x3d_Vertex;in uint x3d_SplatIndex;out vec4 color;out vec2 texCoord;out vec3 conic;
+uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_OrientationsTexture;uniform sampler2D x3d_ScalesTexture;uniform mediump sampler2D x3d_OpacitiesTexture;uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;in vec4 x3d_Vertex;in uint x3d_SplatIndex;out vec4 color;out vec2 texCoord;out vec3 conic;
+#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)
+out vec3 vertex;
+#endif
 #include<Fog>
 #include<Logarithmic>
-const float SH_C0=.28209479177387814;
+const float SPLAT_SIGMA=3.;const float SH_C0=.28209479177387814;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
 const float SH_C1_0=-.4886025119029199;const float SH_C1_1=.4886025119029199;const float SH_C1_2=-.4886025119029199;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
@@ -1054,7 +1036,7 @@ const float SH_C3_0=-.5900435899266435;const float SH_C3_1=2.890611442640554;con
 #endif
 #endif
 #endif
-mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec3 viewSplatCenter,const in mat3 cov3D){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;float zz=z*z;mat3 J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/zz,0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/zz,0.,0.,0.);mat3 W=transpose(mat3(x3d_ModelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*cov3D*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}vec3 computeColorFromSH(const in ivec2 texelCoord,const in vec3 splatCenter){vec3 sh0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,0),0).rgb;
+mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=-rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec3 viewSplatCenter,const in mat3 cov3D){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;float zz=z*z;mat3 J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/zz,0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/zz,0.,0.,0.);mat3 W=transpose(mat3(x3d_ModelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*cov3D*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}vec3 computeColorFromSH(const in ivec2 texelCoord,const in vec3 splatCenter){vec3 sh0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,0),0).rgb;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
 vec3 sh1_0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,1),0).rgb;vec3 sh1_1=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,2),0).rgb;vec3 sh1_2=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,3),0).rgb;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
@@ -1078,7 +1060,10 @@ color+=.5;return color;}void main(){uint textureWidth=uint(textureSize(x3d_Posit
 #if defined(X3D_XR_SESSION)
 viewSplatCenter=x3d_EyeMatrix*viewSplatCenter;
 #endif
-vec4 clipSplatCenter=x3d_ProjectionMatrix*viewSplatCenter;clipSplatCenter/=clipSplatCenter.w;if(any(greaterThan(abs(clipSplatCenter.xyz),vec3(1.3)))){gl_Position=vec4(0);return;}vec4 splatOrientation=texelFetch(x3d_OrientationsTexture,texelCoord,0);vec3 splatScale=texelFetch(x3d_ScalesTexture,texelCoord,0).xyz;float opacity=texelFetch(x3d_OpacitiesTexture,texelCoord,0).r;mat3 cov3d=computeCov3D(normalize(splatOrientation),splatScale);vec3 cov2d=computeCov2D(viewSplatCenter.xyz/viewSplatCenter.w,cov3d);float a=cov2d.x;float b=cov2d.y;float c=cov2d.z;float det=(a*c-b*b);if(det==0.){gl_Position=vec4(0);return;}conic=vec3(c,-b,a)/det;vec2 quadPixelSize=3.4*sqrt(vec2(a,c));vec2 quadNdcSize=quadPixelSize/vec2(x3d_Viewport.zw)*2.;clipSplatCenter.xy+=x3d_Vertex.xy*quadNdcSize;float minScreen=float(min(x3d_Viewport.z,x3d_Viewport.w));float maxQuadSize=max(quadPixelSize.x,quadPixelSize.y);if(maxQuadSize>minScreen){gl_Position=vec4(0);return;}texCoord=x3d_Vertex.xy*quadPixelSize;gl_Position=clipSplatCenter;
+vec4 clipSplatCenter=x3d_ProjectionMatrix*viewSplatCenter;clipSplatCenter/=clipSplatCenter.w;if(any(greaterThan(abs(clipSplatCenter.xyz),vec3(1.3)))){gl_Position=vec4(0.,0.,2.,1.);return;}vec4 splatOrientation=texelFetch(x3d_OrientationsTexture,texelCoord,0);vec3 splatScale=texelFetch(x3d_ScalesTexture,texelCoord,0).xyz;float opacity=texelFetch(x3d_OpacitiesTexture,texelCoord,0).r;mat3 cov3d=computeCov3D(normalize(splatOrientation),splatScale);vec3 cov2d=computeCov2D(viewSplatCenter.xyz/viewSplatCenter.w,cov3d);float a=cov2d.x;float b=cov2d.y;float c=cov2d.z;float det=a*c-b*b;if(det==0.){gl_Position=vec4(0.,0.,2.,1.);return;}conic=vec3(c,-b,a)/det;vec2 quadPixelSize=SPLAT_SIGMA*sqrt(vec2(a,c));vec2 quadNdcSize=quadPixelSize/vec2(x3d_Viewport.zw)*2.;clipSplatCenter.xy+=x3d_Vertex.xy*quadNdcSize;float minScreen=float(min(x3d_Viewport.z,x3d_Viewport.w));float maxQuadSize=max(quadPixelSize.x,quadPixelSize.y);if(maxQuadSize>minScreen){gl_Position=vec4(0.,0.,2.,1.);return;}texCoord=x3d_Vertex.xy*quadPixelSize;gl_Position=clipSplatCenter;
+#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)
+vec4 invClipSplatCenter=inverse(x3d_ProjectionMatrix)*clipSplatCenter;vertex=invClipSplatCenter.xyz/invClipSplatCenter.w;
+#endif
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
 logarithmic(gl_Position);
 #endif
@@ -1088,22 +1073,36 @@ fog();
 #endif
 }`
 
+const GaussianSplats_vs_default_ = vs;
+;
+
+/* harmony default export */ const GaussianSplats_vs = (external_X_ITE_X3D_Namespace_default().add ("GaussianSplats.vs", GaussianSplats_vs_default_));
+;// ./src/x_ite/Browser/X_ITE/GaussianSplats.fs.js
+
+// https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-viewer-lwjgl/src/main/resources/fragmentShaderSource.glsl
+
 const fs = () => /* glsl */ `#version 300 es
-precision highp int;precision mediump float;precision mediump sampler2D;in vec4 color;in vec2 texCoord;in vec3 conic;
+precision highp int;precision highp float;precision highp sampler2D;in vec4 color;in vec2 texCoord;in vec3 conic;
+#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)
+in vec3 vertex;
+#endif
 #if!defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 out vec4 x3d_FragColor;
 #endif
 #include<ToneMapping>
+#include<ClipPlanes>
 #include<Fog>
 #include<OIT>
 #include<Logarithmic>
-void main(){float exponent=-.5*(conic.x*texCoord.x*texCoord.x+conic.z*texCoord.y*texCoord.y)-conic.y*texCoord.x*texCoord.y;if(exponent>0.)discard;float alpha=min(.99,exp(exponent)*color.a);if(alpha<1./255.)discard;vec4 finalColor=vec4(color.rgb,alpha);
+void main(){
+#if defined(X3D_CLIP_PLANES)
+clip();
+#endif
+float exponent=-.5*(conic.x*texCoord.x*texCoord.x+conic.z*texCoord.y*texCoord.y)-conic.y*texCoord.x*texCoord.y;if(exponent>0.)discard;float alpha=min(.99,exp(exponent)*color.a);if(alpha<1./255.)discard;vec4 finalColor=vec4(color.rgb,alpha);
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
-#if!defined(X3D_LINEAR_OUTPUT)
 finalColor.rgb=toneMap(finalColor.rgb);
-#endif
 #if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 oit(finalColor);
 #else
@@ -1114,12 +1113,36 @@ logarithmic();
 #endif
 }`
 
-// Register shaders.
-
+const GaussianSplats_fs_default_ = fs;
 ;
 
-external_X_ITE_X3D_ShaderRegistry_default().addVertex   ("GaussianSplats", vs);
-external_X_ITE_X3D_ShaderRegistry_default().addFragment ("GaussianSplats", fs);
+/* harmony default export */ const GaussianSplats_fs = (external_X_ITE_X3D_Namespace_default().add ("GaussianSplats.fs", GaussianSplats_fs_default_));
+;// ./src/x_ite/Browser/X_ITE/GaussianSplatsShape.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Register shaders.
+
+
+
+
+
+external_X_ITE_X3D_ShaderRegistry_default().addVertexShader   ("GaussianSplats", GaussianSplats_vs);
+external_X_ITE_X3D_ShaderRegistry_default().addFragmentShader ("GaussianSplats", GaussianSplats_fs);
+
+// Spherical Harmonics Counts
+
+const SH_COEFS = [1, 3, 5, 7];
 
 // Quad Geometry
 
@@ -1141,8 +1164,6 @@ const QuadGeometry = new Float32Array ([
 
 // Special X3DShapeNode for internal use.
 
-const ShaderCache = new WeakMap ();
-
 function GaussianSplatsShape (executionContext, node)
 {
    external_X_ITE_X3D_X3DShapeNode_default().call (this, executionContext);
@@ -1152,9 +1173,10 @@ function GaussianSplatsShape (executionContext, node)
    // Private Properties
 
    this .node                   = node;
-   this .shaderCache            = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
+   this .shaderCache            = this .getBrowser () .getShaders ();
    this .currentModelViewMatrix = new Float32Array (16);
    this .sortModelViewMatrix    = new Float32Array (16);
+   this .clipPlanes             = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (external_X_ITE_X3D_X3DShapeNode_default()).prototype),
@@ -1169,8 +1191,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // Quad Geometry
 
-      this .geometryContext = new (external_X_ITE_X3D_GeometryContext_default()) ();
-
+      this .geometryContext   = new (external_X_ITE_X3D_GeometryContext_default()) ();
       this .geometryBuffer    = gl .createBuffer ();
       this .splatsIndexBuffer = gl .createBuffer ();
       this .vertexArrayObject = new (external_X_ITE_X3D_VertexArray_default()) (gl);
@@ -1186,18 +1207,27 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       this .sphericalHarmonicsTexture = this .createTexture (gl .TEXTURE_2D_ARRAY);
       this .opacitiesTexture          = this .createTexture ();
 
+      this .positionsTextureUnit          = browser .popTextureUnit ();
+      this .orientationsTextureUnit       = browser .popTextureUnit ();
+      this .scalesTextureUnit             = browser .popTextureUnit ();
+      this .sphericalHarmonicsTextureUnit = browser .popTextureUnit ();
+      this .opacitiesTextureUnit          = browser .popTextureUnit ();
+
       browser .resetTextureUnits ();
 
       // Fields
 
-      this .node ._positions           .addInterest ("requestRebuild", this);
-      this .node ._orientations        .addInterest ("requestRebuild", this);
-      this .node ._scales              .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics0 .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics1 .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics2 .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics3 .addInterest ("requestRebuild", this);
-      this .node ._opacities           .addInterest ("requestRebuild", this);
+      this .node ._colorSpace   .addInterest ("set_key__",      this);
+      this .node ._positions    .addInterest ("requestRebuild", this);
+      this .node ._orientations .addInterest ("requestRebuild", this);
+      this .node ._scales       .addInterest ("requestRebuild", this);
+      this .node ._opacities    .addInterest ("requestRebuild", this);
+
+      for (const [degree, coefs] of SH_COEFS .entries ())
+      {
+         for (let coef = 0; coef < coefs; ++ coef)
+            this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .addInterest ("requestRebuild", this);
+      }
 
       this ._rebuild .addInterest ("rebuild", this);
 
@@ -1213,47 +1243,53 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    },
    getGeometryType ()
    {
-      return (external_X_ITE_X3D_GeometryType_default()).QUAD;
+      return (external_X_ITE_X3D_GeometryType_default()).POINT;
    },
    getNumInstances ()
    {
       return this .numSplats;
    },
+   set_key__ ()
+   {
+      let key = "GS";
+
+      for (const [degree, coefs] of SH_COEFS .entries ())
+      {
+         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
+
+         key += filled ? 1 : 0;
+      }
+
+      switch (this .node ._colorSpace .getValue ())
+      {
+         case "LIN_REC709_DISPLAY":
+            key += 1;
+            break;
+         default: // "SRGB_REC709_DISPLAY"
+            key += 0;
+            break;
+      }
+
+      this .key = key;
+   },
    set_bbox__ ()
    {
+      const bbox = this .bbox;
+
       if (this .isDefaultBBoxSize ())
-      {
-         const
-            positions    = this .node ._positions .getValue (),
-            numPositions = this .node ._positions .length * 3,
-            min          = new (external_X_ITE_X3D_Vector3_default()) (Number .POSITIVE_INFINITY),
-            max          = new (external_X_ITE_X3D_Vector3_default()) (Number .NEGATIVE_INFINITY),
-            point        = new (external_X_ITE_X3D_Vector3_default()) ();
-
-         for (let i = 0; i < numPositions; i += 3)
-         {
-            point .set (positions [i], positions [i + 1], positions [i + 2]);
-            min .min (point);
-            max .max (point);
-         }
-
-         if (numPositions)
-            this .bbox .setExtents (min, max);
-         else
-            this .bbox .set ();
-      }
+         bbox .setArray (this .node ._positions .shrinkToFit ());
       else
-      {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      }
+         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+      this .getBBoxSize ()   .assign (bbox .size);
+      this .getBBoxCenter () .assign (bbox .center);
    },
+   set_geometry__ ()
+   { },
    set_transparent__ ()
    {
-      this .transparent = true;
-      this .alphaMode   = (external_X_ITE_X3D_AlphaMode_default()).BLEND;
+      this .setTransparent (true);
+      this .setAlphaMode ((external_X_ITE_X3D_AlphaMode_default()).BLEND);
    },
    createTexture (target)
    {
@@ -1263,8 +1299,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          texture = gl .createTexture ();
 
       target ??= gl .TEXTURE_2D;
-
-      texture .textureUnit = browser .popTextureUnit ();
 
       gl .bindTexture (target, texture);
 
@@ -1286,6 +1320,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          gl        = browser .getContext (),
          numSplats = this .node ._positions .length;
 
+      this .numSplats = numSplats;
+
       // Indices
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
@@ -1303,23 +1339,28 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             orientations       = new Float32Array (textureSize * 4),
             scales             = new Float32Array (textureSize * 3),
             opacities          = new Float32Array (textureSize),
-            sphericalHarmonics = new Float32Array (textureSize * 16 * 3);
+            sphericalHarmonics = new Float32Array (textureSize * 3 * 16);
 
          positions    .set (this .node ._positions    .getValue () .subarray (0, numSplats * 3));
          orientations .set (this .node ._orientations .getValue () .subarray (0, numSplats * 4));
          scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
-         sphericalHarmonics .set (this .node ._sphericalHarmonics0 .getValue () .subarray (0, numSplats * 3));
+         // Degree 0,1,2,3
 
-         for (let d = 0; d < 3; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics1 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 1));
+         let offset = 0;
 
-         for (let d = 0; d < 5; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics2 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 4));
+         for (const [degree, coefs] of SH_COEFS .entries ())
+         {
+            for (let coef = 0; coef < coefs; ++ coef)
+            {
+               const value = this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .getValue ();
 
-         for (let d = 0; d < 7; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 9));
+               sphericalHarmonics .set (value .subarray (0, numSplats * 3), offset);
+
+               offset += textureSize * 3;
+            }
+         }
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
@@ -1331,23 +1372,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, scales);
 
          gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .R32F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .R16F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
 
          gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
-         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB32F, textureWidth, textureWidth, 4, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
+         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, 16, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
       }
-
-
-      // Key
-
-      let key = "";
-
-      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics3 .length ? 1 : 0;
-
-      this .key       = key;
-      this .numSplats = numSplats;
 
       // Sort Worker
 
@@ -1355,6 +1384,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // Finish
 
+      this .set_key__ ();
       this .set_bbox__ ();
       this .set_objects__ ();
    },
@@ -1362,50 +1392,53 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    { },
    display (gl, renderContext)
    {
-      const
-         viewport   = renderContext .viewport,
-         browser    = this .getBrowser (),
-         shaderNode = this .getShader (renderContext);
-
-      // Set viewport.
-
-      gl .viewport (... viewport);
+      const shaderNode = this .getShader (renderContext);
 
       // Setup shader.
 
       shaderNode .enable (gl);
+      shaderNode .hasFog (null);
 
       // Uniforms
 
-      const { renderObject, modelViewMatrix, localObjects } = renderContext;
+      const { renderObject, viewport, modelViewMatrix, localObjects, fogNode } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
+      // Set ClipPlane nodes.
+
+      shaderNode .setClipPlanes (gl, localObjects, renderObject);
+      fogNode ?.setShaderUniforms (gl, shaderNode);
+
+      // Set viewport and matrices.
+
+      gl .viewport (... viewport);
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
-      // We need to convert from NDC space to screen space, which is done by multiplying with the framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
+      // We need to convert from NDC space to screen space, which is done by multiplying with the
+      // framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
       gl .uniform2f (shaderNode .x3d_FocalLength,
          projectionMatrixArray [0] * viewport [2] * 0.5,
          projectionMatrixArray [5] * viewport [3] * 0.5);
 
-      // Textures
+      // Set textures.
 
-      gl .activeTexture (gl .TEXTURE0 + this .positionsTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .positionsTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .orientationsTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .orientationsTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .scalesTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .scalesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .opacitiesTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .opacitiesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonicsTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonicsTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
 
       // Setup vertex attributes.
@@ -1433,13 +1466,14 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    },
    getShader (renderContext)
    {
-      const { renderObject, fogNode } = renderContext;
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       let key = "";
 
       key += this .key;
       key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
+      key += localObjectsKeys .join (""); // ClipPlane
 
       return this .shaderCache .get (key) ?? this .createShader (key, renderContext);
    },
@@ -1448,71 +1482,32 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       const
          browser = this .getBrowser (),
          gl      = browser .getContext (),
-         options = [ ];
+         options = browser .getDefaultMaterial () .getShaderOptions (this .geometryContext, renderContext)
+            .filter (option => !option .startsWith ("X3D_COLORSPACE_"));
 
-      // Render Object
+      // Color Space
 
-      if (browser .getRenderingProperty ("XRSession"))
-         options .push ("X3D_XR_SESSION");
-
-      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
+      switch (this .node ._colorSpace .getValue ())
       {
-         case "SRGB":
-            options .push ("X3D_COLORSPACE_SRGB");
-            break;
-         case "LINEAR":
+         case "LIN_REC709_DISPLAY":
             options .push ("X3D_COLORSPACE_LINEAR");
             break;
-         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+         default: // "SRGB_REC709_DISPLAY"
             options .push ("X3D_COLORSPACE_SRGB");
-            break;
-      }
-
-      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
-            break;
-      }
-
-      const { renderObject, fogNode } = renderContext;
-
-      if (renderObject .getLogarithmicDepthBuffer ())
-         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-      if (renderObject .getRenderPass () === (external_X_ITE_X3D_RenderPass_default()).RENDER_KEY)
-      {
-         if (renderObject .getOrderIndependentTransparency ())
-            options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-      }
-
-      // Fog
-
-      switch (fogNode ?.getFogType ())
-      {
-         case 1:
-            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
-            break;
-         case 2:
-            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
             break;
       }
 
       // Spherical Harmonics
 
-      if (this .node ._sphericalHarmonics1 .length)
-         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_1");
+      for (const [degree, coefs] of SH_COEFS .entries ())
+      {
+         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
 
-      if (this .node ._sphericalHarmonics2 .length)
-         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_2");
+         if (!filled)
+            break;
 
-      if (this .node ._sphericalHarmonics3 .length)
-         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_3");
+         options .push (`X3D_GAUSSIAN_SPLATTING_DEGREE_${degree}`);
+      }
 
       // Shader
 
@@ -1538,21 +1533,34 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       shaderNode .enable (gl);
 
-      gl .uniform1i (shaderNode .x3d_PositionsTexture,          this .positionsTexture          .textureUnit);
-      gl .uniform1i (shaderNode .x3d_OrientationsTexture,       this .orientationsTexture       .textureUnit);
-      gl .uniform1i (shaderNode .x3d_ScalesTexture,             this .scalesTexture             .textureUnit);
-      gl .uniform1i (shaderNode .x3d_OpacitiesTexture,          this .opacitiesTexture          .textureUnit);
-      gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTexture .textureUnit);
+      gl .uniform1i (shaderNode .x3d_PositionsTexture,          this .positionsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OrientationsTexture,       this .orientationsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_ScalesTexture,             this .scalesTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OpacitiesTexture,          this .opacitiesTextureUnit);
+      gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTextureUnit);
 
       return shaderNode;
    },
    initSortWorker ()
    {
+      if (!this .getBrowser () .getBrowserOption ("LoadUrlObjects"))
+         return;
+
+      // Terminate existing worker.
+
       this .sortWorker ?.terminate ();
 
-      const url = external_X_ITE_X3D_URLs_default().getLibraryURL ("mkkellogg-sort.worker.js");
+      // Load worker.
+
+      const
+         content = `import "${external_X_ITE_X3D_URLs_default().getLibraryURL ("mkkellogg-sort.worker.js")}";`,
+         url     = URL .createObjectURL (new Blob ([content], { type: "text/javascript" }));
 
       this .sortWorker = new Worker (url, { type: "module" });
+
+      URL .revokeObjectURL (url);
+
+      // Connect events.
 
       const
          browser = this .getBrowser (),
@@ -1562,21 +1570,18 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       {
          // console .log (event .data .type);
 
+         this .sortPending = false;
+
          switch (event .data .type)
          {
             case "ready":
             {
-               this .sortPending = false;
-
                this .sortModelViewMatrix .fill (0);
-
                browser .addBrowserEvent ();
                break;
             }
             case "sorted":
             {
-               this .sortPending = false;
-
                gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
 
@@ -1586,8 +1591,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             case "error":
             {
                console .error ("Sort worker error:", event .data .message);
-
-               this .sortPending = false;
                break;
             }
          }
@@ -1622,10 +1625,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       this .sortModelViewMatrix .set (viewMatrix);
 
-      this .sortWorker .postMessage ({
+      this .sortWorker ?.postMessage ({
          type: "sort",
          viewMatrix: this .sortModelViewMatrix,
       });
+
+      this .sortPending = true;
    },
 });
 
@@ -1649,6 +1654,20 @@ Object .defineProperties (GaussianSplatsShape,
    },
 });
 
+const GaussianSplatsShape_default_ = GaussianSplatsShape;
+;
+
+/* harmony default export */ const X_ITE_GaussianSplatsShape = (external_X_ITE_X3D_Namespace_default().add ("GaussianSplatsShape", GaussianSplatsShape_default_));
+;// ./src/x_ite/Components/X_ITE/GaussianSplats.js
+
+
+
+
+
+
+
+
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -1666,7 +1685,7 @@ function GaussianSplats (executionContext)
 
    // Private Properties
 
-   this .shapeNode = new GaussianSplatsShape (executionContext, this);
+   this .shapeNode = new X_ITE_GaussianSplatsShape (executionContext, this);
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
@@ -1710,19 +1729,32 @@ Object .defineProperties (GaussianSplats,
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "positions",           new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "orientations",        new (external_X_ITE_X3D_Fields_default()).MFVec4f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scales",              new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "opacities",           new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonics0", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonics1", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonics2", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonics3", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",             new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",            new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",          new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",                       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "colorSpace",                     new (external_X_ITE_X3D_Fields_default()).SFString ("SRGB_REC709_DISPLAY")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "positions",                      new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "orientations",                   new (external_X_ITE_X3D_Fields_default()).MFVec4f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scales",                         new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "opacities",                      new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree0Coef0", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree1Coef0", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree1Coef1", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree1Coef2", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree2Coef0", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree2Coef1", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree2Coef2", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree2Coef3", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree2Coef4", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef0", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef1", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef2", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef3", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef4", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef5", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef6", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",                        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",                    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",                       new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",                     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -1811,33 +1843,35 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
    },
    set_bbox__: (() =>
    {
-      const bbox = new (external_X_ITE_X3D_Box3_default()) ();
+      const subBBox = new (external_X_ITE_X3D_Box3_default()) ();
 
       return function ()
       {
+         const bbox = this .bbox;
+
          if (this .isDefaultBBoxSize ())
          {
             if (this .getGeometry ())
             {
-               this .bbox .set ();
+               bbox .set ();
 
                const geometryBBox = this .getGeometry () .getBBox ();
 
                for (const matrix of this .matrices)
-                  this .bbox .add (bbox .assign (geometryBBox) .multRight (matrix));
+                  bbox .add (subBBox .assign (geometryBBox) .multRight (matrix));
             }
             else
             {
-               this .bbox .set ();
+               bbox .set ();
             }
          }
          else
          {
-            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+            bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
          }
 
-         this .getBBoxSize ()   .assign (this .bbox .size);
-         this .getBBoxCenter () .assign (this .bbox .center);
+         this .getBBoxSize ()   .assign (bbox .size);
+         this .getBBoxCenter () .assign (bbox .center);
       };
    })(),
    set_transform__ ()
@@ -2029,7 +2063,7 @@ X_ITE_ExtensionKeys .add ("IRIDESCENCE_MATERIAL_EXTENSION");
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Iridescence", Iridescence2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("Iridescence", Iridescence2_glsl);
 
 // Register textures.
 
@@ -2387,7 +2421,7 @@ return vec4(color,baseColor.a);}`
 /* harmony default export */ const SpecularGlossiness2_glsl = (external_X_ITE_X3D_Namespace_default().add ("SpecularGlossiness2.glsl", SpecularGlossiness2_glsl_default_));
 ;// ./src/assets/shaders/webgl2/SpecularGlossiness2.fs.js
 const SpecularGlossiness2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<SpecularGlossiness>
 `
 ;
@@ -2409,8 +2443,8 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude  ("SpecularGlossiness", SpecularGlossiness2_glsl);
-external_X_ITE_X3D_ShaderRegistry_default().addFragment ("SpecularGlossiness", SpecularGlossiness2_fs);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile    ("SpecularGlossiness", SpecularGlossiness2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addFragmentShader ("SpecularGlossiness", SpecularGlossiness2_fs);
 
 // Register textures.
 
@@ -3185,7 +3219,9 @@ f_diffuse+=diffuseTransmissionIBL*(1.-singleScatter)*singleScatter;f_diffuse*=ma
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 albedoSheenScaling=1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotV,materialInfo.sheenRoughnessFactor);
 #endif
+#if defined(X3D_USE_IBL)
 vec3 f_dielectric_fresnel_ibl=getIBLGGXFresnel(n,v,materialInfo.perceptualRoughness,materialInfo.f0_dielectric,materialInfo.specularWeight);frontColor+=mix(f_diffuse,f_specular_dielectric,f_dielectric_fresnel_ibl)*albedoSheenScaling;
+#endif
 #endif
 #if defined(X3D_LIGHTING)
 for(int i=0;i<X3D_NUM_LIGHTS;++i){x3d_LightSourceParameters light=x3d_LightSource[i];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}if(distanceToLight<=light.radius||light.radius<0.){vec3 l=normalize(pointToLight);vec3 h=normalize(l+v);float NdotL=clamp(dot(n,l),0.,1.);float VdotH=clamp(dot(v,h),0.,1.);vec3 dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH));vec3 l_diffuse=vec3(0);vec3 l_specular_dielectric=vec3(0);vec3 l_dielectric_brdf=vec3(0);
@@ -3245,8 +3281,8 @@ external_X_ITE_X3D_MaterialTextures_default().add ("x3d_MultiscatterColorTexture
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Scatter",              Scatter2_glsl);
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("SubsurfaceScattering", SubsurfaceScattering2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("Scatter",              Scatter2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("SubsurfaceScattering", SubsurfaceScattering2_glsl);
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -3269,13 +3305,31 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
 
+      this ._scatterStrength          .addInterest ("set_scatterStrength__",          this);
+      this ._scatterStrengthTexture   .addInterest ("set_scatterStrengthTexture__",   this);
+      this ._scatterAnisotropy        .addInterest ("set_scatterAnisotropy__",        this);
       this ._multiscatterColor        .addInterest ("set_multiscatterColor__",        this);
       this ._multiscatterColorTexture .addInterest ("set_multiscatterColorTexture__", this);
-      this ._scatterAnisotropy        .addInterest ("set_scatterAnisotropy__",        this);
 
+      this .set_scatterStrength__ ();
+      this .set_scatterStrengthTexture__ ();
+      this .set_scatterAnisotropy__ ();
       this .set_multiscatterColor__ ();
       this .set_multiscatterColorTexture__ ();
-      this .set_scatterAnisotropy__ ();
+   },
+   set_scatterStrength__ ()
+   {
+      this .scatterStrength = external_X_ITE_X3D_Algorithm_default().clamp (this ._scatterStrength .getValue (), 0, 1);
+   },
+   set_scatterStrengthTexture__ ()
+   {
+      this .scatterStrengthTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._scatterStrengthTexture);
+
+      this .addTexture (0, this .scatterStrengthTextureNode);
+   },
+   set_scatterAnisotropy__ ()
+   {
+      this .scatterAnisotropy = external_X_ITE_X3D_Algorithm_default().clamp (this ._scatterAnisotropy .getValue (), -1, 1);
    },
    set_multiscatterColor__ ()
    {
@@ -3285,11 +3339,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       this .multiscatterColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._multiscatterColorTexture);
 
-      this .addTexture (0, this .multiscatterColorTextureNode);
-   },
-   set_scatterAnisotropy__ ()
-   {
-      this .scatterAnisotropy = external_X_ITE_X3D_Algorithm_default().clamp (this ._scatterAnisotropy .getValue (), -1, 1);
+      this .addTexture (1, this .multiscatterColorTextureNode);
    },
    getExtensionKey ()
    {
@@ -3305,13 +3355,15 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
+      this .scatterStrengthTextureNode   ?.getShaderOptions (options, "SCATTER_STRENGTH",   true);
       this .multiscatterColorTextureNode ?.getShaderOptions (options, "MULTISCATTER_COLOR", true);
    },
    getShaderUniforms (uniforms)
    {
       uniforms .push ("x3d_ScatterMaterialIdEXT");
-      uniforms .push ("x3d_MultiscatterColorEXT");
+      uniforms .push ("x3d_ScatterStrengthEXT");
       uniforms .push ("x3d_ScatterAnisotropyEXT");
+      uniforms .push ("x3d_MultiscatterColorEXT");
       uniforms .push ("x3d_ScatterSamplesEXT");
       uniforms .push ("x3d_ScatterMinRadiusEXT");
       uniforms .push ("x3d_ScatterSamplerEXT");
@@ -3320,6 +3372,12 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       const browser = this .getBrowser ();
+
+      this .scatterStrengthTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject .x3d_ScatterStrengthTextureEXT,
+         this ._scatterStrengthTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
       this .multiscatterColorTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject .x3d_MultiscatterColorTextureEXT,
@@ -3334,8 +3392,9 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
          return;
       }
 
-      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+      gl .uniform1f  (shaderObject .x3d_ScatterStrengthEXT,   this .scatterStrength);
       gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
       gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    X_ITE_ScatterSamples .SCATTER_SAMPLES);
       gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  X_ITE_ScatterSamples .SCATTER_MIN_RADIUS);
 
@@ -3365,10 +3424,13 @@ Object .defineProperties (VolumeScatterMaterialExtension,
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterStrength",                 new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterStrengthTextureMapping",   new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterStrengthTexture",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterAnisotropy",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColor",               new (external_X_ITE_X3D_Fields_default()).SFColor ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColorTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColorTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterAnisotropy",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },

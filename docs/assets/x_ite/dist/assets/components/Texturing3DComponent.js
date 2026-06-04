@@ -1,9 +1,9 @@
-/* X_ITE v15.0.3 */
+/* X_ITE v15.1.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 925
+/***/ 280
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ },
 
-/***/ 951
+/***/ 234
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -77,7 +77,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ },
 
-/***/ 191
+/***/ 770
 (module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4035,7 +4035,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ },
 
-/***/ 407
+/***/ 418
 (module) {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7179,10 +7179,10 @@ var Decoder = class _Decoder {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(191);
-/* provided dependency */ var jpegDecode = __webpack_require__(407);
-/* provided dependency */ var CharLS = __webpack_require__(925);
-/* provided dependency */ var OpenJPEG = __webpack_require__(951);
+/* provided dependency */ var dicomParser = __webpack_require__(770);
+/* provided dependency */ var jpegDecode = __webpack_require__(418);
+/* provided dependency */ var CharLS = __webpack_require__(280);
+/* provided dependency */ var OpenJPEG = __webpack_require__(234);
 
 
 
@@ -8309,7 +8309,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
    },
    loadData ()
    {
-      new (external_X_ITE_X3D_FileLoader_default()) (this) .loadDocument (this ._url, (data, URL) =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, (data, fileURL) =>
       {
          if (data === null)
          {
@@ -8320,14 +8320,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || URL .href .match (/^data:image\/ktx2[;,]/))
+            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
                this .setMipMaps (false);
 
                return this .getBrowser () .getKTXDecoder ()
                   .then (decoder => decoder .loadKTXFromBuffer (data))
-                  .then (texture => this .setKTXTexture (texture, URL));
+                  .then (texture => this .setKTXTexture (texture, fileURL));
             }
 
             this .setLinear (false);
@@ -8369,15 +8369,15 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
          }
       });
    },
-   setKTXTexture (texture, URL)
+   setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (URL .protocol !== "data:")
-            console .info (`Done loading image texture 3D '${decodeURI (URL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image texture 3D '${decodeURI (fileURL)}'.`);
       }
 
       const { baseWidth, baseHeight, baseDepth, numComponents } = texture;
@@ -8446,6 +8446,7 @@ const ImageTexture3D_default_ = ImageTexture3D;
 
 
 
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -8495,22 +8496,35 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .protocol !== "data:")
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
-      }
+         if (data === null)
+         {
+            this .loadNext ();
+         }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (fileURL);
 
-      this .image .attr ("src", this .URL);
+            this .setLinear (false);
+            this .setMipMaps (true);
+
+            this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+            this .image .attr ("src", this .objectURL);
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
+
+      URL .revokeObjectURL (this .objectURL);
 
       this .loadNext ();
    },
@@ -8518,8 +8532,8 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    {
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -8591,6 +8605,10 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
 
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
+      }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
       }
    },
    updateOutputs (width, height, depth, colorDepth)

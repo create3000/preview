@@ -1281,6 +1281,7 @@ declare namespace X3D
       readonly FontStyle: number;
       readonly ForcePhysicsModel: number;
       readonly Gain: number;
+      readonly GaussianSplats: number;
       readonly GeneratedCubeMapTexture: number;
       readonly GeoCoordinate: number;
       readonly GeoElevationGrid: number;
@@ -4122,7 +4123,7 @@ declare namespace X3D
    interface BlendModeProxy extends X3DAppearanceChildNodeProxy
    {
       /**
-       * Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
+       * Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be one of:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -4134,7 +4135,7 @@ declare namespace X3D
        */
       blendColor: SFColorRGBA;
       /**
-       * Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
+       * Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be one of:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -8622,6 +8623,168 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFTime.
        */
       tailTime: number;
+   }
+
+   /** The GaussianSplats node adds basic support for storing 3D Gaussian splats in X3D files. */
+   interface GaussianSplatsProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
+   {
+      /**
+       * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+       *
+       * This field is of access type 'initializeOnly' and type SFVec3f.
+       */
+      bboxCenter: SFVec3f;
+      /**
+       * Whether to display bounding box for associated geometry, aligned with world coordinates.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      bboxDisplay: boolean;
+      /**
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       *
+       * This field is of access type 'initializeOnly' and type SFVec3f.
+       */
+      bboxSize: SFVec3f;
+      /**
+       * The color space of the reconstructed color values. It must be one of:
+, SRGB_REC709_DISPLAY, LIN_REC709_DISPLAY
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      colorSpace: "SRGB_REC709_DISPLAY" | "LIN_REC709_DISPLAY";
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Input/Output field opacities.
+       *
+       * This field is of access type 'inputOutput' and type MFFloat.
+       */
+      opacities: MFFloat;
+      /**
+       * Input/Output field orientations.
+       *
+       * This field is of access type 'inputOutput' and type MFVec4f.
+       */
+      orientations: MFVec4f;
+      /**
+       * Input/Output field positions.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      positions: MFVec3f;
+      /**
+       * Input/Output field scales.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      scales: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree0Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree1Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree1Coef1: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree1Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef1: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef3: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef4: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef1: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef3: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef4: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef5: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef6: MFVec3f;
+      /**
+       * Whether or not renderable content within this node is visually displayed.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      visible: boolean;
    }
 
    /** GeneratedCubeMapTexture is a texture node that defines a cubic environment map that sources its data from internally generated images. */
@@ -16014,6 +16177,12 @@ declare namespace X3D
        */
       children: MFNode <X3DChildNodeProxy>;
       /**
+       * Sets color depth of the rendered texture.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      colorDepth: number;
+      /**
        * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
        *
        * This field is of access type 'initializeOnly' and type SFBool.
@@ -16026,17 +16195,17 @@ declare namespace X3D
        */
       description: string;
       /**
-       * Sets the width, height, color components (and number of MRTs).
-       *
-       * This field is of access type 'inputOutput' and type MFInt32.
-       */
-      dimensions: MFInt32;
-      /**
        * The enabled field either enables or disables data output processing by the node.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       enabled: boolean;
+      /**
+       * Sets height of the rendered texture.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      height: number;
       /**
        * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
        *
@@ -16074,17 +16243,17 @@ declare namespace X3D
        */
       replaceImage: boolean;
       /**
+       * singleFrame controls when the next texture is captured.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      singleFrame: boolean;
+      /**
        * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
       textureProperties: TexturePropertiesProxy | null;
-      /**
-       * update controls regeneration of the texture.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
        * The updateInterval field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
        *
@@ -16097,6 +16266,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * Sets width of the rendered texture.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      width: number;
    }
 
    /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */
@@ -21048,13 +21223,13 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * The multi-scatter albedo.
+       * The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light..
        *
        * This field is of access type 'inputOutput' and type SFColor.
        */
       multiscatterColor: SFColor;
       /**
-       * A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor.
+       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColor*.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -21066,11 +21241,29 @@ declare namespace X3D
        */
       multiscatterColorTextureMapping: string;
       /**
-       * The anisotropy of scatter events. Range is [-1, 1].
+       * The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       scatterAnisotropy: number;
+      /**
+       * The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterStrength: number;
+      /**
+       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by *scatterStrength*.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      scatterStrengthTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      scatterStrengthTextureMapping: string;
    }
 
    /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
@@ -23113,6 +23306,7 @@ declare namespace X3D
       FontStyle: FontStyleProxy,
       ForcePhysicsModel: ForcePhysicsModelProxy,
       Gain: GainProxy,
+      GaussianSplats: GaussianSplatsProxy,
       GeneratedCubeMapTexture: GeneratedCubeMapTextureProxy,
       GeoCoordinate: GeoCoordinateProxy,
       GeoElevationGrid: GeoElevationGridProxy,

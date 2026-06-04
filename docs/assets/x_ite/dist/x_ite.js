@@ -1,4 +1,4 @@
-/* X_ITE v15.0.3 */
+/* X_ITE v15.1.1 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,41 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 321
+/***/ 88
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const Namespace = { };
+
+Object .defineProperty (Namespace, "add",
+{
+   value (name, module)
+   {
+      if (Namespace .hasOwnProperty (name))
+      {
+         console .error (new Error (`Namespace: "${name}" already exists.`));
+         return module;
+      }
+
+      const X3D = window [Symbol .for ("X_ITE.X3D")];
+
+      if (X3D)
+         X3D [name] = module;
+
+      // For x_ite.js:
+      return Namespace [name] = module;
+   },
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Namespace .add ("Namespace", Namespace));
+
+
+/***/ },
+
+/***/ 556
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1051,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 491
+/***/ 62
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2047,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 500
+/***/ 821
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2027,7 +2061,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(731) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(358) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2258,7 +2292,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 191
+/***/ 150
 (module) {
 
 /**
@@ -7037,7 +7071,7 @@ if (true) {
 
 /***/ },
 
-/***/ 206
+/***/ 273
 (__unused_webpack_module, exports) {
 
 
@@ -10282,54 +10316,20 @@ if (true) {
 
 /***/ },
 
-/***/ 520
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-const Namespace = { };
-
-Object .defineProperty (Namespace, "add",
-{
-   value (name, module)
-   {
-      if (Namespace .hasOwnProperty (name))
-      {
-         console .error (new Error (`Namespace: "${name}" already exists.`));
-         return module;
-      }
-
-      const X3D = window [Symbol .for ("X_ITE.X3D")];
-
-      if (X3D)
-         X3D [name] = module;
-
-      // For x_ite.js:
-      return Namespace [name] = module;
-   },
-});
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Namespace .add ("Namespace", Namespace));
-
-
-/***/ },
-
-/***/ 731
+/***/ 358
 (module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 305 );
+const { jQuery } = __webpack_require__( 10 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 305
+/***/ 10
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10338,7 +10338,7 @@ module.exports = jQuery;
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(520);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(88);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -17261,7 +17261,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(520);
+var Namespace = __webpack_require__(88);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -18419,7 +18419,7 @@ const Features =
       {
          register ()
          { }
-         
+
          unregister ()
          { }
       };
@@ -18467,7 +18467,7 @@ const Features_default_ = Features;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(305)["A"];
+/* provided dependency */ var $ = __webpack_require__(10)["A"];
 
 
 
@@ -28892,7 +28892,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (Namespace/* default */.A .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var Legacy_$ = __webpack_require__(10)["A"];
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -28954,7 +28954,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (Namespace/* default */.A .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "15.0.3";
+const BROWSER_VERSION_default_ = "15.1.1";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (Namespace/* default */.A .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -29541,7 +29541,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(10)["A"];
 
 
 
@@ -29826,6 +29826,9 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
             shapeNode    = shapes [i] .shapeNode,
             numInstances = shapeNode .getNumInstances ();
 
+         if (!shapeNode .getExecutionContext () .getCountPrimitives ())
+            continue;
+
          switch (shapeNode .getGeometryType ())
          {
             case Shape_GeometryType .POINT:
@@ -29851,9 +29854,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
 
                // ParticleSystem nodes may have no geometry.
                if (!geometryNode)
-                  continue;
-
-               if (!geometryNode .getExecutionContext () .getCountPrimitives ())
                   continue;
 
                const vertices = geometryNode .getVertices () .length / 4 * numInstances;
@@ -29989,7 +29989,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(10)["A"];
 
 
 
@@ -30471,7 +30471,7 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var RenderingProperties_$ = __webpack_require__(10)["A"];
 
 
 
@@ -30553,7 +30553,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var Notification_$ = __webpack_require__(10)["A"];
 
 
 
@@ -30639,7 +30639,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(10)["A"];
 
 
 
@@ -33411,6 +33411,66 @@ Object .assign (Box3 .prototype,
          max .max (p1, p2, p3, p4);
       };
    })(),
+   setPoints: (() =>
+   {
+      const
+         min = new Numbers_Vector3 (),
+         max = new Numbers_Vector3 ();
+
+      return function  (points)
+      {
+            min .set (Number .POSITIVE_INFINITY),
+            max .set (Number .NEGATIVE_INFINITY);
+
+         for (const point of points)
+         {
+            min .min (point);
+            max .max (point);
+         }
+
+         return this .setExtents (min, max);
+      };
+   })(),
+   setArray: (() =>
+   {
+      const
+         min = new Numbers_Vector3 (),
+         max = new Numbers_Vector3 ();
+
+      return function (array, stride = 3)
+      {
+         const length = array .length;
+
+         if (!length)
+            return this .set ();
+
+         let minX = Number .POSITIVE_INFINITY;
+         let minY = Number .POSITIVE_INFINITY;
+         let minZ = Number .POSITIVE_INFINITY;
+
+         let maxX = Number .NEGATIVE_INFINITY;
+         let maxY = Number .NEGATIVE_INFINITY;
+         let maxZ = Number .NEGATIVE_INFINITY;
+
+         for (let i = 0; i < length; i += stride)
+         {
+            const
+               x = array [i],
+               y = array [i + 1],
+               z = array [i + 2];
+
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (z < minZ) minZ = z;
+
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+            if (z > maxZ) maxZ = z;
+         }
+
+         return this .setExtents (min .set (minX, minY, minZ), max .set (maxX, maxY, maxZ));
+      };
+   })(),
    getPoints: (() =>
    {
       const
@@ -33775,17 +33835,11 @@ Object .assign (Box3,
    },
    fromPoints (points)
    {
-      const
-         min = new Numbers_Vector3 (Number .POSITIVE_INFINITY),
-         max = new Numbers_Vector3 (Number .NEGATIVE_INFINITY);
-
-      for (const point of points)
-      {
-         min .min (point);
-         max .max (point);
-      }
-
-      return new Box3 () .setExtents (min, max);
+      return new Box3 () .setPoints (points);
+   },
+   fromArray (array, stride = 3)
+   {
+      return new Box3 () .setArray (array, stride);
    },
 });
 
@@ -34059,7 +34113,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(10)["A"];
 
 
 
@@ -36008,7 +36062,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (Namespace/* default */.A .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DParser_$ = __webpack_require__(10)["A"];
 
 
 function X3DParser (scene, name = "Parser")
@@ -36206,18 +36260,6 @@ Object .assign (X3DParser .prototype,
          array [i + 2] = z;
       }
    },
-   rotateAxes180 (array)
-   {
-      // This function is for STL and PLY models.
-
-      const length = array .length;
-
-      for (let i = 0; i < length; i += 3)
-      {
-         array [i + 1] = -array [i + 1];
-         array [i + 2] = -array [i + 2];
-      }
-   },
 });
 
 const X3DParser_default_ = X3DParser;
@@ -36343,7 +36385,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(10)["A"];
 
 
 
@@ -39036,7 +39078,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var XMLParser_$ = __webpack_require__(10)["A"];
 
 
 
@@ -40322,7 +40364,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var JSONParser_$ = __webpack_require__(10)["A"];
 
 
 
@@ -41255,7 +41297,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (Namespace/* default */.A .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(191);
+/* provided dependency */ var libtess = __webpack_require__(150);
 
 
 const Triangle3 =
@@ -43691,6 +43733,8 @@ function X3DRenderObject_assign (lhs, rhs)
    lhs .length = length;
 }
 
+X3DRenderObject .assign = X3DRenderObject_assign;
+
 const X3DRenderObject_default_ = X3DRenderObject;
 ;
 
@@ -45990,50 +46034,33 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       this .normals        .length = 0;
       this .vertices       .length = 0;
    },
-   updateBBox: (() =>
+   updateBBox ()
    {
-      const point = new Numbers_Vector3 ();
+      // Determine bbox.
 
-      return function ()
+      const
+         vertices     = this .vertices .getValue (),
+         { min, max } = this;
+
+      if (vertices .length)
       {
-         // Determine bbox.
-
-         const
-            vertices    = this .vertices .getValue (),
-            numVertices = vertices .length,
-            min         = this .min,
-            max         = this .max;
-
-         if (numVertices)
-         {
-            if (min .x === Number .POSITIVE_INFINITY)
-            {
-               for (let i = 0; i < numVertices; i += 4)
-               {
-                  const { [i]: v1, [i + 1]: v2, [i + 2]: v3 } = vertices;
-
-                  point .set (v1, v2, v3);
-
-                  min .min (point);
-                  max .max (point);
-               }
-            }
-
-            this .bbox .setExtents (min, max);
-         }
+         if (min .x === Number .POSITIVE_INFINITY)
+            this .bbox .setArray (vertices, 4) .getExtents (min, max);
          else
-         {
-            this .bbox .setExtents (min .set (0), max .set (0));
-         }
+            this .bbox .setExtents (min, max);
+      }
+      else
+      {
+         this .bbox .setExtents (min .set (0), max .set (0));
+      }
 
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+      for (let i = 0; i < 5; ++ i)
+         this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
-         this ._bbox_changed .addEvent ();
+      this ._bbox_changed .addEvent ();
 
-         this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
-      };
-   })(),
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
+   },
    transfer ()
    {
       const gl = this .getBrowser () .getContext ();
@@ -46955,6 +46982,7 @@ const BitSet_default_ = BitSet;
 
 
 
+
 function X3DBackgroundNode (executionContext)
 {
    Core_X3DBindableNode .call (this, executionContext);
@@ -46973,14 +47001,14 @@ function X3DBackgroundNode (executionContext)
    // Private properties
 
    this .modelMatrix      = new Numbers_Matrix4 ();
-   this .clipPlanes       = [ ];
+   this .localObjects     = [ ];
+   this .localObjectsKeys = [ ];
    this .colors           = [ ];
    this .sphere           = [ ];
    this .textureNodes     = new Array (6);
    this .textureBits      = new Utility_BitSet ();
-   this .sphereContext    = new Rendering_GeometryContext ({ colorMaterial: true });
-   this .texturesContext  = new Rendering_GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
-   this .localObjectsKeys = this .sphereContext .localObjectsKeys;
+   this .sphereContext    = new Rendering_GeometryContext ({ colorMaterial: true, localObjectsKeys: this .localObjectsKeys });
+   this .texturesContext  = new Rendering_GeometryContext ({ localObjectsKeys: this .localObjectsKeys });
 
    this [Rendering_RenderPass .RENDER_KEY]         = this;
    this [Rendering_RenderPass .TRANSMISSION_KEY]   = this;
@@ -47335,22 +47363,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
          }
          case Rendering_TraverseType .DISPLAY:
          {
-            const
-               localObjects     = renderObject .getLocalObjects (),
-               clipPlanes       = this .clipPlanes,
-               localObjectsKeys = this .localObjectsKeys;
-
-            let c = 0;
-
-            for (const localObject of localObjects)
-            {
-               if (localObject .isClipPlane)
-                  clipPlanes [c ++] = localObject;
-            }
-
-            clipPlanes       .length = c;
-            localObjectsKeys .length = c;
-            localObjectsKeys .fill (0);
+            // Handle ClipPane nodes.
+            Rendering_X3DRenderObject .assign (this .localObjects,     renderObject .getLocalObjects ());
+            Rendering_X3DRenderObject .assign (this .localObjectsKeys, renderObject .getLocalObjectsKeys ());
             return;
          }
       }
@@ -47449,7 +47464,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
       const shaderNode = browser .getDefaultMaterial () .getShader (sphereContext);
 
       shaderNode .enable (gl);
-      shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
+      shaderNode .setClipPlanes (gl, this .localObjects, renderObject);
 
       // Uniforms
 
@@ -47502,7 +47517,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
             const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
+            shaderNode .setClipPlanes (gl, this .localObjects, renderObject);
 
             // Set uniforms.
 
@@ -47961,7 +47976,8 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (Namespace/* default */.A .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(10)["A"];
+
 
 
 
@@ -48026,38 +48042,48 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
-         this .setLinear (true);
-         this .setMipMaps (false);
-
-         this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
-            .then (texture => this .setKTXTexture (texture))
-            .catch (error => this .setError ({ type: error .message }));
-      }
-      else
-      {
-         this .setLinear (false);
-         this .setMipMaps (true);
-
-         if (this .URL .protocol !== "data:")
+         if (data === null)
          {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+            this .loadNext ();
          }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (fileURL);
 
-         this .image .attr ("src", this .URL);
-      }
+            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^data:image\/ktx2[;,]/))
+            {
+               this .setLinear (true);
+               this .setMipMaps (false);
+
+               this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture))
+                  .catch (error => this .setError ({ type: error .message }));
+            }
+            else
+            {
+               this .setLinear (false);
+               this .setMipMaps (true);
+
+               this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+               this .image .attr ("src", this .objectURL);
+            }
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}:'`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}:'`, event .type);
+
+      URL .revokeObjectURL (this .objectURL);
 
       this .loadNext ();
    },
@@ -48068,8 +48094,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -48095,8 +48121,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -48117,6 +48143,10 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
       {
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
+      }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
       }
    },
    updateOutputs (width, height, colorDepth)
@@ -50119,9 +50149,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      const minDistance = this .getNearDistance (layerNode .getNavigationInfo ()) * 2;
-
-      this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
+      this .lookAt (layerNode, point, 0.5, transitionTime, factor, straighten);
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
@@ -50491,7 +50519,8 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(10)["A"];
+
 
 
 
@@ -50764,6 +50793,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_transmission":
             case "KHR_materials_volume_scatter":
             case "KHR_materials_volume":
+            case "KHR_gaussian_splatting":
             {
                components .push (browser .getComponent ("X_ITE", 1));
                break;
@@ -51092,13 +51122,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!buffer .uri)
          return this .buffers [i];
 
-      const
-         url         = new URL (buffer .uri, this .getScene () .getBaseURL ()),
-         response    = await fetch (url),
-         blob        = await response .blob (),
-         arrayBuffer = await blob .arrayBuffer ();
+      this .getScene () .addLoadingObject (buffer);
 
-      return GLTF2Parser_$.ungzip (arrayBuffer);
+      const
+         url         = new x_ite_Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
+         arrayBuffer = await InputOutput_FileLoader .loadDocument (this .getBrowser () .getWorld (), url, { dataAsString: false });
+
+      this .getScene () .removeLoadingObject (buffer);
+
+      return arrayBuffer;
    },
    bufferViewsArray (bufferViews)
    {
@@ -51555,17 +51587,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       for (const [key, extension] of Object .entries (extensions))
       {
+         if (!this .extensions .has (key))
+            continue;
+
          switch (key)
          {
             case "KHR_texture_basisu":
+            // case "EXT_texture_astc":
             case "EXT_texture_avif":
             case "EXT_texture_webp":
-            {
-               if (this .extensions .has (key))
-                  images .push (this .images [extension ?.source]);
-
+               images .push (this .images [extension ?.source]);
                break;
-            }
          }
       }
    },
@@ -52067,6 +52099,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
 
+      extension ._scatterStrength        = this .numberValue (KHR_materials_volume_scatter .scatterStrengthFactor, 0);
+      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_volume_scatter .scatterStrengthTexture);
+      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_volume_scatter .scatterTexture);
+
       const multiscatterColor = new Numbers_Color3 ();
 
       if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
@@ -52286,6 +52322,9 @@ function eventsProcessed ()
       this .attributesObject (primitive .attributes);
       this .targetsArray     (primitive .targets);
 
+      if (primitive .extensions ?.KHR_gaussian_splatting)
+         return this .khrGaussianSplatting (primitive, shapeNodes);
+
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
 
@@ -52296,6 +52335,53 @@ function eventsProcessed ()
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+   },
+   khrGaussianSplatting (primitive, shapeNodes)
+   {
+      const
+         scene                  = this .getScene (),
+         gaussianSplats         = scene .createNode ("GaussianSplats", false),
+         KHR_gaussian_splatting = primitive .extensions ?.KHR_gaussian_splatting,
+         attributes             = primitive .attributes;
+
+      gaussianSplats ._colorSpace = String (KHR_gaussian_splatting ?.colorSpace ?? "SRGB_REC709_DISPLAY") .toUpperCase ();
+
+      gaussianSplats ._positions    = attributes ?.POSITION ?.array ?? [ ];
+      gaussianSplats ._orientations = attributes ?.["KHR_gaussian_splatting:ROTATION"] ?.array ?? [ ];
+      gaussianSplats ._scales       = attributes ?.["KHR_gaussian_splatting:SCALE"]    ?.array ?? [ ];
+      gaussianSplats ._opacities    = attributes ?.["KHR_gaussian_splatting:OPACITY"]  ?.array ?? [ ];
+
+      // Degrees 0,1,2,3
+
+      for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
+      {
+         for (let coef = 0; coef < coefs; ++ coef)
+         {
+            const
+               field = gaussianSplats .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`),
+               value = attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array ?? [ ];
+
+            field .setValue (value);
+         }
+      }
+
+      // Bounding Box
+
+      const
+         min    = new Numbers_Vector3 (),
+         max    = new Numbers_Vector3 (),
+         hasMin = this .vectorValue (attributes ?.POSITION ?.min, min),
+         hasMax = this .vectorValue (attributes ?.POSITION ?.max, max);
+
+      if (hasMin && hasMax)
+      {
+         gaussianSplats ._bboxSize   = max .copy () .subtract (min),
+         gaussianSplats ._bboxCenter = min .copy () .add (max) .divide (2);
+      }
+
+      gaussianSplats .setup ();
+
+      shapeNodes .push (primitive .shapeNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
@@ -53141,7 +53227,7 @@ function eventsProcessed ()
                return;
             }
 
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -54871,7 +54957,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(10)["A"];
 
 
 
@@ -54977,7 +55063,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var OBJParser_$ = __webpack_require__(10)["A"];
 
 
 
@@ -56431,7 +56517,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var STLBParser_$ = __webpack_require__(10)["A"];
 
 
 
@@ -56842,36 +56928,43 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
       const scene = this .getScene ();
 
-      if (this .sphericalHarmonics0)
+      if (this .sphericalHarmonics)
       {
          scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
 
          await this .getBrowser () .loadComponents (scene);
 
          const
-            node           = scene .createNode ("GaussianSplats"),
+            transform      = scene .createNode ("Transform"),
+            gaussianSplats = scene .createNode ("GaussianSplats"),
             quaternions    = this .quaternions,
             numQuaternions = quaternions .length,
             orientations   = [ ];
 
-         this .rotateAxes180 (this .points);
-
-         // Quaternion elements must be rotated from wxyz to xyzw,
-         // and quaternion must be rotated by 180 degrees about x-axis.
+         // Quaternion elements must be rotated from wxyz to xyzw.
          // https://www.kaggle.com/code/stpeteishii/creatures-ply-to-gaussian-splat
          for (let i = 0; i < numQuaternions; i += 4)
-            orientations .push (quaternions [i + 1], -quaternions [i + 2], -quaternions [i + 3], -quaternions [i]);
+            orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], quaternions [i]);
 
-         node .positions           = this .points;
-         node .orientations        = orientations;
-         node .scales              = this .scales;
-         node .opacities           = this .opacities;
-         node .sphericalHarmonics0 = this .sphericalHarmonics0;
-         node .sphericalHarmonics1 = this .sphericalHarmonics1;
-         node .sphericalHarmonics2 = this .sphericalHarmonics2;
-         node .sphericalHarmonics3 = this .sphericalHarmonics3;
+         gaussianSplats .positions    = this .points;
+         gaussianSplats .orientations = orientations;
+         gaussianSplats .scales       = this .scales;
+         gaussianSplats .opacities    = this .opacities;
 
-         scene .rootNodes .push (node);
+         // Degrees 0,1,2,3
+
+         let i = 0;
+
+         for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
+         {
+            for (let coef = 0; coef < coefs; ++ coef)
+               gaussianSplats [`sphericalHarmonicsDegree${degree}Coef${coef}`] = this .sphericalHarmonics [i ++];
+         }
+
+         transform .rotation = new Numbers_Rotation4 (1, 0, 0, Math .PI);
+         transform .children .push (gaussianSplats);
+
+         scene .rootNodes .push (transform);
       }
       else if (this .coordIndex) // IndexedFaceSet
       {
@@ -57010,6 +57103,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
    },
    parseVertices ({ count, properties })
    {
+      // console .time ("vertices");
+
       // Geometry
 
       const
@@ -57025,10 +57120,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          quaternions = [ ],
          opacities   = [ ],
          sh0         = [ ], // Degree 0
-         rest        = Array .from ({ length: 45 }, () => [ ]),
+         rest        = Array .from ({ length: 45 }, () => [ ]), // Degree 1,2,3
          restIndex   = new Map (Array .from ({ length: 45 }, (v, i) => [`f_rest_${i}`, i]));
-
-      // console .time ("vertices")
 
       for (let i = 0; i < count; ++ i)
       {
@@ -57094,7 +57187,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          }
       }
 
-      // console .timeEnd ("vertices")
+      // console .timeEnd ("vertices");
 
       // Geometric properties
 
@@ -57110,30 +57203,30 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-ply/src/main/java/de/javagl/jsplat/io/ply/PlySplatReader.java#L121
 
          const
-            numSplats      = points .length / 3,
-            shDegree       = this .getSphericalHarmonicsDegree (rest),
-            shDimensions_1 = this .getDimensionsForDegree (shDegree) - 1,
-            shs            = Array .from ({ length: 15 }, () => [ ]);
+            numSplats     = points .length / 3,
+            shDegree      = this .getSphericalHarmonicsDegree (rest),
+            shDimensions1 = this .getDimensionsForDegree (shDegree) - 1,
+            shDimensions2 = shDimensions1 * 2,
+            shs           = Array .from ({ length: 15 }, () => [ ]);
 
-         for (let d = 0; d < shDimensions_1; ++ d)
+         for (let d = 0; d < shDimensions1; ++ d)
          {
             const
-               rx = rest [shDimensions_1 * 0 + d],
-               ry = rest [shDimensions_1 * 1 + d],
-               rz = rest [shDimensions_1 * 2 + d],
+               rx = rest [d],
+               ry = rest [shDimensions1 + d],
+               rz = rest [shDimensions2 + d],
                sh = shs [d];
 
             for (let s = 0; s < numSplats; ++ s)
                sh .push (rx [s], ry [s], rz [s]);
          }
 
-         this .quaternions         = quaternions;
-         this .scales              = scales;
-         this .opacities           = opacities;
-         this .sphericalHarmonics0 = sh0;
-         this .sphericalHarmonics1 = shs [0] .concat (shs [1], shs [2]);
-         this .sphericalHarmonics2 = shs [3] .concat (shs [4], shs [5], shs [6], shs [7]);
-         this .sphericalHarmonics3 = shs [8] .concat (shs [9], shs [10], shs [11], shs [12], shs [13], shs [14]);
+         shs .unshift (sh0);
+
+         this .quaternions        = quaternions;
+         this .scales             = scales;
+         this .opacities          = opacities;
+         this .sphericalHarmonics = shs;
       }
    },
    getSphericalHarmonicsDegree (rest)
@@ -57312,6 +57405,7 @@ const PLYAParser_default_ = PLYAParser;
 
 /* harmony default export */ const Parser_PLYAParser = (Namespace/* default */.A .add ("PLYAParser", PLYAParser_default_));
 ;// ./src/x_ite/Parser/PLYBParser.js
+/* provided dependency */ var PLYBParser_$ = __webpack_require__(10)["A"];
 
 
 function PLYBParser (scene)
@@ -57351,13 +57445,13 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, Parser_PLYAParser
 {
    getEncoding ()
    {
-      return ["ARRAY_BUFFER", "STRING"];
+      return "ARRAY_BUFFER";
    },
-   setInput (inputs)
+   setInput (input)
    {
-      this .arrayBuffer  = inputs [0];
+      this .arrayBuffer  = input;
       this .dataView     = new DataView (this .arrayBuffer);
-      this .input        = inputs [1];
+      this .input        = PLYBParser_$.decodeText (input .slice (0, 4096));
       this .magic        = this .input .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
       this .byteOffset   = this .magic ?.[0] .length;
       this .littleEndian = this .magic ?.[1] === "binary_little_endian";
@@ -57887,8 +57981,8 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(305)["A"];
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(191);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(10)["A"];
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(150);
 
 
 
@@ -60622,7 +60716,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(10)["A"];
 
 
 
@@ -60739,13 +60833,33 @@ class GoldenGate extends Parser_X3DParser
          switch (encoding)
          {
             case "STRING":
-               return GoldenGate_$.decodeText (x3dSyntax);
+            {
+               const string = GoldenGate_$.decodeText (x3dSyntax);;
+
+               if (x3dSyntax instanceof ArrayBuffer)
+               {
+                  if (x3dSyntax .byteLength && !string .length)
+                     return undefined;
+               }
+
+               return string;
+            }
             case "XML":
-               return GoldenGate_$.parseXML (this .getInput ("STRING", x3dSyntax));
+            {
+               const string = this .getInput ("STRING", x3dSyntax);
+
+               return string === undefined ? undefined : GoldenGate_$.parseXML (string);
+            }
             case "JSON":
-               return JSON .parse (this .getInput ("STRING", x3dSyntax));
+            {
+               const string = this .getInput ("STRING", x3dSyntax);
+
+               return string === undefined ? undefined : JSON .parse (string);
+            }
             case "ARRAY_BUFFER":
+            {
                return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
+            }
          }
       }
       catch
@@ -61038,7 +61152,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var FileLoader_$ = __webpack_require__(10)["A"];
 
 
 
@@ -61051,23 +61165,34 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node, cacheScene = false)
+function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    Base_X3DObject .call (this);
 
    this .node             = node;
    this .cacheScene       = cacheScene;
+   this .dataAsString     = dataAsString;
    this .browser          = node .getBrowser ();
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
    this .url              = [ ];
-   this .URL              = new URL (this .getBaseURL ());
+   this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
 }
 
 Object .assign (FileLoader,
 {
    sceneCache: new Map (),
+   loadDocument (node, url, options)
+   {
+      return new Promise ((resolve, reject) => new FileLoader (node, options) .loadDocument (url, (data, fileURL) =>
+      {
+         if (data)
+            resolve (data, fileURL);
+
+         reject ();
+      }));
+   },
 });
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .prototype),
@@ -61080,7 +61205,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
    },
    getURL ()
    {
-      return this .URL;
+      return this .fileURL;
    },
    getBaseURL ()
    {
@@ -61164,8 +61289,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading scene '${decodeURI (this .fileURL)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
@@ -61182,7 +61307,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       if (data === null)
          callback (null);
       else
-         this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
+         this .createX3DFromString (this .fileURL, data, callback, this .loadDocumentError .bind (this));
    },
    loadDocument (url, callback)
    {
@@ -61208,15 +61333,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
             return await this .callback (url .substring (result [0] .length));
       }
 
-      this .URL = new URL (url, this .getBaseURL ());
+      this .fileURL = new URL (url, this .getBaseURL ());
 
       // Data URL:
+      if (this .dataAsString)
       {
          const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
          if (result && result [3] !== "base64")
          {
-            // const mimeType = result [1] || "text/plain"";
+            // const mimeType = result [1] || "text/plain"";
 
             let data = url .substring (result [0] .length);
 
@@ -61229,17 +61355,17 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       // Bind Viewpoint URLs:
 
-      if (this .URL .protocol !== "data:" && this .bindViewpoint)
+      if (this .fileURL .protocol !== "data:" && this .bindViewpoint)
       {
          const referer = new URL (this .getBaseURL ());
 
-         if (this .URL .protocol === referer .protocol &&
-             this .URL .hostname === referer .hostname &&
-             this .URL .port     === referer .port &&
-             this .URL .pathname === referer .pathname &&
-             this .URL .hash)
+         if (this .fileURL .protocol === referer .protocol &&
+             this .fileURL .hostname === referer .hostname &&
+             this .fileURL .port     === referer .port &&
+             this .fileURL .pathname === referer .pathname &&
+             this .fileURL .hash)
          {
-            return this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
+            return this .bindViewpoint (decodeURIComponent (this .fileURL .hash .substring (1)));
          }
       }
 
@@ -61250,19 +61376,19 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          // Handle target
 
          if (this .target .length && this .target !== "_self")
-            return this .foreign (this .URL .href, this .target);
+            return this .foreign (this .fileURL .href, this .target);
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .URL .protocol !== "data:" && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
-            return this .foreign (this .URL .href, this .target);
+         if (this .fileURL .protocol !== "data:" && this .fileURL .href .match (/\.(?:html|htm|xhtml)$/))
+            return this .foreign (this .fileURL .href, this .target);
       }
 
       // Cached scenes:
 
-      if (this .sceneCallback && this .cacheScene && !this .URL .search .length)
+      if (this .sceneCallback && this .cacheScene && !this .fileURL .search .length)
       {
-         const cacheURL = new URL (this .URL);
+         const cacheURL = new URL (this .fileURL);
 
          cacheURL .hash = "";
 
@@ -61272,7 +61398,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          {
             const scene = await promise;
 
-            scene .setWorldURL (this .URL .href);
+            scene .setWorldURL (this .fileURL .href);
 
             return this .sceneCallback (scene);
          }
@@ -61290,18 +61416,53 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       const
          options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response = this .checkResponse (await fetch (this .URL, options)),
-         mimeType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
+         response = this .checkResponse (await fetch (this .fileURL, options)),
+         mimeType = response .headers .get ("Content-Type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
       {
          // console .log (mimeType);
 
          if (foreignMimeType .has (mimeType))
-            return this .foreign (this .URL .href, this .target);
+            return this .foreign (this .fileURL .href, this .target);
       }
 
-      await this .callback (FileLoader_$.ungzip (await response .arrayBuffer ()), this .URL);
+      const contentLength = +response .headers .get ("x-file-size") || +response .headers .get ("content-length");
+
+      let arrayBuffer;
+
+      if (contentLength)
+      {
+         const
+            browser = this .browser,
+            reader  = response .body .getReader (),
+            values  = [ ];
+
+         let loadedBytes = 0;
+
+         for (;;)
+         {
+            const { done, value } = await reader .read ();
+
+            if (done)
+               break;
+
+            values .push (value)
+
+            // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
+            loadedBytes += value .byteLength;
+
+            browser .setLoadingFractions (this .node, Math .min (loadedBytes / contentLength, 1));
+         }
+
+         arrayBuffer = await new Blob (values) .arrayBuffer ();
+      }
+      else
+      {
+         arrayBuffer = await response .arrayBuffer ()
+      }
+
+      await this .callback (FileLoader_$.ungzip (arrayBuffer), this .fileURL);
    },
    checkResponse (response)
    {
@@ -61331,12 +61492,12 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
    },
    printError (error)
    {
-      const typeName = this .node instanceof Execution_X3DWorld ? "" : ` of ${this .node .getTypeName ()}`;
+      const typeName = this .node instanceof Execution_X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
 
-      if (this .URL .protocol === "data:")
+      if (this .fileURL .protocol === "data:")
          console .error (`Couldn't load data URL${typeName}.`);
       else
-         console .error (`Couldn't load URL '${FileLoader_$.try (() => decodeURI (this .URL)) ?? this .URL}'${typeName}.`, error);
+         console .error (`Couldn't load URL '${FileLoader_$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}'${typeName}.`, error);
 
       console .error (error);
    },
@@ -61430,7 +61591,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Pr
 
       this [_fileLoader] ?.abort ();
 
-      this [_fileLoader] = new InputOutput_FileLoader (this, cache)
+      this [_fileLoader] = new InputOutput_FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    getInternalScene ()
@@ -61745,7 +61906,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(10)["A"];
 
 
 
@@ -64402,7 +64563,7 @@ add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(10)["A"];
 
 
 
@@ -64478,7 +64639,7 @@ function X3DCoreContext (element)
          X3DCoreContext_$("<link/>",
          {
             on: { load: resolve },
-            integrity: "sha384-EIN6BlS+4qPVUKdojluiboM8NwBBWvSbkXmqaj0pM3RbCAavqGjOPFMEC4ZV3qqy",
+            integrity: "sha384-FRR+tAr8pfs3Zyr0Mh9pVMDpPQfEk2JmOqHul7hOCobZNSLUU3RPkYoDCOguOKwB",
             crossorigin: "anonymous",
             rel: "stylesheet",
             href: new URL ("x_ite.css", Networking_URLs .getScriptURL ()),
@@ -67559,7 +67720,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
    isEnabled ()
    {
-      return this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== Shape_GeometryType .GEOMETRY);
+      return !!(this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== Shape_GeometryType .GEOMETRY));
    },
    getBBox (bbox, shadows)
    {
@@ -67685,7 +67846,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
    set_transparent__ ()
    {
-      // This function is overloaded in ParticleSystem!
+      // This function is overloaded in ParticleSystem and GaussianSplatsShape!
 
       const alphaMode = this .appearanceNode .getAlphaMode ();
 
@@ -69237,7 +69398,7 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, Layering_X3DViewpor
                      return;
                }
 
-               // Proceed with next case:
+               // falls through
             }
             default:
             {
@@ -69320,6 +69481,13 @@ const X3DLayeringContext_default_ = X3DLayeringContext;
 ;// ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
 const ToneMapping2_glsl_default_ = () => /* glsl */ `
 const float GAMMA=2.2;const float INV_GAMMA=1./GAMMA;vec3 linearToSRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearToSRGB(const in vec4 color){return vec4(linearToSRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
+#if defined(X3D_LINEAR_OUTPUT)
+vec3 toneMap(in vec3 color){
+#if defined(X3D_COLORSPACE_SRGB)
+color=sRGBToLinear(color);
+#endif
+return color;}
+#else
 #if defined(X3D_TONEMAP_ACES_NARKOWICZ)
 vec3 toneMapACES_Narkowicz(const in vec3 color){const float A=2.51;const float B=.03;const float C=2.43;const float D=.59;const float E=.14;return clamp((color*(A*color+B))/(color*(C*color+D)+E),0.,1.);}
 #endif
@@ -69345,7 +69513,9 @@ color=toneMap_KhronosPbrNeutral(color);
 #if defined(X3D_COLORSPACE_LINEAR)
 color=linearToSRGB(color);
 #endif
-return color;}`
+return color;}
+#endif
+`
 ;
 
 /* harmony default export */ const ToneMapping2_glsl = (Namespace/* default */.A .add ("ToneMapping2.glsl", ToneMapping2_glsl_default_));
@@ -70520,8 +70690,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(500);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(821);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(10)["A"];
 
 
 
@@ -70754,7 +70924,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
-      this .lookAtBBox (x, y, this .getStraightenHorizon ());
+
+      if (this .getBrowser () .getAltKey ())
+         this .lookAtPoint (x, y, this .getStraightenHorizon ());
+      else
+         this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
@@ -71596,8 +71770,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(500);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(821);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(10)["A"];
 
 
 
@@ -72334,8 +72508,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(500);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(821);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(10)["A"];
 
 
 
@@ -72548,8 +72722,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(500);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(821);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(10)["A"];
 
 
 
@@ -73632,8 +73806,9 @@ const
    _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
    X3DNetworkingContext_loadingObjects = Symbol (),
-   _loading        = Symbol (),
+   _browserLoading = Symbol (),
    _set_loadCount  = Symbol (),
+   _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
 
 function getBaseURI (element)
@@ -73652,10 +73827,11 @@ function X3DNetworkingContext ()
    this .addChildObjects (Base_X3DConstants .outputOnly, "loadCount", new x_ite_Fields .SFInt32 ());
 
    this [_baseURL]        = getBaseURI (this .getElement ());
+   this [_browserLoading] = false;
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [X3DNetworkingContext_loadingObjects] = new Set ();
-   this [_loading]        = false;
+   this [_loadFractions]  = new Map ();
 }
 
 Object .assign (X3DNetworkingContext .prototype,
@@ -73686,11 +73862,11 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    getBrowserLoading ()
    {
-      return this [_loading];
+      return this [_browserLoading];
    },
    setBrowserLoading (value)
    {
-      this [_loading] = value;
+      this [_browserLoading] = value;
 
       if (value)
       {
@@ -73715,7 +73891,7 @@ Object .assign (X3DNetworkingContext .prototype,
             // Defer until promises are resolved.
             setTimeout (() =>
             {
-               if (!this [_loading])
+               if (!this [_browserLoading])
                   this .getSplashScreen () .addClass ("x_ite-private-fade-out-splash-screen");
             });
          }
@@ -73751,9 +73927,19 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingTotal]   = 0;
 
       this [X3DNetworkingContext_loadingObjects] .clear ();
+      this [_loadFractions]  .clear ();
 
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
+   },
+   setLoadingFractions (object, fractions)
+   {
+      if (!this [_browserLoading])
+         return;
+
+      // Let fractions go from 1 to 0.
+      this [_loadFractions] .set (object, 1 - fractions);
+      this [_set_loadCount] ();
    },
    [_set_loadCount] ()
    {
@@ -73761,7 +73947,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       let string;
 
-      if (this ._loadCount .getValue () || this [_loading])
+      if (this ._loadCount .getValue () || this [_browserLoading])
       {
          string = ((loadingDisplay || 1) === 1
             ? gettext ("Loading %1 file")
@@ -73774,11 +73960,17 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this .updateCursor ();
 
-      if (this [_loading])
+      if (this [_browserLoading])
       {
+         const live = Array .from (this [_loadFractions] .values ())
+            .reduce ((p, c) => p + c, 0);
+
+         // Let the live loading fractions be half of the count.
+         const fractions = 1 - (this ._loadCount .getValue () + live) / (this [_loadingTotal] + this [_loadFractions] .size);
+
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
-            .css ("width", (100 - 100 * this ._loadCount .getValue () / this [_loadingTotal]) + "%");
+            .css ("width", `${100 * fractions}%`);
       }
       else
       {
@@ -73898,8 +74090,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(500);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(821);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(10)["A"];
 
 
 
@@ -75164,7 +75356,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(10)["A"];
 
 
 
@@ -75809,9 +76001,7 @@ finalColor=getHatchColor(finalColor,gl_FragCoord);
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
-#if!defined(X3D_LINEAR_OUTPUT)
 finalColor.rgb=toneMap(finalColor.rgb);
-#endif
 #if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 oit(finalColor);
 #else
@@ -76694,8 +76884,13 @@ info.diffuseTransmissionColorFactor*=getDiffuseTransmissionColorTextureEXT();
 return info;}
 #endif
 #if defined(X3D_VOLUME_SCATTER_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_ScatterStrengthTextureEXT", "a", "linear")}
 ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
-uniform vec3 x3d_MultiscatterColorEXT;MaterialInfo getVolumeScatterInfo(in MaterialInfo info){info.multiscatterColor=x3d_MultiscatterColorEXT;
+uniform float x3d_ScatterStrengthEXT;uniform vec3 x3d_MultiscatterColorEXT;MaterialInfo getVolumeScatterInfo(in MaterialInfo info){float scatterStrength=x3d_ScatterStrengthEXT;
+#if defined(X3D_SCATTER_STRENGTH_TEXTURE_EXT)
+scatterStrength*=getScatterStrengthTextureEXT();
+#endif
+info.multiscatterColor=x3d_MultiscatterColorEXT;
 #if defined(X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
 info.multiscatterColor*=getMultiscatterColorTextureEXT();
 #endif
@@ -76997,7 +77192,7 @@ vec3 getPunctualRadianceTransmission(const in vec3 normal,const in vec3 view,con
 /* harmony default export */ const Punctual2_glsl = (Namespace/* default */.A .add ("Punctual2.glsl", Punctual2_glsl_default_));
 ;// ./src/assets/shaders/webgl2/Default2.vs.js
 const Default2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<Vertex>
 `
 ;
@@ -77005,7 +77200,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 /* harmony default export */ const Default2_vs = (Namespace/* default */.A .add ("Default2.vs", Default2_vs_default_));
 ;// ./src/assets/shaders/webgl2/Depth2.fs.js
 const Depth2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform int x3d_Id;layout(location=0)out vec4 x3d_FragData0;
+precision highp int;precision highp float;precision highp sampler2D;uniform int x3d_Id;layout(location=0)out vec4 x3d_FragData0;
 #if defined(X3D_CLIP_PLANES)
 in vec3 vertex;
 #endif
@@ -77039,7 +77234,7 @@ x3d_FragData0=vec4(vec3(gl_FragCoord.z),1.);
 /* harmony default export */ const Depth2_fs = (Namespace/* default */.A .add ("Depth2.fs", Depth2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Depth2.vs.js
 const Depth2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
+precision highp int;precision highp float;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
 #if defined(X3D_CLIP_PLANES)
 out vec3 vertex;
 #endif
@@ -77077,19 +77272,19 @@ gl_Position=x3d_ProjectionMatrix*tVertex;}`
 /* harmony default export */ const Depth2_vs = (Namespace/* default */.A .add ("Depth2.vs", Depth2_vs_default_));
 ;// ./src/assets/shaders/webgl2/FullScreen2.vs.js
 const FullScreen2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;in vec2 x3d_Vertex;out vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.,1.);}`
+precision highp int;precision highp float;precision highp sampler2D;in vec2 x3d_Vertex;out vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.,1.);}`
 ;
 
 /* harmony default export */ const FullScreen2_vs = (Namespace/* default */.A .add ("FullScreen2.vs", FullScreen2_vs_default_));
 ;// ./src/assets/shaders/webgl2/LineTransform2.fs.js
 const LineTransform2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;void main(){}`
+precision highp int;precision highp float;void main(){}`
 ;
 
 /* harmony default export */ const LineTransform2_fs = (Namespace/* default */.A .add ("LineTransform2.fs", LineTransform2_fs_default_));
 ;// ./src/assets/shaders/webgl2/LineTransform2.vs.js
 const LineTransform2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;
+precision highp int;precision highp float;
 #if defined(X3D_PASS_0)
 uniform vec4 viewport;uniform mat4 modelViewProjectionMatrix;uniform mat4 invModelViewProjectionMatrix;uniform float linewidthScaleFactor1_2;
 #if defined(X3D_INSTANCING)
@@ -77123,7 +77318,7 @@ out mat3 instanceNormalMatrix0;out vec4 tangent0;out vec3 normal0;out mat3 insta
 /* harmony default export */ const LineTransform2_vs = (Namespace/* default */.A .add ("LineTransform2.vs", LineTransform2_vs_default_));
 ;// ./src/assets/shaders/webgl2/Material2.fs.js
 const Material2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<Material>
 `
 ;
@@ -77131,13 +77326,13 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 /* harmony default export */ const Material2_fs = (Namespace/* default */.A .add ("Material2.fs", Material2_fs_default_));
 ;// ./src/assets/shaders/webgl2/OITCompose2.fs.js
 const OITCompose2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform sampler2D x3d_AccumRevealageTexture;uniform sampler2D x3d_AlphaTexture;out vec4 x3d_FragColor;void main(){ivec2 fragCoord=ivec2(gl_FragCoord.xy);vec4 accum=texelFetch(x3d_AccumRevealageTexture,fragCoord,0);if(accum.a>=1.)discard;float alpha=texelFetch(x3d_AlphaTexture,fragCoord,0).r;float revealage=1.-accum.a;x3d_FragColor=vec4(revealage*accum.rgb/clamp(alpha,.001,50000.),revealage);}`
+precision highp int;precision highp float;precision highp sampler2D;uniform sampler2D x3d_AccumRevealageTexture;uniform sampler2D x3d_AlphaTexture;out vec4 x3d_FragColor;void main(){ivec2 fragCoord=ivec2(gl_FragCoord.xy);vec4 accum=texelFetch(x3d_AccumRevealageTexture,fragCoord,0);if(accum.a>=1.)discard;float alpha=texelFetch(x3d_AlphaTexture,fragCoord,0).r;float revealage=1.-accum.a;x3d_FragColor=vec4(revealage*accum.rgb/clamp(alpha,.001,50000.),revealage);}`
 ;
 
 /* harmony default export */ const OITCompose2_fs = (Namespace/* default */.A .add ("OITCompose2.fs", OITCompose2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Physical2.fs.js
 const Physical2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<PBR>
 `
 ;
@@ -77145,7 +77340,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 /* harmony default export */ const Physical2_fs = (Namespace/* default */.A .add ("Physical2.fs", Physical2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Pointing2.fs.js
 const Pointing2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;in vec3 vertex;in vec3 normal;in vec4 texCoord;
+precision highp int;precision highp float;precision highp sampler2D;in vec3 vertex;in vec3 normal;in vec4 texCoord;
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 in vec4 texCoord0;
 #else
@@ -77171,7 +77366,7 @@ x3d_FragData0=vec4(vertex,x3d_Id);x3d_FragData1=vec4(normal,0.);x3d_FragData2=te
 /* harmony default export */ const Pointing2_fs = (Namespace/* default */.A .add ("Pointing2.fs", Pointing2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Pointing2.vs.js
 const Pointing2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
+precision highp int;precision highp float;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
 #if defined(X3D_NORMALS)
 in vec3 x3d_Normal;
 #else
@@ -77213,7 +77408,7 @@ gl_Position=x3d_ProjectionMatrix*tVertex;}`
 /* harmony default export */ const Pointing2_vs = (Namespace/* default */.A .add ("Pointing2.vs", Pointing2_vs_default_));
 ;// ./src/assets/shaders/webgl2/Unlit2.fs.js
 const Unlit2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<Unlit>
 `
 ;
@@ -77316,15 +77511,15 @@ const ShaderRegistry = {
          Unlit: Unlit2_fs,
       },
    },
-   addVertex: function (name, shader2)
+   addVertexShader (name, shader2)
    {
       this .vertex [2] [name] = shader2;
    },
-   addFragment: function (name, shader2)
+   addFragmentShader (name, shader2)
    {
       this .fragment [2] [name] = shader2;
    },
-   addInclude: function (name, shader2)
+   addIncludeFile (name, shader2)
    {
       this .includes [2] [name] = shader2;
    },
@@ -77387,7 +77582,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(10)["A"];
 
 
 
@@ -78241,7 +78436,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .numClipPlanes = 0;
 
       for (const clipPlane of clipPlanes)
-         clipPlane .setShaderUniforms (gl, this, renderObject);
+      {
+         if (clipPlane .isClipPlane)
+            clipPlane .setShaderUniforms (gl, this, renderObject);
+      }
    },
    setUniforms: (() =>
    {
@@ -79391,7 +79589,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(10)["A"];
 
 
 
@@ -79482,7 +79680,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, Core_X3DNode .pro
    },
    loadData ()
    {
-      new InputOutput_FileLoader (this) .loadDocument (this ._url, (data, url) =>
+      new InputOutput_FileLoader (this) .loadDocument (this ._url, (data, fileURL) =>
       {
          if (data === null)
          {
@@ -79518,14 +79716,14 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, Core_X3DNode .pro
                if (match)
                {
                   const fileName = shaderCompiler .getSourceFileName (match [1])
-                     || url
+                     || fileURL
                      || this .getExecutionContext () .getWorldURL ();
 
                   throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', line ${match [2]}, ${log}`);
                }
                else
                {
-                  const fileName = url || this .getExecutionContext () .getWorldURL ();
+                  const fileName = fileURL || this .getExecutionContext () .getWorldURL ();
 
                   throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', ${log}`);
                }
@@ -81334,7 +81532,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(10)["A"];
 
 
 
@@ -81641,7 +81839,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(10)["A"];
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -82696,7 +82894,7 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(10)["A"];
 /*******************************************************************************
  * MIT License
  *
@@ -93460,7 +93658,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
 
       this .fileLoader ?.abort ();
 
-      this .fileLoader = new InputOutput_FileLoader (this, cache)
+      this .fileLoader = new InputOutput_FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)
@@ -97726,7 +97924,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
    {
       this .unloadData ();
 
-      new InputOutput_FileLoader (this) .loadDocument (this ._url, async (data, URL) =>
+      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
@@ -97741,9 +97939,13 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
 
             if (DEVELOPMENT)
             {
-               if (URL .protocol !== "data:")
-                  console .info (`Done loading audio '${decodeURI (URL)}'.`);
+               if (fileURL .protocol !== "data:")
+                  console .info (`Done loading audio '${decodeURI (fileURL)}'.`);
             }
+         }
+         else
+         {
+            throw new Error ("AudioClip: no suitable file type handler found.");
          }
       });
    },
@@ -100760,9 +100962,10 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(305)["A"];
-/* provided dependency */ var SuperGif = __webpack_require__(321);
-/* provided dependency */ var APNG = __webpack_require__(491);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(10)["A"];
+/* provided dependency */ var SuperGif = __webpack_require__(556);
+/* provided dependency */ var APNG = __webpack_require__(62);
+
 
 
 
@@ -100852,42 +101055,69 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
       // Get URL.
 
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
+      this .fileURL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .URL .protocol !== "data:")
+      if (this .fileURL .pathname .endsWith (".gif") || this .fileURL .href .match (/^data:image\/gif[;,]/))
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+         new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         {
+            if (data === null)
+            {
+               this .loadNext ();
+            }
+            else if (data instanceof ArrayBuffer)
+            {
+               this .fileURL = new URL (fileURL);
+
+               const
+                  img = MovieTexture_$("<img></img>") .appendTo (MovieTexture_$("<div></div>")),
+                  gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+
+               gif .load_raw (new Uint8Array (data), () => this .setGif (gif));
+            }
+            else
+            {
+               throw new Error ("MovieTexture: no suitable file type handler found.");
+            }
+         });
       }
-
-      if (this .URL .pathname .endsWith (".gif"))
+      else if (this .fileURL .pathname .endsWith (".png") || this .fileURL .href .match (/^data:image\/png[;,]/))
       {
-         const
-            img = MovieTexture_$("<img></img>") .appendTo (MovieTexture_$("<div></div>")),
-            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+         new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         {
+            if (data === null)
+            {
+               this .loadNext ();
+            }
+            else if (data instanceof ArrayBuffer)
+            {
+               this .fileURL = new URL (fileURL);
 
-         gif .load_url (this .URL, () => this .setGif (gif));
+               const
+                  parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default,
+                  apng      = await parseAPNG (data);
 
-         // this .setTimeout ({ type: "timeout" });
-      }
-      else if (this .URL .pathname .endsWith (".png"))
-      {
-         const parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default;
-
-         fetch (this .URL, { cache: this .getCache () ? "default" : "reload" })
-            .then (response => response .arrayBuffer ())
-            .then (arrayBuffer => parseAPNG (arrayBuffer))
-            .then (apng => this .setAPNG (apng))
-            .catch (error => this .setError ({ type: error .message}));
-
+               this .setAPNG (apng);
+            }
+            else
+            {
+               throw new Error ("MovieTexture: no suitable file type handler found.");
+            }
+         });
       }
       else
       {
+         if (this .fileURL .protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .fileURL .searchParams .set ("_", Date .now ());
+         }
+
          this .video
             .on ("abort error", this .setError .bind (this))
             .on ("suspend stalled", this .setTimeout .bind (this))
             .on ("loadeddata", this .setVideo .bind (this))
-            .attr ("src", this .URL)
+            .attr ("src", this .fileURL)
             .get (0) .load ();
       }
    },
@@ -100903,8 +101133,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading movie '${decodeURI (this .fileURL)}':`, event .type);
 
       this .loadNext ();
    },
@@ -100914,8 +101144,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       {
          if (DEVELOPMENT)
          {
-            if (this .URL .protocol !== "data:")
-               console .info (`Done loading movie '${decodeURI (this .URL)}'.`);
+            if (this .fileURL .protocol !== "data:")
+               console .info (`Done loading movie '${decodeURI (this .fileURL)}'.`);
          }
 
          const
@@ -102144,7 +102374,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(10)["A"];
 
 
 
@@ -103296,7 +103526,7 @@ const SUPPORTED_VERSIONS_default_ = [
 
 /* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(10)["A"];
 
 
 class X3DCanvasElement extends HTMLElement
@@ -103460,8 +103690,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(305)["A"];
-/* provided dependency */ var pako = __webpack_require__(206);
+/* provided dependency */ var jquery_$ = __webpack_require__(10)["A"];
+/* provided dependency */ var pako = __webpack_require__(273);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -103525,13 +103755,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(191);
+/* provided dependency */ var libtess_libtess = __webpack_require__(150);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(305)["A"];
+/* provided dependency */ var X3D_$ = __webpack_require__(10)["A"];
 
 
 
