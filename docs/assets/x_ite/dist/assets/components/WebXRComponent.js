@@ -1,71 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 254
-(module) {
-
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	// The require scope
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -266,6 +228,9 @@ const __default__ = ScreenPoint;
 ;
 
 /* harmony default export */ const Rendering_ScreenPoint = (external_X_ITE_X3D_Namespace_default().add ("ScreenPoint", __default__));
+;// external "__X_ITE_X3D__ .PointingType"
+const external_X_ITE_X3D_PointingType_namespaceObject = __X_ITE_X3D__ .PointingType;
+var external_X_ITE_X3D_PointingType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PointingType_namespaceObject);
 ;// external "__X_ITE_X3D__ .ViewVolume"
 const external_X_ITE_X3D_ViewVolume_namespaceObject = __X_ITE_X3D__ .ViewVolume;
 var external_X_ITE_X3D_ViewVolume_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ViewVolume_namespaceObject);
@@ -331,7 +296,7 @@ Object .assign ((external_X_ITE_X3D_ExamineViewer_default()).prototype,
 
       if (button0)
       {
-         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (-gamepad .axes [3]));
+         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (gamepad .axes [3]));
       }
       else if (button1)
       {
@@ -418,7 +383,7 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 });
 
 ;// ./src/x_ite/Browser/WebXR/X3DWebXRContext.js
-/* provided dependency */ var $ = __webpack_require__(254);
+
 
 
 
@@ -459,24 +424,33 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      this [_xrButton] = $("<div></div>")
-         .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."))
-         .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
-         .on ("mousedown touchstart", false)
-         .on ("mouseup touchend", event =>
-         {
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-            event .stopPropagation ();
+      this [_xrButton] ??= (() =>
+      {
+         const xrButton = document .createElement ("div");
 
+         const xrToggleSession = () =>
+         {
             this .startAudioElements ();
 
             if (this .getSession () === window)
                this .xrStartSession ();
             else
                this .xrStopSession ();
-         })
-         .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
+         };
+
+         xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button", "x_ite-private-fade");
+         xrButton .part ?.add ("xr-button");
+
+         xrButton .title      = external_X_ITE_X3D_gettext_default()("Start WebXR session.");
+         xrButton .onmouseup  = xrToggleSession;
+         xrButton .ontouchend = xrToggleSession;
+
+         this .getSurface () .querySelector (".x_ite-private-buttons") .append (xrButton);
+
+         return xrButton;
+      })();
+
+      this [_xrButton] .classList .remove ("x_ite-private-hidden");
    },
    async xrStartSession ()
    {
@@ -493,7 +467,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          await gl .makeXRCompatible ();
 
-         this .finishedEvents () .addInterest ("xrUpdatePointers", this);
+         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
 
          session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
@@ -515,7 +489,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .xrUpdateBaseLayer ({ }, session);
          this .setSession (session);
-         this .removeHit (this .getHit ());
+         this .buttonReleaseEvent (NaN, NaN);
 
          // Browser Options
 
@@ -529,7 +503,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Button
 
-         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Stop WebXR session."));
+         this [_xrButton] .title = external_X_ITE_X3D_gettext_default()("Stop WebXR session.");
 
          // session .addEventListener ("select", event =>
          // {
@@ -550,13 +524,13 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .finishedEvents () .removeInterest ("xrUpdatePointers", this);
+         this .displayFinishEvents () .removeInterest ("xrUpdatePointers", this);
 
          this .setSession (window);
          this .setDefaultFramebuffer (null);
 
          for (const { hit } of this [_inputSources])
-            this .removeHit (hit);
+            this .buttonReleaseEvent (0, 0, hit);
 
          this [_referenceSpace] = null;
          this [_baseLayer]      = null;
@@ -579,7 +553,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Button
 
-         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."));
+         this [_xrButton] .title = external_X_ITE_X3D_gettext_default()("Start WebXR session.");
       });
    },
    xrContentScale ()
@@ -630,7 +604,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .getSession () .updateRenderState (nearFarPlanes);
       };
    })(),
-   xrUpdateVisibility (event)
+   xrUpdateVisibility ()
    {
       switch (this .getSession () .visibilityState)
       {
@@ -670,7 +644,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       for (const inputSource of event .removed)
       {
-         this .removeHit (inputSource .hit);
+         this .buttonReleaseEvent (0, 0, inputSource .hit);
          this [_inputSources] .delete (inputSource);
       }
 
@@ -800,7 +774,7 @@ Object .assign (X3DWebXRContext .prototype,
             if (!active)
                continue;
 
-            this .touch (viewport [2] / 2, viewport [3] / 2, hit, inputSource);
+            this .touch ((external_X_ITE_X3D_PointingType_default()).MOVE, viewport [2] / 2, viewport [3] / 2, hit, inputSource);
 
             // Make a vibration puls if there is a sensor hit.
 
@@ -861,7 +835,7 @@ Object .assign (X3DWebXRContext .prototype,
                {
                   hit .pressed = false;
 
-                  this .buttonReleaseEvent (hit);
+                  this .buttonReleaseEvent (0, 0, hit);
                }
             }
 
@@ -929,7 +903,7 @@ Object .assign (X3DWebXRContext .prototype,
                   .assign (matrix)
                   .multRight (viewMatrix)
                   .translate (hit .originalPoint)
-                  .rotate (hitRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, hit .originalNormal));
+                  .rotate (hitRotation .setVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, hit .originalNormal));
 
                this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }

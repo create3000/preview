@@ -1,71 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 254
-(module) {
-
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	// The require scope
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -79,7 +41,7 @@ const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Browser/CubeMapTexturing/Panorama2.fs.js
 const __default__ = /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;in vec2 texCoord;out vec4 x3d_FragColor;uniform sampler2D x3d_PanoramaTextureEXT;uniform int x3d_CurrentFaceEXT;vec3 uvToXYZ(const in int face,const in vec2 uv){switch(face){case 0:return vec3(1.,uv.y,uv.x);case 1:return vec3(-1.,uv.y,-uv.x);case 2:return vec3(uv.x,uv.y,-1.);case 3:return vec3(-uv.x,uv.y,1.);case 4:return vec3(uv.y,-1.,uv.x);default:return vec3(-uv.y,1.,uv.x);}}vec2 dirToUV(const in vec3 dir){return vec2(.5+.5*atan(dir.z,dir.x)/M_PI,1.-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture(x3d_PanoramaTextureEXT,src).rgb;}void main(){x3d_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFaceEXT,texCoord),1.);}`
+precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.141592653589793;in vec2 texCoord;out vec4 x3d_FragColor;uniform sampler2D x3d_PanoramaTextureEXT;uniform int x3d_CurrentFaceEXT;vec3 uvToXYZ(const in int face,const in vec2 uv){switch(face){case 0:return vec3(1.,uv.y,uv.x);case 1:return vec3(-1.,uv.y,-uv.x);case 2:return vec3(uv.x,uv.y,-1.);case 3:return vec3(-uv.x,uv.y,1.);case 4:return vec3(uv.y,-1.,uv.x);default:return vec3(-uv.y,1.,uv.x);}}vec2 dirToUV(const in vec3 dir){return vec2(.5+.5*atan(dir.z,dir.x)/M_PI,1.-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture(x3d_PanoramaTextureEXT,src).rgb;}void main(){x3d_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFaceEXT,texCoord),1.);}`
 ;
 
 /* harmony default export */ const Panorama2_fs = (external_X_ITE_X3D_Namespace_default().add ("Panorama2.fs", __default__));
@@ -136,6 +98,8 @@ function X3DEnvironmentTextureNode (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DEnvironmentTextureNode);
 
+   // Private properties
+
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_CUBE_MAP;
@@ -148,24 +112,27 @@ function X3DEnvironmentTextureNode (executionContext)
       gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
       gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
    ];
-
-   this .size   = 1;
-   this .levels = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (external_X_ITE_X3D_X3DSingleTextureNode_default()).prototype),
 {
+   initialize ()
+   {
+      external_X_ITE_X3D_X3DSingleTextureNode_default().prototype .initialize .call (this);
+
+      this .clearTexture ();
+   },
    getTarget ()
    {
       return this .target;
    },
-   getTextureType ()
-   {
-      return 4;
-   },
    getTargets ()
    {
       return this .targets;
+   },
+   getTextureType ()
+   {
+      return 4;
    },
    getSize ()
    {
@@ -202,6 +169,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (e
          this .setSize (1);
          this .setTransparent (false);
          this .updateTextureParameters ();
+         this .addNodeEvent ();
       };
    })(),
    updateTextureParameters ()
@@ -283,10 +251,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
       const gl = this .getBrowser () .getContext ();
 
       this .frameBuffer = gl .createFramebuffer ();
-
-      // Upload default data.
-
-      this .clearTexture ();
 
       // Initialize.
 
@@ -381,7 +345,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
 
             // Copy color texture.
 
-            gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
             gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -406,8 +369,12 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
       else
       {
          this .clearTexture ();
-         this .addNodeEvent ();
       }
+   },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const textureNode of this .textureNodes)
+         textureNode ?.getRenderedTextures (renderedTextures);
    },
 });
 
@@ -503,10 +470,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
-      // Upload default data.
-
-      this .clearTexture ();
-
       // Initialize.
 
       this ._size .addInterest ("set_size__", this);
@@ -516,6 +479,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    isRenderedTexture ()
    {
       return true;
+   },
+   getRenderedTextures (renderedTextures)
+   {
+      renderedTextures .add (this);
    },
    addUpdateCallback (key, callback)
    {
@@ -527,19 +494,22 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    },
    set_size__ ()
    {
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
+      const size = this ._size .getValue ();
+
+      // Dispose old framebuffer.
+
+      this .frameBuffer ?.dispose ();
 
       // Transfer 6 textures of size x size pixels.
-
-      const size = this ._size .getValue ();
 
       if (size > 0)
       {
          // Upload default data.
 
-         const defaultData = new Uint8Array (size * size * 4);
+         const
+            browser     = this .getBrowser (),
+            gl          = browser .getContext (),
+            defaultData = new Uint8Array (size * size * 4);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -559,7 +529,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       {
          this .frameBuffer = null;
 
-         this .setSize (0);
+         this .clearTexture ();
       }
    },
    traverse (type, renderObject)
@@ -585,12 +555,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       // Rotations to negated normals of the texture cube.
 
       const rotations = [
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Z_AXIS), // front
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Z_AXIS),          // back
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).X_AXIS),          // left
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_X_AXIS), // right
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Y_AXIS), // top
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Y_AXIS),          // bottom
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Z_AXIS), // front
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Z_AXIS),          // back
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).X_AXIS),          // left
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_X_AXIS), // right
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Y_AXIS), // top
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Y_AXIS),          // bottom
       ];
 
       // Negated scales of the texture cube.
@@ -622,8 +592,8 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          const
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             browser            = this .getBrowser (),
-            layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
+            viewport           = this .viewport,
             background         = dependentRenderer .getBackground (),
             navigationInfoNode = dependentRenderer .getNavigationInfo (),
             viewpointNode      = dependentRenderer .getViewpoint (),
@@ -638,7 +608,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
@@ -647,8 +617,8 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
          for (let i = 0; i < 6; ++ i)
          {
-            gl .viewport (... this .viewport);
-            gl .scissor (... this .viewport);
+            gl .viewport (... viewport);
+            gl .scissor (... viewport);
             gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 
@@ -673,7 +643,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
             // Render layer's children.
 
-            layer .traverse ((external_X_ITE_X3D_TraverseType_default()).DISPLAY, dependentRenderer);
+            renderObject .getLayer () .traverse ((external_X_ITE_X3D_TraverseType_default()).DISPLAY, dependentRenderer);
 
             // Pop matrices.
 
@@ -708,8 +678,11 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      if (this .textureRenderingPass)
-         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+      if (!this .textureRenderingPass)
+         return;
+
+      // Hide object by making scissor zero size.
+      gl .scissor (0, 0, 0, 0);
    },
 });
 
@@ -746,7 +719,6 @@ var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
-/* provided dependency */ var $ = __webpack_require__(254);
 
 
 
@@ -764,9 +736,6 @@ function ImageCubeMapTexture (executionContext)
    external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ImageCubeMapTexture);
-
-   this .image    = $("<img></img>");
-   this .urlStack = new (external_X_ITE_X3D_Fields_default()).MFString ();
 }
 
 Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
@@ -777,17 +746,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
-      // Upload default data.
-
-      this .clearTexture ();
-
-      // Initialize.
-
-      this .image
-         .on ("load", this .setImage .bind (this))
-         .on ("abort error", this .setError .bind (this))
-         .attr ("crossorigin", "anonymous");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    unloadData ()
@@ -796,130 +754,96 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    },
    loadData ()
    {
-      this .urlStack .setValue (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .urlStack .length === 0)
-      {
-         this .clearTexture ();
-         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
-         this .addNodeEvent ();
-         return;
-      }
-
-      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL, mimeType) =>
       {
          if (data === null)
          {
-            this .loadNext ();
+            this .clearTexture ();
+            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
          {
-            this .fileURL = new URL (fileURL);
+            fileURL = new URL (fileURL);
 
-            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^data:image\/ktx2[;,]/))
+            if (/\.ktx2?(?:\.gz)?$/ .test (fileURL .pathname) || /^\s*data:image\/ktx2[;,]/ .test (fileURL .href))
             {
                this .setLinear (true);
                this .setMipMaps (false);
 
-               this .getBrowser () .getKTXDecoder ()
-                  .then (decoder => decoder .loadKTXFromBuffer (data))
-                  .then (texture => this .setKTXTexture (texture))
-                  .catch (error => this .setError ({ type: error .message }));
+               const
+                  decoder = await this .getBrowser () .getKTXDecoder (),
+                  texture = await decoder .loadKTXFromBuffer (data);
+
+               this .setKTXTexture (texture, fileURL);
             }
             else
             {
                this .setLinear (false);
                this .setMipMaps (true);
 
-               this .objectURL = URL .createObjectURL (new Blob ([data]));
+               const objectURL = URL .createObjectURL (new Blob ([data], { type: mimeType }));
 
-               this .image .attr ("src", this .objectURL);
+               try
+               {
+                  this .setImage (await this .loadImage (objectURL), fileURL);
+               }
+               finally
+               {
+                  URL .revokeObjectURL (objectURL);
+               }
             }
          }
          else
          {
-            throw new Error ("ImageTexture: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
-
-      URL .revokeObjectURL (this .objectURL);
-
-      this .loadNext ();
-   },
-   setKTXTexture (texture)
+   setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
-         return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
+         throw new Error ("Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'.");
 
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         this .setTexture (texture);
-         this .setTransparent (false);
-         this .setSize (texture .baseWidth);
-         this .updateTextureParameters ();
+      this .setTexture (texture);
+      this .setTransparent (false);
+      this .setSize (texture .baseWidth);
+      this .updateTextureParameters ();
 
-         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
-         this .addNodeEvent ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+      this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
    },
-   setImage ()
+   setImage (image, fileURL)
    {
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         // Create texture.
+      // Create texture.
 
-         const
-            gl      = this .getBrowser () .getContext (),
-            texture = gl .createTexture ();
+      const
+         gl      = this .getBrowser () .getContext (),
+         texture = gl .createTexture ();
 
-         gl .bindTexture (gl .TEXTURE_2D, texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
+      gl .bindTexture (gl .TEXTURE_2D, texture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
 
-         this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"), false);
+      this .imageToCubeMap (texture, image .width, image .height, false);
 
-         // Update load state.
+      // Update load state.
 
-         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
-         this .addNodeEvent ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
-      finally
-      {
-         URL .revokeObjectURL (this .objectURL);
-      }
+      this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+      this .addNodeEvent ();
    },
    imageToCubeMap (texture, width, height)
    {
@@ -966,7 +890,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
          for (let i = 0; i < 6; ++ i)
-            gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
          // Extract images.
 
@@ -1025,7 +949,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       gl .bindTexture (this .getTarget (), this .getTexture ());
 
       for (let i = 0; i < 6; ++ i)
-         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+         gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
       // Render faces.
 

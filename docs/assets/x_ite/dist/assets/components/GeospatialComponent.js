@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -374,7 +368,7 @@ Object .assign (UniversalTransverseMercator .prototype,
 
       if (northing < 0)
       {
-         S        = ! this .southernHemisphere;
+         S        = !this .southernHemisphere;
          northing = -northing;
       }
 
@@ -451,7 +445,7 @@ Object .assign (UniversalTransverseMercator .prototype,
       {
          northing += N0;
 
-         if (! this .southernHemisphere)
+         if (!this .southernHemisphere)
             northing = -northing;
       }
       else
@@ -690,7 +684,7 @@ const
    y      = new (external_X_ITE_X3D_Vector3_default()) (),
    z      = new (external_X_ITE_X3D_Vector3_default()) ();
 
-function X3DGeospatialObject (executionContext)
+function X3DGeospatialObject (/* executionContext */)
 {
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DGeospatialObject);
 
@@ -784,14 +778,14 @@ Object .assign (X3DGeospatialObject .prototype,
    {
       if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
       {
-         this .getCoord          = getCoordRotateYUp;
+         this .getLocalCoord     = getLocalCoordRotateYUp;
          this .getGeoCoord       = getGeoCoordRotateYUp;
          this .getGeoUpVector    = getGeoUpVectorRotateYUp;
          this .getLocationMatrix = getLocationMatrixRotateYUp;
       }
       else
       {
-         delete this .getCoord;
+         delete this .getLocalCoord;
          delete this .getGeoCoord;
          delete this .getGeoUpVector;
          delete this .getLocationMatrix;
@@ -805,7 +799,7 @@ Object .assign (X3DGeospatialObject .prototype,
    {
       return this .standardOrder;
    },
-   getCoord (geoPoint, result)
+   getLocalCoord (geoPoint, result)
    {
       return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
    },
@@ -838,7 +832,7 @@ Object .assign (X3DGeospatialObject .prototype,
    { },
 });
 
-function getCoordRotateYUp (geoPoint, result)
+function getLocalCoordRotateYUp (geoPoint, result)
 {
    return this .invOriginMatrix .multVecMatrix (this .referenceFrame .convert (geoPoint, result));
 }
@@ -944,7 +938,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
 
             index *= 3;
 
-            return this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
+            return this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
          }
          else
          {
@@ -966,7 +960,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
 
             index *= 3;
 
-            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+            this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
          }
@@ -990,7 +984,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
 
          for (let index = 0; index < length; index += 3)
          {
-            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+            this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
          }
@@ -1138,13 +1132,6 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
       this .set_tangent__ ();
       this .set_normal__ ();
    },
-   getHeight (index)
-   {
-      if (index < this ._height .length)
-         return this ._height [index] * this ._yScale .getValue ();
-
-      return 0;
-   },
    createTexCoords ()
    {
       const
@@ -1238,10 +1225,12 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
    {
       const
          points     = [ ],
+         yScale     = this ._yScale .getValue (),
          xDimension = this ._xDimension .getValue (),
          zDimension = this ._zDimension .getValue (),
          xSpacing   = this ._xSpacing .getValue (),
-         zSpacing   = this ._zSpacing .getValue ();
+         zSpacing   = this ._zSpacing .getValue (),
+         height     = this ._height .shrinkToFit ();
 
       // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
       // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between
@@ -1258,11 +1247,10 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
             {
                const point = new (external_X_ITE_X3D_Vector3_default()) (zSpacing * z, // latitude, northing
                                           xSpacing * x, // longitude, easting
-                                          this .getHeight (x + z * xDimension));
+                                          (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-
-               points .push (this .getCoord (point, point));
+               points .push (this .getLocalCoord (point, point));
             }
          }
       }
@@ -1274,11 +1262,10 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
             {
                const point = new (external_X_ITE_X3D_Vector3_default()) (xSpacing * x, // longitude, easting
                                           zSpacing * z, // latitude, northing
-                                          this .getHeight (x + z * xDimension));
+                                          (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-
-               points .push (this .getCoord (point, point));
+               points .push (this .getLocalCoord (point, point));
             }
          }
       }
@@ -1485,6 +1472,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this ._rootNode .addFieldInterest (this .rootGroupNode ._children);
 
       this .rootGroupNode ._children = this ._rootNode;
@@ -1560,6 +1549,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
          }
       }
    },
+   set_live__ ()
+   {
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode .setLive (this .isLive ());
+   },
    set_rootLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 0)
@@ -1584,7 +1578,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
          return previous + (childInlineNode .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
             childInlineNode .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
       },
-      0)
+      0);
 
       if (loaded !== 4)
          return;
@@ -1622,7 +1616,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
       return function (modelViewMatrix)
       {
-         modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
+         modelViewMatrix .translate (this .getLocalCoord (this ._center .getValue (), center));
 
          const distance = modelViewMatrix .origin .norm ();
 
@@ -2046,8 +2040,8 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (ext
 
       return function (index0, index1, weight)
       {
-         this .getCoord (this ._keyValue [index0] .getValue (), keyValue0);
-         this .getCoord (this ._keyValue [index1] .getValue (), keyValue1);
+         this .getLocalCoord (this ._keyValue [index0] .getValue (), keyValue0);
+         this .getLocalCoord (this ._keyValue [index1] .getValue (), keyValue1);
 
          const coord = this .geocentric .slerp (keyValue0, keyValue1, weight);
 
@@ -2470,7 +2464,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function ()
       {
-         return this .getCoord (this ._position .getValue (), position);
+         return this .getLocalCoord (this ._position .getValue (), position);
       };
    })(),
    setPosition: (() =>
@@ -2488,7 +2482,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function ()
       {
-         this .getCoord (this ._position .getValue (), position);
+         this .getLocalCoord (this ._position .getValue (), position);
 
          this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
       };
@@ -2533,7 +2527,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function ()
       {
-         return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
+         return this .getLocalCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
    setCenterOfRotation: (() =>
@@ -2559,7 +2553,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
       {
          if (!dynamic || this .getUserPosition () .norm () < 6.5e6)
          {
-            this .getCoord (this ._position .getValue (), position);
+            this .getLocalCoord (this ._position .getValue (), position);
 
             return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
          }

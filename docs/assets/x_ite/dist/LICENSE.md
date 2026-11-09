@@ -24,24 +24,6 @@ ADDITIONAL LICENSES
 -------------------
 
 ```
-/*!
- * jQuery JavaScript Library v4.0.0+slim
- * https://jquery.com/
- *
- * Copyright OpenJS Foundation and other contributors
- * Released under the MIT license
- * https://jquery.com/license/
- *
- * Date: 2026-01-18T00:20Z
- */
-
-/*!
- * jQuery Mousewheel 3.2.2
- * Copyright OpenJS Foundation and other contributors
- */
-
-/*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
-
 /**
  * @license
  * Copyright 2000, Silicon Graphics, Inc. All Rights Reserved.

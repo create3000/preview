@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -183,7 +177,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
 
       this .textureNode ?.addInterest ("set_textureNode__", this);
 
-      this .setEnabled (!!this .textureNode);
+      this .setEnabled (!! this .textureNode);
 
       this .set_textureNode__ ();
       this .set_on__ ();
@@ -279,11 +273,11 @@ Object .assign (TextureProjectorContainer .prototype,
 
       const
          lightNode             = this .lightNode,
-         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
+         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -488,11 +482,11 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 
       const
          lightNode             = this .lightNode,
-         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
+         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -502,7 +496,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       const
          width        = lightNode .getTexture () .getWidth (),
          height       = lightNode .getTexture () .getHeight (),
-         aspect       = width / height,
+         ratio        = width / height,
          minimumX     = lightNode .getMinimumX (),
          maximumX     = lightNode .getMaximumX (),
          minimumY     = lightNode .getMinimumY (),
@@ -512,11 +506,11 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          nearDistance = lightNode .getNearDistance (),
          farDistance  = lightNode .getFarDistance ();
 
-      if (aspect > sizeX / sizeY)
+      if (ratio > sizeX / sizeY)
       {
          const
             center  = (minimumX + maximumX) / 2,
-            size1_2 = (sizeY * aspect) / 2;
+            size1_2 = (sizeY * ratio) / 2;
 
          external_X_ITE_X3D_Camera_default().ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
       }
@@ -524,7 +518,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       {
          const
             center  = (minimumY + maximumY) / 2,
-            size1_2 = (sizeX / aspect) / 2;
+            size1_2 = (sizeX / ratio) / 2;
 
          external_X_ITE_X3D_Camera_default().ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
       }
@@ -550,7 +544,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 
       this .matrixArray .set (this .matrix);
    },
-   setShaderUniforms (gl, shaderObject, renderObject)
+   setShaderUniforms (gl, shaderObject /*, renderObject */)
    {
       const
          i        = shaderObject .numTextureProjectors ++,

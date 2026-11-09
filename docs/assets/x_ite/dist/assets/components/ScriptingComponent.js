@@ -1,71 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 254
-(module) {
-
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	// The require scope
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -242,8 +204,11 @@ var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(e
 ;// external "__X_ITE_X3D__ .SFNodeCache"
 const external_X_ITE_X3D_SFNodeCache_namespaceObject = __X_ITE_X3D__ .SFNodeCache;
 var external_X_ITE_X3D_SFNodeCache_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_SFNodeCache_namespaceObject);
+;// external "__X_ITE_X3D__ .helper"
+const external_X_ITE_X3D_helper_namespaceObject = __X_ITE_X3D__ .helper;
+var external_X_ITE_X3D_helper_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_helper_namespaceObject);
 ;// ./src/x_ite/Components/Scripting/Script.js
-/* provided dependency */ var $ = __webpack_require__(254);
+
 
 
 
@@ -331,16 +296,13 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    async unloadData ()
    {
-      // Call shutdown.
+      // Call shutdown and disconnect.
 
-      const shutdown = this .context ?.get ("shutdown");
+      this .shutdown ?.();
 
-      if (typeof shutdown === "function")
-         this .call__ (shutdown, "shutdown");
+      window .removeEventListener ("unload", this .shutdown);
 
-      // Disconnect shutdown.
-
-      $(window) .off (`.Script-${this .getId ()}`);
+      this .shutdown = null;
 
       // Disconnect prepareEvents.
 
@@ -370,7 +332,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          }
          else
          {
-            await this .initialize__ ($.decodeText (data));
+            await this .initialize__ (external_X_ITE_X3D_helper_default().decodeText (data));
             this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
          }
       });
@@ -381,7 +343,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       const handler =
       {
-         get (target, key, receiver)
+         get (target, key)
          {
             switch (key)
             {
@@ -390,7 +352,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
                case "currentScene":
                   return getScriptNode () .getExecutionContext ();
                default:
-                  return Reflect .get (target, key, receiver);
+                  return Reflect .get (target, key);
             }
          },
       };
@@ -462,6 +424,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          SFMatrix4d:    { value: (external_X_ITE_X3D_Fields_default()).SFMatrix4d },
          SFMatrix4f:    { value: (external_X_ITE_X3D_Fields_default()).SFMatrix4f },
          SFNode:        { value: SFNode },
+         SFQuaternion:  { value: (external_X_ITE_X3D_Fields_default()).SFQuaternion },
          SFRotation:    { value: (external_X_ITE_X3D_Fields_default()).SFRotation },
          SFString:      { value: (external_X_ITE_X3D_Fields_default()).SFString },
          SFVec2d:       { value: (external_X_ITE_X3D_Fields_default()).SFVec2d },
@@ -484,6 +447,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          MFMatrix4d:    { value: (external_X_ITE_X3D_Fields_default()).MFMatrix4d },
          MFMatrix4f:    { value: (external_X_ITE_X3D_Fields_default()).MFMatrix4f },
          MFNode:        { value: (external_X_ITE_X3D_Fields_default()).MFNode },
+         MFQuaternion:  { value: (external_X_ITE_X3D_Fields_default()).MFQuaternion },
          MFRotation:    { value: (external_X_ITE_X3D_Fields_default()).MFRotation },
          MFString:      { value: (external_X_ITE_X3D_Fields_default()).MFString },
          MFTime:        { value: (external_X_ITE_X3D_Fields_default()).MFTime },
@@ -570,7 +534,15 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       const shutdown = this .context .get ("shutdown");
 
       if (typeof shutdown === "function")
-         $(window) .on (`unload.Script-${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
+      {
+         this .shutdown = () =>
+         {
+            if (!browser .isContextLost ())
+               this .call__ (shutdown, "shutdown");
+         };
+
+         window .addEventListener ("unload", this .shutdown, { once: true });
+      }
 
       // Connect prepareEvents.
 

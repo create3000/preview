@@ -1,71 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 254
-(module) {
-
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	// The require scope
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -113,8 +75,11 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .URLs"
 const external_X_ITE_X3D_URLs_namespaceObject = __X_ITE_X3D__ .URLs;
 var external_X_ITE_X3D_URLs_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_URLs_namespaceObject);
+;// external "__X_ITE_X3D__ .helper"
+const external_X_ITE_X3D_helper_namespaceObject = __X_ITE_X3D__ .helper;
+var external_X_ITE_X3D_helper_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_helper_namespaceObject);
 ;// ./src/x_ite/Components/Text/X3DFontStyleNode.js
-/* provided dependency */ var $ = __webpack_require__(254);
+
 
 
 
@@ -275,7 +240,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
       // Wait for FontLibrary nodes to be setuped or changed.
 
-      await $.sleep (0);
+      await external_X_ITE_X3D_helper_default().sleep (0);
 
       // Get font.
 
@@ -306,7 +271,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
          const fileURL = new URL (fontFamily, executionContext .getBaseURL ());
 
-         if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         if (fileURL .protocol === "data:" || /\.(?:woff2|woff|otf|ttf)$/i .test (fileURL .pathname))
          {
             if (executionContext .getSpecificationVersion () >= 4.1)
                console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
@@ -1017,9 +982,6 @@ const X3DTextGeometry_default_ = X3DTextGeometry;
 ;
 
 /* harmony default export */ const Text_X3DTextGeometry = (external_X_ITE_X3D_Namespace_default().add ("X3DTextGeometry", X3DTextGeometry_default_));
-;// external "__X_ITE_X3D__ .Matrix4"
-const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
-var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// external "__X_ITE_X3D__ .Bezier"
 const external_X_ITE_X3D_Bezier_namespaceObject = __X_ITE_X3D__ .Bezier;
 var external_X_ITE_X3D_Bezier_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Bezier_namespaceObject);
@@ -1027,7 +989,6 @@ var external_X_ITE_X3D_Bezier_default = /*#__PURE__*/__webpack_require__.n(exter
 const external_X_ITE_X3D_libtess_namespaceObject = __X_ITE_X3D__ .libtess;
 var external_X_ITE_X3D_libtess_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_libtess_namespaceObject);
 ;// ./src/x_ite/Browser/Text/PolygonText.js
-
 
 
 
@@ -1045,10 +1006,6 @@ function PolygonText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeometry .prototype),
 {
-   getMatrix ()
-   {
-      return (external_X_ITE_X3D_Matrix4_default()).IDENTITY;
-   },
    getTextureNode ()
    {
       return null;
@@ -1202,8 +1159,14 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
 
          if (vertices .length)
          {
-            min .assign (vertices [0]) .min (... vertices);
-            max .assign (vertices [0]) .max (... vertices);
+            min .assign (vertices [0]);
+            max .assign (vertices [0]);
+
+            for (const vertex of vertices)
+            {
+               min .min (vertex);
+               max .max (vertex);
+            }
          }
          else
          {
@@ -1304,7 +1267,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
          triangles .push (point);
       }
 
-      function combineCallback (coords, data, weight)
+      function combineCallback (coords /* , data, weight */)
       {
          return new (external_X_ITE_X3D_Vector3_default()) (... coords);
       }
@@ -17901,7 +17864,7 @@ Object .assign (X3DTextContext .prototype,
 
       if (!promise)
       {
-         promise = new Promise ((resolve, reject) =>
+         promise = new Promise (resolve =>
          {
             new (external_X_ITE_X3D_FileLoader_default()) (node, { dataAsString: false }) .loadDocument ([fileURL], async data =>
             {
@@ -17928,7 +17891,7 @@ Object .assign (X3DTextContext .prototype,
                }
                else
                {
-                  throw new Error (`${node .getTypeName ()}: no suitable file type handler found.`);
+                  throw new Error (`${node .getTypeName ()}: No suitable file handler found.`);
                }
             });
          });
@@ -18062,17 +18025,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .set_fontStyle__ ();
    },
-   getMatrix ()
-   {
-      return this .textGeometry .getMatrix ();
-   },
-   getLength (index)
-   {
-      if (index < this ._length .length)
-         return Math .max (0, this ._length [index]);
-
-      return 0;
-   },
    set_live__ ()
    {
       const
@@ -18103,6 +18055,13 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .textGeometry = this .fontStyleNode .createTextGeometry (this);
    },
+   getLength (index)
+   {
+      if (index < this ._length .length)
+         return Math .max (0, this ._length [index]);
+
+      return 0;
+   },
    build ()
    {
       this .textGeometry .update ();
@@ -18122,6 +18081,14 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
       renderContext .textureNode = this .textGeometry .getTextureNode ();
 
       external_X_ITE_X3D_X3DGeometryNode_default().prototype .display .call (this, gl, renderContext);
+
+      renderContext .textureNode = null;
+   },
+   displayInstanced (gl, renderContext, shapeNode)
+   {
+      renderContext .textureNode = this .textGeometry .getTextureNode ();
+
+      external_X_ITE_X3D_X3DGeometryNode_default().prototype .displayInstanced .call (this, gl, renderContext, shapeNode);
 
       renderContext .textureNode = null;
    },

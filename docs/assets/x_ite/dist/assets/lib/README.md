@@ -1,6 +1,6 @@
 # References
 
-## glTF Sample Viewer
+## Look Up Table Images
 
 * https://github.com/KhronosGroup/glTF-Sample-Viewer
 * https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/assets/images/lut_charlie.png
@@ -11,7 +11,6 @@
 
 * https://github.com/KhronosGroup/KTX-Software/releases/
 * https://github.khronos.org/KTX-Software/ktxjswrappers/index.html
-* https://github.com/KhronosGroup/KTX-Software/tree/main/tests/testimages
 * https://github.com/KhronosGroup/glTF-Sample-Environments
 
 ## Draco

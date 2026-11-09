@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -80,8 +74,6 @@ Object .assign (X3DLayoutContext .prototype,
          screenTextureProperties ._boundaryModeR       = "CLAMP_TO_EDGE";
          screenTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
          screenTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
-         screenTextureProperties ._generateMipMaps     = false;
-         screenTextureProperties ._textureCompression  = "DEFAULT";
 
          screenTextureProperties .setup ();
 
@@ -915,11 +907,7 @@ var external_X_ITE_X3D_TextAlignment_default = /*#__PURE__*/__webpack_require__.
 ;// external "__X_ITE_X3D__ .PixelTexture"
 const external_X_ITE_X3D_PixelTexture_namespaceObject = __X_ITE_X3D__ .PixelTexture;
 var external_X_ITE_X3D_PixelTexture_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PixelTexture_namespaceObject);
-;// external "__X_ITE_X3D__ .Box3"
-const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
-var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
 ;// ./src/x_ite/Browser/Layout/ScreenText.js
-
 
 
 
@@ -944,10 +932,6 @@ function ScreenText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
 {
-   getMatrix ()
-   {
-      return this .matrix;
-   },
    getTextureNode ()
    {
       return this .textureNode;
@@ -1011,8 +995,6 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
          }
 
          this .getBBox () .setExtents (min, max);
-
-         this .matrix .assign ((external_X_ITE_X3D_Matrix4_default()).ZERO);
 
          // Scale origin, text and line bounds by contentScale.
 
@@ -1265,37 +1247,15 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverseBefore: (() =>
+   traverseBefore (type, renderObject, shapeNode)
    {
-      const
-         bbox   = new (external_X_ITE_X3D_Box3_default()) (),
-         matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+      this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
-      return function (type, renderObject, shapeNode)
-      {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, matrix, 1, true);
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
-
-         if (matrix .equals (this .matrix))
-            return;
-
-         this .matrix .assign (matrix);
-
-         // Update Text bbox.
-
-         bbox .assign (this .getBBox ()) .multRight (this .matrix);
-
-         this .getText () .setBBox (bbox);
-
-         // Immediately update X3DShapeNode bbox.
-
-         shapeNode .set_bbox__ ();
-      };
-   })(),
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .matrix);
+   },
    traverseAfter (type, renderObject)
    {
       renderObject .getModelViewMatrix () .pop ();

@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -208,14 +202,14 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transferFunction_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .transferFunctionNode));
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -251,7 +245,7 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -344,10 +338,8 @@ Object .assign (X3DVolumeRenderingContext .prototype,
 
          textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
          textureProperties ._boundaryModeT       = "REPEAT";
-         textureProperties ._magnificationFilter = "DEFAULT";
-         textureProperties ._minificationFilter  = "DEFAULT";
-         textureProperties ._generateMipMaps     = true;
-         textureProperties ._textureCompression  = "DEFAULT";
+         textureProperties ._magnificationFilter = "NICEST";
+         textureProperties ._minificationFilter  = "NICEST";
 
          textureProperties .setup ();
 
@@ -448,7 +440,7 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightConstant1_" + this .getId (), this ._weightConstant1 .copy ());
@@ -475,10 +467,10 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
-      if (! this .voxelsNode)
+      if (!this .voxelsNode)
          return "";
 
       let string = "";
@@ -618,10 +610,10 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
-      if (! this .voxelsNode)
+      if (!this .voxelsNode)
          return "";
 
       let string = "";
@@ -679,7 +671,7 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
 {
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "retainedOpacity_" + this .getId (), this ._retainedOpacity .copy ());
@@ -688,7 +680,7 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -719,7 +711,7 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -785,7 +777,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "colorSteps_"      + this .getId (), this ._colorSteps      .copy ());
@@ -801,7 +793,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -846,7 +838,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -955,7 +947,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       for (const renderStyleNode of this .renderStyleNodes)
@@ -968,7 +960,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -992,7 +984,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -1056,7 +1048,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, V
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "edgeColor_"         + this .getId (), this ._edgeColor         .copy ());
@@ -1067,7 +1059,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, V
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -1104,7 +1096,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, V
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -1673,10 +1665,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
    {
       this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
-      if (this .voxelsNode)
-         this .getAppearance () ._texture = this ._voxels;
-      else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
+      this .getAppearance () ._texture = this .voxelsNode ?? this .getBrowser () .getDefaultVoxels ();
    },
    createShader (options, vs, fs)
    {
@@ -1925,7 +1914,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
 {
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
@@ -1936,7 +1925,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2043,7 +2032,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2153,10 +2142,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
    {
       this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
-      if (this .voxelsNode)
-         this .getAppearance () ._texture = this ._voxels;
-      else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
+      this .getAppearance () ._texture = this .voxelsNode ?? this .getBrowser () .getDefaultVoxels ();
    },
    createShader (options, vs, fs)
    {
@@ -2336,7 +2322,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       if (this .materialNode)
@@ -2358,7 +2344,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2462,7 +2448,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2530,7 +2516,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "silhouetteRetainedOpacity_" + this .getId (), this ._silhouetteRetainedOpacity .copy ());
@@ -2542,7 +2528,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2576,7 +2562,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2643,7 +2629,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "coolColor_" + this .getId (), this ._coolColor .copy ());
@@ -2654,7 +2640,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2699,7 +2685,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -2786,10 +2772,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
    {
       this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
-      if (this .voxelsNode)
-         this .getAppearance () ._texture = this ._voxels;
-      else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
+      this .getAppearance () ._texture = this .voxelsNode ?? this .getBrowser () .getDefaultVoxels ();
    },
    createShader (options, vs, fs)
    {

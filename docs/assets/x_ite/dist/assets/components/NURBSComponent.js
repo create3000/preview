@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -1986,7 +1980,7 @@ function uvSeam (i, dimension, points, pointIndex, seamIndex)
    }
 
    if (pointIndex .has (key))
-      seamIndex .set (i, pointIndex .get (key))
+      seamIndex .set (i, pointIndex .get (key));
    else
       pointIndex .set (key, i);
 }
@@ -2725,7 +2719,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
          this .derivative (direction, u);
 
-         this ._value_changed = rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, direction);
+         this ._value_changed = rotation .setVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, direction);
       };
    })(),
 });
@@ -4052,7 +4046,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, NURBS_X3
             uScale = uMax - uMin,
             vScale = vMax - vMin,
             offset = new (external_X_ITE_X3D_Vector3_default()) (uMin, vMin, 0),
-            scale  = new (external_X_ITE_X3D_Vector3_default()) (uScale, vScale, 1)
+            scale  = new (external_X_ITE_X3D_Vector3_default()) (uScale, vScale, 1);
 
          // Triangulate holes on unit square.
 
@@ -4119,7 +4113,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, NURBS_X3
          {
             const p = trimmedTriangles [t];
 
-            if (p .hasOwnProperty ("index"))
+            if (Object .hasOwn (p, "index"))
             {
                const
                   d  = p .index,

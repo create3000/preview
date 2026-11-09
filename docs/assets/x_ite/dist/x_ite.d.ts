@@ -110,7 +110,7 @@ declare namespace X3D
       /**
        * Returns a list of all field type classes that are supported by this browser. This property is read-only.
        */
-      readonly fieldTypes: FieldTypesArray;
+      readonly supportedFields: SupportedFieldsArray;
       /**
        * A String value which can be read and written, containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
        */
@@ -272,6 +272,10 @@ declare namespace X3D
        * Loses the WebGL context.
        */
       loseContext (): void;
+      /**
+       * Returns a Promise that resolves when the next frame has been rendered. This can be used to synchronize with the rendering loop.
+       */
+      nextFrame (): Promise <void>;
 
       /**
        * Start processing events.
@@ -392,6 +396,7 @@ declare namespace X3D
       Shading:	                     ShadingTypes,
       MotionBlur:                   boolean,
       // Additional options:
+      AudioIntensity:               number,
       AlwaysUpdateGeometries:       boolean,
       AutoUpdate:                   boolean,
       Cache:                        boolean,
@@ -399,12 +404,12 @@ declare namespace X3D
       ContentScale:                 number,
       ContextMenu:                  boolean,
       Debug:                        boolean,
+      DisplayColorSpace:            "SRGB" | "DISPLAY_P3",
       Exposure:                     number,
       Gravity:                      number,
       LoadUrlObjects:               boolean,
       LogarithmicDepthBuffer:       boolean,
       MaximumFrameRate:             number,
-      MetadataReference:            string,
       Multisampling:                number,
       Mute:                         boolean,
       Notifications:                boolean,
@@ -436,6 +441,7 @@ declare namespace X3D
       MaxSamples:             number,
       Multisampling:          number,
       PixelsPerPoint:         number,
+      SoundDestinations:      number,
       XRSession:              boolean,
    };
 
@@ -565,11 +571,11 @@ declare namespace X3D
       /**
        * Adds *node* to the list of root nodes. If the node already exists, the function silently returns.
        */
-      addRootNode (node: SFNode): void;
+      addRootNode (node: SFNode | null): void;
       /**
-       * Removes *node* from the list of root nodes.
+       * Removes all occurrences of *node* from the list of root nodes.
        */
-      removeRootNode (node: SFNode): void;
+      removeRootNode (node: SFNode | null): void;
       /**
        * Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
        */
@@ -782,9 +788,9 @@ declare namespace X3D
    }
 
    /**
-    * FieldTypesArray is an object that represents an array of classes derived from X3DField. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *FieldTypesArray*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+    * SupportedFieldsArray is an object that represents an array of classes derived from X3DField. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *SupportedFieldsArray*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
     */
-   class FieldTypesArray extends X3DInfoArray <X3DField> { }
+   class SupportedFieldsArray extends X3DInfoArray <X3DField> { }
 
    /**
     * ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
@@ -897,6 +903,10 @@ declare namespace X3D
        * A string of the imported name. This property is read-only.
        */
       readonly importedName: string;
+      /**
+       * The SFNode object of the instance node. This node can be added to the scene graph. This property is read-only.
+       */
+      readonly instance: SFNode;
       /**
        * An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT.
        */
@@ -1081,30 +1091,34 @@ declare namespace X3D
    {
       [Symbol .iterator](): IterableIterator <T>;
       readonly [index: number]: T;
+      /**
+       * An integer containing the number of elements in the array.
+       */
       readonly length: number;
 
       at (index: number): T;
       entries (): IterableIterator <[number, T]>;
-      every (predicate: ArrayTest <T>): boolean;
-      fill (val: T, start?: number, end?: number): this;
-      filter (predicate: ArrayTest <T>): this;
-      find (test: ArrayTest <T>): T | undefined;
-      findIndex (test: ArrayTest <T>): number;
-      findLast (test: ArrayTest <T>): T | undefined;
-      findLastIndex (test: ArrayTest <T>): number;
-      forEach (action: ArrayAction <T>): void;
-      includes (needle: T): boolean;
-      indexOf (needle: T): number;
+      every (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
+      filter (callbackFn: ArrayTest <T>, thisArg?: any): this;
+      find (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      findLast (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findLastIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      flat (): T [];
+      flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [];
+      forEach (callbackFn: ArrayAction <T>, thisArg?: any): void;
+      includes (searchElement: T, fromIndex?: number): boolean;
+      indexOf (searchElement: T, fromIndex?: number): number;
       join (separator?: string): string;
       keys (): number [];
-      lastIndexOf (needle: T): number;
-      map <U> (f: (element: T, i: number, array: this) => U): this;
-      reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
-      reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      lastIndexOf (searchElement: T, fromIndex?: number): number;
+      map <U> (callbackFn: (element: T, index: number, array: this) => U, thisArg?: any): this;
+      reduce <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
+      reduceRight <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
       slice (start?: number, end?: number): this;
-      some (predicate: ArrayTest <T>): boolean;
+      some (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
       toReversed (): this;
-      toSorted (comparator?: (a: T, b: T) => number): this;
+      toSorted (compareFn?: (a: T, b: T) => number): this;
       toSpliced (start: number, deleteCount: number, ... items: T []): this;
       values (): IterableIterator <T>;
       with (index: number, value: T): this;
@@ -1156,6 +1170,7 @@ declare namespace X3D
       readonly SFMatrix4d: number;
       readonly SFMatrix4f: number;
       readonly SFNode: number;
+      readonly SFQuaternion: number;
       readonly SFRotation: number;
       readonly SFString: number;
       readonly SFTime: number;
@@ -1178,6 +1193,7 @@ declare namespace X3D
       readonly MFMatrix4d: number;
       readonly MFMatrix4f: number;
       readonly MFNode: number;
+      readonly MFQuaternion: number;
       readonly MFRotation: number;
       readonly MFString: number;
       readonly MFTime: number;
@@ -1278,6 +1294,7 @@ declare namespace X3D
       readonly FloatVertexAttribute: number;
       readonly Fog: number;
       readonly FogCoordinate: number;
+      readonly FontLibrary: number;
       readonly FontStyle: number;
       readonly ForcePhysicsModel: number;
       readonly Gain: number;
@@ -1299,6 +1316,7 @@ declare namespace X3D
       readonly HAnimHumanoid: number;
       readonly HAnimJoint: number;
       readonly HAnimMotion: number;
+      readonly HAnimPose: number;
       readonly HAnimSegment: number;
       readonly HAnimSite: number;
       readonly ImageCubeMapTexture: number;
@@ -1402,6 +1420,7 @@ declare namespace X3D
       readonly ScalarChaser: number;
       readonly ScalarDamper: number;
       readonly ScalarInterpolator: number;
+      readonly ScatterMaterialExtension: number;
       readonly ScreenFontStyle: number;
       readonly ScreenGroup: number;
       readonly Script: number;
@@ -1470,7 +1489,6 @@ declare namespace X3D
       readonly VolumeEmitter: number;
       readonly VolumeMaterialExtension: number;
       readonly VolumePickSensor: number;
-      readonly VolumeScatterMaterialExtension: number;
       readonly WaveShaper: number;
       readonly WindPhysicsModel: number;
       readonly WorldInfo: number;
@@ -1544,6 +1562,7 @@ declare namespace X3D
       readonly X3DSoundProcessingNode: number;
       readonly X3DSoundSourceNode: number;
       readonly X3DStatement: number;
+      readonly X3DTangentNode: number;
       readonly X3DTexture2DNode: number;
       readonly X3DTexture3DNode: number;
       readonly X3DTextureCoordinateNode: number;
@@ -1696,7 +1715,7 @@ declare namespace X3D
    }
 
    /**
-    * The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
+    * The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of an SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of an SFColor object.
     */
    class SFColor extends X3DField
    {
@@ -1707,13 +1726,13 @@ declare namespace X3D
       static readonly WHITE: SFColor;
 
       /**
-       * Creates a SFColor object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+       * Creates an SFColor object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
        *
        * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
        */
       static fromHSV (h: number, s: number, v: number): SFColor;
       /**
-       * Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       * Creates an SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
        */
       static fromString (value: string): SFColor;
 
@@ -1753,11 +1772,11 @@ declare namespace X3D
        */
       setHSV (h: number, s: number, v: number): void;
       /**
-       * Returns a SFColor object whose value is converted to sRGB color space.
+       * Returns an SFColor object whose value is converted to sRGB color space.
        */
       linearToSRGB (): SFColor;
       /**
-       * Returns a SFColor object whose value is converted to linear color space.
+       * Returns an SFColor object whose value is converted to linear color space.
        */
       sRGBToLinear (): SFColor;
       /**
@@ -1767,7 +1786,7 @@ declare namespace X3D
    }
 
    /**
-    * The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+    * The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of an SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of an SFColorRGBA object.
     */
    class SFColorRGBA extends X3DField
    {
@@ -1779,13 +1798,13 @@ declare namespace X3D
       static readonly WHITE: SFColor;
 
       /**
-       * Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
+       * Creates an SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
        *
        * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
        */
       static fromHSVA (h: number, s: number, v: number, a: number): SFColorRGBA;
       /**
-       * Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       * Creates an SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
        */
       static fromString (value: string): SFColorRGBA;
 
@@ -1829,11 +1848,11 @@ declare namespace X3D
        */
       setHSVA (h: number, s: number, v: number, a: number): void;
       /**
-       * Returns a SFColorRGBA object whose value is converted to sRGB color space.
+       * Returns an SFColorRGBA object whose value is converted to sRGB color space.
        */
       linearToSRGB (): SFColorRGBA;
       /**
-       * Returns a SFColorRGBA object whose value is converted to linear color space.
+       * Returns an SFColorRGBA object whose value is converted to linear color space.
        */
       sRGBToLinear (): SFColorRGBA;
       /**
@@ -1885,8 +1904,8 @@ declare namespace X3D
       /**
        * @param width is the width in pixels of the image.
        * @param height is the height in pixels of the image.
-       * @param components are the number of components of the image (0-4).
-       * @param array is a MFInt32 array with pixel data.
+       * @param components are the number of components of the image [0-4].
+       * @param array is an optional MFInt32 array with pixel data.
        */
       constructor (width: number, height: number, components: number, array?: MFInt32);
 
@@ -1907,7 +1926,7 @@ declare namespace X3D
        */
       height: number;
       /**
-       * Number of components.
+       * Number of components in the range [0-4].
        */
       comp: number;
       /**
@@ -1952,13 +1971,13 @@ declare namespace X3D
       [index: number]: number;
 
       /**
-       * Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object.
+       * Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is an SFVec2d/f object, *scaleOrientation* is a Number and *center* is an SFVec2d/f object.
        *
        * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
        */
       setTransform (translation: SFVec2, rotation: number, scaleFactor: SFVec2, scaleOrientation: number, center: SFVec2): void;
       /**
-       * Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
+       * Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is an SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
        *
        * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
        *
@@ -1970,63 +1989,63 @@ declare namespace X3D
        */
       determinant (): number;
       /**
-       * Returns a SFMatrix whose value is the inverse of this object.
+       * Returns an SFMatrix whose value is the inverse of this object.
        */
       inverse (): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the transpose of this object.
+       * Returns an SFMatrix3d/f whose value is the transpose of this object.
        */
       transpose (): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
+       * Returns an SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
        */
       multLeft (matrix: this): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
+       * Returns an SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
        */
       multRight (matrix: this): this;
       /**
-       * Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec2d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
       /**
-       * Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec2d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec2d | SFVec2f> (col: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
       /**
-       * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
+       * Returns an SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
        */
       multDirMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
       /**
-       * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
+       * Returns an SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
        */
       multMatrixDir <T extends SFVec2d | SFVec2f> (col: T): T;
       /**
-       * Returns a SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
+       * Returns an SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
        */
       translate <T extends SFVec2d | SFVec2f> (translation: T): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
+       * Returns an SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
        */
       rotate (rotation: number): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
+       * Returns an SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
        */
       scale <T extends SFVec2d | SFVec2f> (scale: T): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+       * Returns an SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
        */
       skewX (angle: number): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+       * Returns an SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
        */
       skewY (angle: number): this;
    }
@@ -2076,7 +2095,7 @@ declare namespace X3D
       [index: number]: number;
 
       /**
-       * Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3d/f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3d/f object.
+       * Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is an SFRotation object, *scaleFactor* is an SFVec3d/f object, *scaleOrientation* is an SFRotation object and *center* is an SFVec3d/f object.
        *
        * Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
        */
@@ -2094,55 +2113,55 @@ declare namespace X3D
        */
       determinant (): number;
       /**
-       * Returns a SFMatrix whose value is the inverse of this object.
+       * Returns an SFMatrix whose value is the inverse of this object.
        */
       inverse (): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the transpose of this object.
+       * Returns an SFMatrix4d/f whose value is the transpose of this object.
        */
       transpose (): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
+       * Returns an SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
        */
       multLeft (matrix: this): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
+       * Returns an SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
        */
       multRight (matrix: this): this;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec4d | SFVec4f> (row: T): T;
       /**
-       * Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec4d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec4d | SFVec4f> (col: T): T;
       /**
-       * Returns a SFVec4d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec4d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
+       * Returns an SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
        */
       multDirMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+       * Returns an SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
        */
       multMatrixDir <T extends SFVec3d | SFVec3f> (col: T): T;
       /**
-       * Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
+       * Returns an SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
        */
       translate <T extends SFVec3d | SFVec3f> (translation: T): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
+       * Returns an SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
        */
       rotate (rotation: SFRotation): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
+       * Returns an SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
        */
       scale <T extends SFVec3d | SFVec3f> (scale: T): this;
    }
@@ -2198,10 +2217,6 @@ declare namespace X3D
        */
       getFieldDefinitions (): FieldDefinitionArray;
       /**
-       * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
-       */
-      getField (name: string): X3DField;
-      /**
        * Returns the node name.
        */
       getNodeName (): string;
@@ -2238,19 +2253,19 @@ declare namespace X3D
        */
       setNodeUserData (key: any, value: any): void;
       /**
-       * Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, produce this node.
+       * Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toVRMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, produce this node.
+       * Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toXMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, produce this node.
+       * Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
@@ -2269,6 +2284,138 @@ declare namespace X3D
    /**
     * The SFRotation object corresponds to an X3D SFRotation field.
     */
+   class SFQuaternion extends X3DField
+   {
+      static readonly type: number;
+      static readonly typeName: "SFQuaternion";
+      static readonly ZERO: SFQuaternion;
+      static readonly IDENTITY: SFQuaternion;
+
+      /**
+       * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
+       */
+      static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFQuaternion;
+
+      /**
+       * A new rotation initialized with the identity rotation is created and returned.
+       */
+      constructor ();
+      /**
+       * *x*, *y*, and *z* are the imaginary parts of the quaternion.
+       * *w* is the real part of the quaternion.
+       */
+      constructor (x: number, y: number, z: number, w: number);
+
+      /**
+       * Returns the first value of the imaginary parts of the quaternion.
+       */
+      x: number;
+      /**
+       * Returns the second value of the imaginary parts of the quaternion.
+       */
+      y: number;
+      /**
+       * Returns the third value of the imaginary parts of the quaternion.
+       */
+      z: number;
+      /**
+       * A number corresponding to the real part of the quaternion.
+       */
+      w: number;
+
+      /**
+       * Returns the first value of the imaginary parts of the quaternion.
+       */
+      i: number;
+      /**
+       * Returns the second value of the imaginary parts of the quaternion.
+       */
+      j: number;
+      /**
+       * Returns the third value of the imaginary parts of the quaternion.
+       */
+      k: number;
+      /**
+       * A number corresponding to the real part of the quaternion.
+       */
+      real: number;
+
+      [Symbol .iterator](): IterableIterator <number>;
+      [index: number]: number;
+
+      /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
+       */
+      add (other: SFQuaternion): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the componentwise negation of the imaginary parts of the object.
+       */
+      conjugate (): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the object divided by the passed numeric value.
+       */
+      divide (denominator: number): SFQuaternion;
+      /**
+       * Returns the rotation matrix as an SFMatrix3f object.
+       */
+      getMatrix (): SFMatrix3f;
+      /**
+       * Returns the dot product of this quaternion and SFQuaternion *other*.
+       */
+      dot (quaternion: SFQuaternion): number;
+      /**
+       *  Returns an SFQuaternion object whose value is the inverse of this object's quaternion.
+       */
+      inverse (): SFQuaternion;
+      /**
+       * Returns the geometric length of this vector.
+       */
+      length (): number;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
+       */
+      multiply (factor: number): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed *quaternion* on the left.
+       */
+      multLeft (quaternion: SFQuaternion): SFQuaternion;
+      /**
+       * Returns an SFVec3d/f whose value is the *vector* multiplied by the object to the left.
+       */
+      multQuatVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
+       */
+      multRight (quaternion: SFQuaternion): SFQuaternion;
+      /**
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed quaternion to the right.
+       */
+      multVecQuat <T extends SFVec3d | SFVec3f> (vector: T): T;
+      /**
+       * Returns an SFQuaternion whose value is the componentwise negation of the object.
+       */
+      negate (): SFQuaternion;
+      /**
+       * Returns an SFQuaternion object converted to unit length.
+       */
+      normalize (): SFQuaternion;
+      /**
+       * Set the value of this quaternion to the rotation matrix passed in *matrix*.
+       */
+      setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
+      /**
+       * Returns an SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destination*.
+       */
+      slerp (destination: SFQuaternion, t: number): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
+       */
+      subtract (other: SFQuaternion): SFQuaternion;
+   }
+
+   /**
+    * The SFRotation object corresponds to an X3D SFRotation field.
+    */
    class SFRotation extends X3DField
    {
       static readonly type: number;
@@ -2280,9 +2427,9 @@ declare namespace X3D
        */
       static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFRotation;
       /**
-       * `x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
+       * *quaternion* is an SFQuaternion object whose value is converted into an SFRotation object.
        */
-      static fromQuaternion (x: number, y: number, z: number, w: number): SFRotation;
+      static fromQuaternion (quaternion: SFQuaternion): SFRotation;
 
       /**
        * A new rotation initialized with the identity rotation is created and returned.
@@ -2294,7 +2441,7 @@ declare namespace X3D
        */
       constructor (x: number, y: number, z: number, angle: number);
       /**
-       * *axis* is a SFVec3d/f object whose value is the axis of rotation.
+       * *axis* is an SFVec3d/f object whose value is the axis of rotation.
        * *angle* is the scalar angle of the rotation (in radians).
        */
       constructor (axis: SFVec3d | SFVec3f, angle: number);
@@ -2332,11 +2479,11 @@ declare namespace X3D
        */
       getMatrix (): SFMatrix3f;
       /**
-       * Returns the underlying quaternion as Array with the four values [x, y, z, w].
+       * Returns the rotation as an SFQuaternion object.
        */
-      getQuaternion (): number [];
+      getQuaternion (): SFQuaternion;
       /**
-       * Returns a SFRotation object whose value is the inverse of this object's rotation.
+       * Returns an SFRotation object whose value is the inverse of this object's rotation.
        */
       inverse (): SFRotation;
       /**
@@ -2344,11 +2491,11 @@ declare namespace X3D
        */
       multiply (rotation: SFRotation): SFRotation;
       /**
-       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+       * Returns an SFVec3d/f whose value is the SFVec3d/f *vector* multiplied by the matrix corresponding to this object's rotation.
        */
       multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
-       * Set the axis of rotation to the vector passed in *vec*.
+       * Set the axis of rotation to the vector passed in *axis*.
        */
       setAxis (axis: SFVec3d | SFVec3f): void;
       /**
@@ -2356,11 +2503,11 @@ declare namespace X3D
        */
       setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
       /**
-       * Set the value of this rotation to the quaternion passed in *x, y, z, w*.
+       * Set the value of this rotation to the quaternion passed in *quaternion*.
        */
-      setQuaternion (x: number, y: number, z: number, w: number): void;
+      setQuaternion (quaternion: SFQuaternion): void;
       /**
-       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
+       * Returns an SFRotation whose value is the spherical linear interpolation between this object's rotation and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFRotation, t: number): SFRotation;
       /**
@@ -2409,7 +2556,7 @@ declare namespace X3D
        */
       constructor ();
       /**
-       * Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
+       * Constructs an SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
        */
       constructor (x: number, y: number);
 
@@ -2462,7 +2609,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns an SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2543,7 +2690,7 @@ declare namespace X3D
        */
       constructor ();
       /**
-       * Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
+       * Constructs an SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
        */
       constructor (x: number, y: number, z: number);
 
@@ -2604,7 +2751,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns an SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2689,7 +2836,7 @@ declare namespace X3D
        */
       constructor ();
       /**
-       * Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
+       * Constructs an SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
        */
       constructor (x: number, y: number, z: number, w: number);
 
@@ -2750,7 +2897,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns an SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2847,42 +2994,45 @@ declare namespace X3D
       length: number;
 
       at (index: number): T;
+      concat (... arrays: this []): this;
       entries (): IterableIterator <[number, T]>;
-      every (predicate: ArrayTest <T>): boolean;
-      fill (val: T, start?: number, end?: number): this;
-      filter (predicate: ArrayTest <T>): this;
-      find (test: ArrayTest <T>): T | undefined;
-      findIndex (test: ArrayTest <T>): number;
-      findLast (test: ArrayTest <T>): T | undefined;
-      findLastIndex (test: ArrayTest <T>): number;
-      forEach (action: ArrayAction <T>): void;
-      includes (needle: T): boolean;
-      indexOf (needle: T): number;
+      every (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
+      fill (value: T, start?: number, end?: number): this;
+      filter (callbackFn: ArrayTest <T>, thisArg?: any): this;
+      find (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      findLast (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findLastIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      flat (): T [];
+      flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [];
+      forEach (callbackFn: ArrayAction <T>, thisArg?: any): void;
+      includes (searchElement: T, fromIndex?: number): boolean;
+      indexOf (searchElement: T, fromIndex?: number): number;
       join (separator?: string): string;
       keys (): number [];
-      lastIndexOf (needle: T): number;
-      map <U> (f: (element: T, i: number, array: this) => U): this;
+      lastIndexOf (searchElement: T, fromIndex?: number): number;
+      map <U> (callbackFn: (element: T, index: number, array: this) => U, thisArg?: any): this;
       pop (): T;
       push (... elements: T []): number;
-      reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
-      reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      reduce <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
+      reduceRight <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
       reverse (): this;
       shift (): T;
       slice (start?: number, end?: number): this;
-      some (predicate: ArrayTest <T>): boolean;
-      sort (comparator?: (a: T, b: T) => number): this;
+      some (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
+      sort (compareFn?: (a: T, b: T) => number): this;
       splice (start: number, deleteCount: number, ... items: T []): this;
       toReversed (): this;
-      toSorted (comparator?: (a: T, b: T) => number): this;
+      toSorted (compareFn?: (a: T, b: T) => number): this;
       toSpliced (start: number, deleteCount: number, ... items: T []): this;
       unshift (... elements: T []): number;
       values (): IterableIterator <T>;
       with (index: number, value: T): this;
    }
 
-   type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean;
-   type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void;
-   type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U;
+   type ArrayTest <T> = (element: T, index: number, array: X3DArrayField <T>) => boolean;
+   type ArrayAction <T> = (element: T, index: number, array: X3DArrayField <T>) => void;
+   type ArrayReducer <T, U> = (accumulator: U, currentValue: T, currentIndex: number, array: X3DArrayField <T>) => U;
 
    /**
     * The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
@@ -2891,6 +3041,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFBool";
+
+      /**
+       * Returns a new `MFBool` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<boolean> | ArrayLike<boolean>): MFBool;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => boolean, thisArg?: any): MFBool;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: boolean []): MFBool;
    }
 
    /**
@@ -2900,6 +3062,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFColor";
+
+      /**
+       * Returns a new `MFColor` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFColor> | ArrayLike<SFColor>): MFColor;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFColor, thisArg?: any): MFColor;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFColor;
    }
 
    /**
@@ -2909,6 +3083,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFColorRGBA";
+
+      /**
+       * Returns a new `MFColorRGBA` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFColorRGBA> | ArrayLike<SFColorRGBA>): MFColorRGBA;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFColorRGBA, thisArg?: any): MFColorRGBA;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFColorRGBA;
    }
 
    /**
@@ -2918,6 +3104,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFDouble";
+
+      /**
+       * Returns a new `MFDouble` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<number> | ArrayLike<number>): MFDouble;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFDouble;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFDouble;
    }
 
    /**
@@ -2927,6 +3125,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFFloat";
+
+      /**
+       * Returns a new `MFFloat` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<number> | ArrayLike<number>): MFFloat;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFFloat;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFFloat;
    }
 
    /**
@@ -2936,6 +3146,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFImage";
+
+      /**
+       * Returns a new `MFImage` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFImage> | ArrayLike<SFImage>): MFImage;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFImage, thisArg?: any): MFImage;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFImage;
    }
 
    /**
@@ -2945,6 +3167,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFInt32";
+
+      /**
+       * Returns a new `MFInt32` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<number> | ArrayLike<number>): MFInt32;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFInt32;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFInt32;
    }
 
    /**
@@ -2954,6 +3188,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix3d";
+
+      /**
+       * Returns a new `MFMatrix3d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix3d> | ArrayLike<SFMatrix3d>): MFMatrix3d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFMatrix3d, thisArg?: any): MFMatrix3d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix3d;
    }
 
    /**
@@ -2963,6 +3209,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix3f";
+
+      /**
+       * Returns a new `MFMatrix3f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix3f> | ArrayLike<SFMatrix3f>): MFMatrix3f;
+      static from (items: Iterable<SFMatrix3f> | ArrayLike<SFMatrix3f>, mapFn: (element: SFMatrix3f, index: number) => SFMatrix3f, thisArg?: any): MFMatrix3f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix3f;
    }
 
    /**
@@ -2972,6 +3230,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix4d";
+
+      /**
+       * Returns a new `MFMatrix4d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix4d> | ArrayLike<SFMatrix4d>): MFMatrix4d;
+      static from (items: Iterable<SFMatrix4d> | ArrayLike<SFMatrix4d>, mapFn: (element: SFMatrix4d, index: number) => SFMatrix4d, thisArg?: any): MFMatrix4d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix4d;
    }
 
    /**
@@ -2981,6 +3251,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix4f";
+
+      /**
+       * Returns a new `MFMatrix4f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix4f> | ArrayLike<SFMatrix4f>): MFMatrix4f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFMatrix4f, thisArg?: any): MFMatrix4f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix4f;
    }
 
    /**
@@ -2990,6 +3272,39 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFNode";
+
+      /**
+       * Returns a new `MFNode` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFNode | null> | ArrayLike<SFNode | null>): MFNode;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFNode | null, thisArg?: any): MFNode;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: (SFNode | null) []): MFNode;
+   }
+
+   /**
+    * The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to store a one-dimensional array of SFQuaternion objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfQuaternionObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFQuaternion (0, 0, 0, 1)`.
+    */
+   class MFQuaternion extends X3DArrayField <SFQuaternion>
+   {
+      static readonly type: number;
+      static readonly typeName: "MFQuaternion";
+
+      /**
+       * Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFQuaternion> | ArrayLike<SFQuaternion>): MFQuaternion;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFQuaternion, thisArg?: any): MFQuaternion;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFQuaternion;
    }
 
    /**
@@ -2999,6 +3314,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFRotation";
+
+      /**
+       * Returns a new `MFRotation` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFRotation> | ArrayLike<SFRotation>): MFRotation;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFRotation, thisArg?: any): MFRotation;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFRotation;
    }
 
    /**
@@ -3008,6 +3335,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFString";
+
+      /**
+       * Returns a new `MFString` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<string> | ArrayLike<string>): MFString;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => string, thisArg?: any): MFString;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: string []): MFString;
    }
 
    /**
@@ -3017,6 +3356,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFTime";
+
+      /**
+       * Returns a new `MFTime` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<number> | ArrayLike<number>): MFTime;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFTime;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFTime;
    }
 
    /**
@@ -3026,6 +3377,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec2d";
+
+      /**
+       * Returns a new `MFVec2d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec2d> | ArrayLike<SFVec2d>): MFVec2d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec2d, thisArg?: any): MFVec2d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec2d;
    }
 
    /**
@@ -3035,6 +3398,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec2f";
+
+      /**
+       * Returns a new `MFVec2f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec2f> | ArrayLike<SFVec2f>): MFVec2f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec2f, thisArg?: any): MFVec2f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec2f;
    }
 
    /**
@@ -3044,6 +3419,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec3d";
+
+      /**
+       * Returns a new `MFVec3d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec3d> | ArrayLike<SFVec3d>): MFVec3d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec3d, thisArg?: any): MFVec3d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec3d;
    }
 
    /**
@@ -3053,6 +3440,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec3f";
+
+      /**
+       * Returns a new `MFVec3f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec3f> | ArrayLike<SFVec3f>): MFVec3f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec3f, thisArg?: any): MFVec3f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec3f;
    }
 
    /**
@@ -3062,6 +3461,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec4d";
+
+      /**
+       * Returns a new `MFVec4d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec4d> | ArrayLike<SFVec4d>): MFVec4d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec4d, thisArg?: any): MFVec4d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec4d;
    }
 
    /**
@@ -3071,6 +3482,18 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec4f";
+
+      /**
+       * Returns a new `MFVec4f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec4f> | ArrayLike<SFVec4f>): MFVec4f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec4f, thisArg?: any): MFVec4f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec4f;
    }
 
    /**
@@ -5320,7 +5743,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT_2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED_1" | "SPEED_2" | "SLIP_1" | "SLIP_2">;
       /**
        * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
        *
@@ -5980,7 +6403,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT_2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED_1" | "SPEED_2" | "SLIP_1" | "SLIP_2">;
       /**
        * The body1 and body2 fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
        *
@@ -7518,11 +7941,11 @@ declare namespace X3D
       metadata: X3DMetadataObjectProxy | null;
    }
 
-   /** EnvironmentLight ... This node only affects the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+   /** EnvironmentLight node uses an environment map to represent incident illumination around a point, and can be used to show reflections of distant objects. */
    interface EnvironmentLightProxy extends X3DLightNodeProxy
    {
       /**
-       * Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+       * Brightness of ambient (nondirectional background) emission from the light.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -7534,19 +7957,19 @@ declare namespace X3D
        */
       color: SFColor;
       /**
-       * Input/Output field diffuseCoefficients.
+       * diffuseCoefficients field provides a 3 x 9 array of float values providing spherical harmonic coefficients for low-frequency characteristics of the environment map to produce an irradiance map corresponding to glTF irradianceCoefficients field.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       diffuseCoefficients: MFFloat;
       /**
-       * Input/Output field diffuseTexture.
+       * diffuseTexture defines explicit precomputed X3DEnvironmentTextureNode (ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture) nodes as the image source for the EnvironmentLight.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       diffuseTexture: X3DEnvironmentTextureNodeProxy | null;
       /**
-       * Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+       * global field affects the scope of lighting effects produced by the EnvironmentLight node, and has no effect on the computation of environment textures.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -7570,7 +7993,13 @@ declare namespace X3D
        */
       on: boolean;
       /**
-       * Input/Output field rotation.
+       * origin defines the relative position for observing the surrounding scene to create an environment texture.
+       *
+       * This field is of access type 'inputOutput' and type SFVec3f.
+       */
+      origin: SFVec3f;
+      /**
+       * rotation field represents the overall rotation of the IBL environment.
        *
        * This field is of access type 'inputOutput' and type SFRotation.
        */
@@ -7588,7 +8017,7 @@ declare namespace X3D
        */
       shadows: boolean;
       /**
-       * Input/Output field specularTexture.
+       * specularTexture defines explicit precomputed X3DEnvironmentTextureNode (ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture) nodes as the image source for the EnvironmentLight.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -8436,6 +8865,53 @@ declare namespace X3D
       metadata: X3DMetadataObjectProxy | null;
    }
 
+   /** FontLibrary can load additional fonts for use by Text and FontStyle nodes. */
+   interface FontLibraryProxy extends X3DChildNodeProxy, X3DUrlObjectProxy
+   {
+      /**
+       * The [autoRefresh field has no effect, Anchor operation is only triggered by user selection.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefresh: number;
+      /**
+       * The [autoRefreshTimeLimit field has no effect, Anchor operation is only triggered by user selection.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefreshTimeLimit: number;
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * The family field provides an identifying alias for the font in the associated file, if that file only contains a single font family (possibly with multiple styles).
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      family: string;
+      /**
+       * The load field has no effect, Anchor operation is only triggered by user selection.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      load: boolean;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting Shape geometry within the Anchor children nodes.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
+   }
+
    /** FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes. */
    interface FontStyleProxy extends X3DFontStyleNodeProxy
    {
@@ -8625,7 +9101,7 @@ declare namespace X3D
       tailTime: number;
    }
 
-   /** The GaussianSplats node adds basic support for storing 3D Gaussian splats in X3D files. */
+   /** The GaussianSplats node adds basic support for direct real-time radiance field rendering of volume data without converting into surface or line primitives. */
    interface GaussianSplatsProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    {
       /**
@@ -8641,14 +9117,19 @@ declare namespace X3D
        */
       bboxDisplay: boolean;
       /**
-       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
        *
        * This field is of access type 'initializeOnly' and type SFVec3f.
        */
       bboxSize: SFVec3f;
       /**
-       * The color space of the reconstructed color values. It must be one of:
-, SRGB_REC709_DISPLAY, LIN_REC709_DISPLAY
+       * castShadow defines whether this GaussianSplats node casts shadows as produced by lighting nodes.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      castShadow: boolean;
+      /**
+       * The color space of the reconstructed color values, either SRGB_REC709_DISPLAY or LIN_REC709_DISPLAY Hint: for details see https://github.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -8660,121 +9141,127 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Input/Output field opacities.
+       * The opacities field defines the opacity of each individual Gaussian splat.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       opacities: MFFloat;
       /**
-       * Input/Output field orientations.
+       * The orientations field values correspond to the orientation of those axes in local space.
        *
-       * This field is of access type 'inputOutput' and type MFVec4f.
+       * This field is of access type 'inputOutput' and type MFQuaternion.
        */
-      orientations: MFVec4f;
+      orientations: MFQuaternion;
       /**
-       * Input/Output field positions.
+       * indicates whether this GaussianSplats node is a target for pointer events, if FALSE then it is ignored during pointer picking.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
+       * The mean vector for the Gaussian splat is provided by the positions of the mesh primitive.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       positions: MFVec3f;
       /**
-       * Input/Output field scales.
+       * The values in the scales field correspond to the spread of the Gaussian along its local principal axes.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       scales: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree0Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef3: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef4: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef3: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef4: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef5: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
@@ -9710,11 +10197,11 @@ declare namespace X3D
       visible: boolean;
    }
 
-   /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimJoint or HAnimSegment nodes. */
+   /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within HAnim nodes. */
    interface HAnimDisplacerProxy extends X3DGeometricPropertyNodeProxy
    {
       /**
-       * Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer.
+       * Defines index values into the parent HAnimJoint or ancestor HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer.
        *
        * This field is of access type 'inputOutput' and type MFInt32.
        */
@@ -9779,11 +10266,23 @@ declare namespace X3D
        */
       center: SFVec3f;
       /**
+       * Contains zero or more HAnimPose nodes that can animate the HAnimHumanoid.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      children: MFNode <HAnimPoseProxy>;
+      /**
        * Author-provided prose that describes intended purpose of this node.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * Contains zero or more HAnimDisplacer nodes that can animate the HAnimHumanoid skinCoord field.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      displacers: MFNode <HAnimDisplacerProxy>;
       /**
        * Contains metadata keyword=value pairs, where approved keyword terms are humanoidVersion authorName authorEmail copyright creationDate usageRestrictions age gender height and weight.
        *
@@ -9809,7 +10308,7 @@ declare namespace X3D
        */
       jointBindingScales: MFVec3f;
       /**
-       * The joints field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy.
+       * (Deprecated) The joints field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -9863,13 +10362,13 @@ declare namespace X3D
        */
       scaleOrientation: SFRotation;
       /**
-       * The segments field contains a list of USE references for all HAnimSegment node instances found within the preceding skeleton hierarchy.
+       * (Deprecated) The segments field contains a list of USE references for all HAnimSegment node instances found within the preceding skeleton hierarchy.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
       segments: MFNode <HAnimSegmentProxy>;
       /**
-       * sites field contains a list of USE references for all HAnimSite node instances found within the preceding skeleton hierarchy.
+       * (Deprecated) sites field contains a list of USE references for all HAnimSite node instances found within the preceding skeleton hierarchy.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -9923,11 +10422,11 @@ declare namespace X3D
        */
       translation: SFVec3f;
       /**
-       * HAnimHumanoid version, where allowed value is 2.
+       * HAnimHumanoid version is required, where allowed value is 2.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
-      version: "2.0";
+      version: "2.0" | "2.1";
       /**
        * List of HAnimSite nodes containing Viewpoint nodes that appear in the skeleton model, usually as USE node references.
        *
@@ -9943,12 +10442,12 @@ declare namespace X3D
    }
 
    /** HAnimJoint node can represent each joint in a body. */
-   interface HAnimJointProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
+   interface HAnimJointProxy extends X3DGroupingNodeProxy, X3DBoundedObjectProxy
    {
       /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
-      addChildren: MFNode <HAnimJointProxy | HAnimSegmentProxy>;
+      addChildren: MFNode <X3DChildNodeProxy>;
       /**
        * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
        *
@@ -9978,7 +10477,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
-      children: MFNode <HAnimJointProxy | HAnimSegmentProxy>;
+      children: MFNode <X3DChildNodeProxy>;
       /**
        * Author-provided prose that describes intended purpose of this node.
        *
@@ -10018,7 +10517,7 @@ declare namespace X3D
       /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
-      removeChildren: MFNode <HAnimJointProxy | HAnimSegmentProxy>;
+      removeChildren: MFNode <X3DChildNodeProxy>;
       /**
        * Orientation of children relative to local coordinate system.
        *
@@ -10200,6 +10699,83 @@ declare namespace X3D
       values: MFFloat;
    }
 
+   /** HAnimPose nodes support setting HAnimJoint values in a corresponding HAnimHumanoid skeleton. */
+   interface HAnimPoseProxy extends X3DChildNodeProxy
+   {
+      /**
+       * The children field lists all HAnimJoint nodes making up this pose.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      children: MFNode <HAnimJointProxy>;
+      /**
+       * commencePose is an input boolean event that triggers the animation of Joint values to achieve the pose.
+       *
+       * This field is of access type 'inputOnly' and type SFBool.
+       */
+      commencePose: boolean;
+      /**
+       * Author-provided prose that describes intended purpose of this node.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * Enables/disables node operation.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      enabled: boolean;
+      /**
+       * isActive true/false events are sent when pose animation starts/stops.
+       *
+       * This field is of access type 'outputOnly' and type SFBool.
+       */
+      readonly isActive: boolean;
+      /**
+       * Level Of Articulation 0.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      loa: number;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Unique name attribute must be defined so that HAnimPose node can be identified at run time for animation purposes.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      name: string;
+      /**
+       * resetAllJoints is an input boolean event that zeroes all Joint objects in the skeleton field to their default values, matching the default binding pose (i.
+       *
+       * This field is of access type 'inputOnly' and type SFBool.
+       */
+      resetAllJoints: boolean;
+      /**
+       * setting fraction in range [0,1] provides an input event that allows gradual change of each joint in the pose, where 0 indicates no change and 1 indicates fully changed.
+       *
+       * This field is of access type 'inputOnly' and type SFTime.
+       */
+      set_fraction: number;
+      /**
+       * set_startTime is an input event that commences the animation of Joint objects in the parent Humanoid object.
+       *
+       * This field is of access type 'inputOnly' and type SFTime.
+       */
+      set_startTime: number;
+      /**
+       * Duration in seconds for animating a pose transition.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      transitionDuration: number;
+   }
+
    /** HAnimSegment node contains Shape geometry for each body segment, providing a visual representation of the skeleton segment. */
    interface HAnimSegmentProxy extends X3DGroupingNodeProxy
    {
@@ -10329,11 +10905,23 @@ declare namespace X3D
        */
       children: MFNode <X3DChildNodeProxy>;
       /**
+       * the coord field is used for HAnimSite objects that have deformable meshes and shall contain coordinates referenced from the mesh in the current object.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      coord: X3DCoordinateNodeProxy | null;
+      /**
        * Author-provided prose that describes intended purpose of this node.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * the displacers field stores HAnimDisplacer objects for a particular HAnimJoint object.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      displacers: MFNode <HAnimDisplacerProxy>;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -10445,11 +11033,25 @@ declare namespace X3D
        */
       autoRefreshTimeLimit: number;
       /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly colorDepth: number;
+      /**
+       * If true, the texture is converted to the color space of the display.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      colorSpaceConversion: boolean;
+      /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly height: number;
       /**
        * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
@@ -10486,6 +11088,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly width: number;
    }
 
    /** ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data. */
@@ -10504,11 +11110,23 @@ declare namespace X3D
        */
       autoRefreshTimeLimit: number;
       /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly colorDepth: number;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly depth: number;
+      /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly height: number;
       /**
        * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
@@ -10551,6 +11169,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly width: number;
    }
 
    /** ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data. */
@@ -10754,11 +11376,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -10926,11 +11548,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11015,11 +11637,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11104,11 +11726,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11193,11 +11815,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11277,21 +11899,57 @@ declare namespace X3D
       visible: boolean;
    }
 
-   /**  */
+   /** InlineGeometry loads geometry from an external file. */
    interface InlineGeometryProxy extends X3DGeometryNodeProxy, X3DUrlObjectProxy
    {
       /**
-       * The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
+       * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefresh: number;
+      /**
+       * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefreshTimeLimit: number;
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
+      load: boolean;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
       smooth: boolean;
       /**
-       * For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering.
+       * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Address of X3D world to load Inline with current scene, retrieved either from local system or an online address.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
    }
 
    /** InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided. */
@@ -11316,13 +11974,13 @@ declare namespace X3D
        */
       bboxDisplay: boolean;
       /**
-       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
        *
        * This field is of access type 'initializeOnly' and type SFVec3f.
        */
       bboxSize: SFVec3f;
       /**
-       * Input/Output field castShadow.
+       * castShadow defines whether this Shape casts shadows as produced by lighting nodes.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11715,7 +12373,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this Layer becomes target for pointer events.
+       * The pointerEvents field defines whether this Layer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11913,7 +12571,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this LayoutLayer becomes target for pointer events.
+       * The pointerEvents field defines whether this LayoutLayer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -12208,7 +12866,7 @@ declare namespace X3D
       trackCurrentView: boolean;
    }
 
-   /** LoadSensor generates events as watchList child nodes are either loaded or fail to load. */
+   /** LoadSensor generates events as children (watchList in X3Dv3) child nodes are either loaded or fail to load. */
    interface LoadSensorProxy extends X3DNetworkSensorNodeProxy
    {
       /**
@@ -12236,7 +12894,7 @@ declare namespace X3D
        */
       readonly isActive: boolean;
       /**
-       * Notify when all watchList child nodes are loaded, or at least one has failed.
+       * Notify when all children/watchList child nodes are loaded, or at least one has failed.
        *
        * This field is of access type 'outputOnly' and type SFBool.
        */
@@ -12708,7 +13366,7 @@ declare namespace X3D
        */
       reference: string;
       /**
-       * The value field provides a list of X3DMetadataObject nodes whose meaning is determined by the name field.
+       * The value field provides a list of X3DMetadataObject nodes whose meaning is each determined by their respective name field.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -13004,6 +13662,10 @@ declare namespace X3D
        */
       autoRefreshTimeLimit: number;
       /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly colorDepth: number;
+      /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
        * This field is of access type 'inputOutput' and type SFString.
@@ -13033,6 +13695,14 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       gain: number;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly hasSound: number;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly height: number;
       /**
        * isActive true/false events are sent when playback starts/stops.
        *
@@ -13123,6 +13793,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly width: number;
    }
 
    /** MultiTexture applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. */
@@ -13147,11 +13821,11 @@ declare namespace X3D
        */
       description: string;
       /**
-       * function operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation.
+       * function operators COMPLEMENT or ALPHA_REPLICATE can be applied after the mode blending operation.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      function: MFString <"COMPLEMENT" | "ALPHAREPLICATE" | "">;
+      function: MFString <"COMPLEMENT" | "ALPHA_REPLICATE" | "">;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -13163,7 +13837,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      mode: MFString <"ADD" | "ADDSIGNED" | "ADDSIGNED2X" | "ADDSMOOTH" | "BLENDCURRENTALPHA" | "BLENDDIFFUSEALPHA" | "BLENDFACTORALPHA" | "BLENDTEXTUREALPHA" | "DOTPRODUCT3" | "MODULATE" | "MODULATE2X" | "MODULATE4X" | "MODULATEALPHA_ADDCOLOR" | "MODULATEINVALPHA_ADDCOLOR" | "MODULATEINVCOLOR_ADDALPHA" | "OFF" | "REPLACE" | "SELECTARG1" | "SELECTARG2" | "SUBTRACT">;
+      mode: MFString <"ADD" | "ADD_SIGNED" | "ADD_SIGNED_2X" | "ADD_SMOOTH" | "BLEND_CURRENT_ALPHA" | "BLEND_DIFFUSE_ALPHA" | "BLEND_FACTOR_ALPHA" | "BLEND_TEXTURE_ALPHA" | "DOT_PRODUCT_3" | "MODULATE" | "MODULATE_2X" | "MODULATE_4X" | "MODULATE_ALPHA_ADD_COLOR" | "MODULATE_INV_ALPHA_ADD_COLOR" | "MODULATE_INV_COLOR_ADD_ALPHA" | "OFF" | "REPLACE" | "SELECT_ARG1" | "SELECT_ARG2" | "SUBTRACT">;
       /**
        * source field determines whether each image source is treated as DIFFUSE, SPECULAR or a multiplicative FACTOR.
        *
@@ -15922,11 +16596,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -16167,25 +16841,19 @@ declare namespace X3D
       solid: boolean;
    }
 
-   /** A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. */
+   /** RenderedTexture is a texture node that renders the view from a local viewpoint or separate scene into an offscreen buffer, producing an image or depth map that can be rendered from model geometry in real time. */
    interface RenderedTextureProxy extends X3DTexture2DNodeProxy, X3DUrlOutputObjectProxy
    {
       /**
-       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
-       *
-       * This field is of access type 'inputOutput' and type MFNode.
-       */
-      children: MFNode <X3DChildNodeProxy>;
-      /**
-       * Sets color depth of the rendered texture.
+       * number of color components for the rendered texture.
        *
        * This field is of access type 'inputOutput' and type SFInt32.
        */
       colorDepth: number;
       /**
-       * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
+       * indicates that a generated texture contains a depth buffer for the image, instead of a color buffer.
        *
-       * This field is of access type 'initializeOnly' and type SFBool.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
       depthMap: boolean;
       /**
@@ -16195,29 +16863,23 @@ declare namespace X3D
        */
       description: string;
       /**
-       * The enabled field either enables or disables data output processing by the node.
+       * image height in pixels.
        *
-       * This field is of access type 'inputOutput' and type SFBool.
-       */
-      enabled: boolean;
-      /**
-       * Sets height of the rendered texture.
-       *
-       * This field is of access type 'inputOutput' and type SFInt32.
+       * This field is of access type 'initializeOnly' and type SFInt32.
        */
       height: number;
       /**
-       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+       * provides a TRUE event when the data output process becomes active, and a FALSE event when the data output process is stopped.
        *
        * This field is of access type 'outputOnly' and type SFBool.
        */
       readonly isActive: boolean;
       /**
-       * The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit.
+       * indicates the maximum number of independent frame files (or movie frames) that can be saved for a single series of image captures.
        *
        * This field is of access type 'inputOutput' and type SFInt32.
        */
-      maximumNumberFrames: number;
+      maxNumberFrames: number;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -16237,15 +16899,15 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * The replaceImage field defines whether only a single updated image file or multiple image files can be saved.
+       * Whether only a single updated image file or multiple image files can be saved.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       replaceImage: boolean;
       /**
-       * singleFrame controls when the next texture is captured.
+       * if TRUE only a single image is captured, otherwise continuous updates are captured.
        *
-       * This field is of access type 'initializeOnly' and type SFBool.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
       singleFrame: boolean;
       /**
@@ -16255,19 +16917,19 @@ declare namespace X3D
        */
       textureProperties: TexturePropertiesProxy | null;
       /**
-       * The updateInterval field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
+       * indicates time intervals between render captures when the update field is "ALWAYS".
        *
        * This field is of access type 'inputOutput' and type SFTime.
        */
       updateInterval: number;
       /**
-       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+       * The url field typically defines a relative address to a file name that can be used for storing one or more rendered textures, and can also provide a destination for output of successive image files as a video file or video stream.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
       /**
-       * Sets width of the rendered texture.
+       * image height in pixels.
        *
        * This field is of access type 'inputOutput' and type SFInt32.
        */
@@ -16729,6 +17391,59 @@ declare namespace X3D
        * This field is of access type 'outputOnly' and type SFFloat.
        */
       readonly value_changed: number;
+   }
+
+   /** ScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
+   interface ScatterMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+   {
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light..
+       *
+       * This field is of access type 'inputOutput' and type SFColor.
+       */
+      multiscatterColor: SFColor;
+      /**
+       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColor.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      multiscatterColorTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      multiscatterColorTextureMapping: string;
+      /**
+       * The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterAnisotropy: number;
+      /**
+       * The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterStrength: number;
+      /**
+       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by scatterStrength.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      scatterStrengthTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      scatterStrengthTextureMapping: string;
    }
 
    /** ScreenFontStyle is an X3DFontStyleNode defines the size, family, justification, and other styles used within a screen layout. */
@@ -18747,8 +19462,8 @@ declare namespace X3D
       whichChoice: number;
    }
 
-   /** Tangent. */
-   interface TangentProxy extends X3DGeometricPropertyNodeProxy
+   /** Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
+   interface TangentProxy extends X3DTangentNodeProxy
    {
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
@@ -18757,7 +19472,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
+       * set of x-y-z-w orthogonal vector values for a surface, applied either per-vertex or per-face to a mesh.
        *
        * This field is of access type 'inputOutput' and type MFVec4f.
        */
@@ -19125,7 +19840,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
-      mode: "SPHERE" | "CAMERASPACENORMAL" | "CAMERASPACEPOSITION" | "CAMERASPACEREFLECTIONVECTOR" | "SPHERE-LOCAL" | "COORD" | "COORD-EYE" | "NOISE" | "NOISE-EYE" | "SPHERE-REFLECT" | "SPHERE-REFLECT-LOCAL";
+      mode: "SPHERE" | "CAMERA_SPACE_NORMAL" | "CAMERA_SPACE_POSITION" | "CAMERA_SPACE_REFLECTION_VECTOR" | "SPHERE_LOCAL" | "COORD" | "COORD_EYE" | "NOISE" | "NOISE_EYE" | "SPHERE_REFLECT" | "SPHERE_REFLECT_LOCAL";
       /**
        * parameter array contains scale and translation (x y z) values for Perlin NOISE mode, parameter[0] contains index of refraction for SPHERE-REFLECT mode, parameter[0] contains index of refraction and parameter[1 to 3] contains the eye point in local coordinates for SPHERE-REFLECT-LOCAL mode.
        *
@@ -20296,11 +21011,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20373,11 +21088,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20479,11 +21194,11 @@ declare namespace X3D
        */
       stripCount: MFInt32;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -21213,59 +21928,6 @@ declare namespace X3D
       sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED";
    }
 
-   /** VolumeScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
-   interface VolumeScatterMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
-   {
-      /**
-       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      metadata: X3DMetadataObjectProxy | null;
-      /**
-       * The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light..
-       *
-       * This field is of access type 'inputOutput' and type SFColor.
-       */
-      multiscatterColor: SFColor;
-      /**
-       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColor*.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      multiscatterColorTexture: X3DSingleTextureNodeProxy | null;
-      /**
-       * Input/Output field multiscatterColorTextureMapping.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      multiscatterColorTextureMapping: string;
-      /**
-       * The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
-       *
-       * This field is of access type 'inputOutput' and type SFFloat.
-       */
-      scatterAnisotropy: number;
-      /**
-       * The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
-       *
-       * This field is of access type 'inputOutput' and type SFFloat.
-       */
-      scatterStrength: number;
-      /**
-       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by *scatterStrength*.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      scatterStrengthTexture: X3DSingleTextureNodeProxy | null;
-      /**
-       * Input/Output field multiscatterColorTextureMapping.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      scatterStrengthTextureMapping: string;
-   }
-
    /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
    interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
    {
@@ -21636,11 +22298,9 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
-       *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -22785,6 +23445,15 @@ declare namespace X3D
 
    }
 
+   /** Base type for all tangent node types in X3D. */
+   interface X3DTangentNodeProxy extends X3DGeometricPropertyNodeProxy
+   {
+      /**
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+   }
+
    /** Base type for all nodes which specify 2D sources for texture images. */
    interface X3DTexture2DNodeProxy extends X3DSingleTextureNodeProxy
    {
@@ -23043,30 +23712,10 @@ declare namespace X3D
       url: MFString;
    }
 
-   /**  */
+   /** X3DUrlOutputObject indicates that a node publish data on the local file system or to a network address. */
    interface X3DUrlOutputObjectProxy extends SFNode
    {
       /**
-       * Author-provided prose that describes intended purpose of the url asset.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      description: string;
-      /**
-       * The enabled field either enables or disables data output processing by the node.
-       *
-       * This field is of access type 'inputOutput' and type SFBool.
-       */
-      enabled: boolean;
-      /**
-       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
-       *
-       * This field is of access type 'outputOnly' and type SFBool.
-       */
-      readonly isActive: boolean;
-      /**
-       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
-       *
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
@@ -23303,6 +23952,7 @@ declare namespace X3D
       FloatVertexAttribute: FloatVertexAttributeProxy,
       Fog: FogProxy,
       FogCoordinate: FogCoordinateProxy,
+      FontLibrary: FontLibraryProxy,
       FontStyle: FontStyleProxy,
       ForcePhysicsModel: ForcePhysicsModelProxy,
       Gain: GainProxy,
@@ -23324,6 +23974,7 @@ declare namespace X3D
       HAnimHumanoid: HAnimHumanoidProxy,
       HAnimJoint: HAnimJointProxy,
       HAnimMotion: HAnimMotionProxy,
+      HAnimPose: HAnimPoseProxy,
       HAnimSegment: HAnimSegmentProxy,
       HAnimSite: HAnimSiteProxy,
       ImageCubeMapTexture: ImageCubeMapTextureProxy,
@@ -23427,6 +24078,7 @@ declare namespace X3D
       ScalarChaser: ScalarChaserProxy,
       ScalarDamper: ScalarDamperProxy,
       ScalarInterpolator: ScalarInterpolatorProxy,
+      ScatterMaterialExtension: ScatterMaterialExtensionProxy,
       ScreenFontStyle: ScreenFontStyleProxy,
       ScreenGroup: ScreenGroupProxy,
       Script: ScriptProxy,
@@ -23495,7 +24147,6 @@ declare namespace X3D
       VolumeEmitter: VolumeEmitterProxy,
       VolumeMaterialExtension: VolumeMaterialExtensionProxy,
       VolumePickSensor: VolumePickSensorProxy,
-      VolumeScatterMaterialExtension: VolumeScatterMaterialExtensionProxy,
       WaveShaper: WaveShaperProxy,
       WindPhysicsModel: WindPhysicsModelProxy,
       WorldInfo: WorldInfoProxy,

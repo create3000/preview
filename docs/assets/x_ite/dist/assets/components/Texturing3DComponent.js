@@ -1,9 +1,9 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 280
+/***/ 629
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ },
 
-/***/ 234
+/***/ 71
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -77,7 +77,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ },
 
-/***/ 770
+/***/ 735
 (module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4035,7 +4035,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ },
 
-/***/ 418
+/***/ 703
 (module) {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5191,14 +5191,6 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ },
 
-/***/ 254
-(module) {
-
-"use strict";
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ },
-
 /***/ 497
 () {
 
@@ -5237,17 +5229,17 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 	});
 /************************************************************************/
 /******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
+/******/ 	const __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		const cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
 /******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 		const module = __webpack_module_cache__[moduleId] = {
 /******/ 			// no module.id needed
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
@@ -5262,33 +5254,27 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
@@ -5326,20 +5312,17 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
-const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 function X3DTexture3DNode (executionContext)
 {
    external_X_ITE_X3D_X3DSingleTextureNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode);
 
+   // Private properties
+
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_3D;
-   this .width  = 0;
-   this .height = 0;
-   this .depth  = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X_ITE_X3D_X3DSingleTextureNode_default()).prototype),
@@ -5352,10 +5335,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X
       this ._repeatT .addInterest ("updateTextureParameters", this);
       this ._repeatR .addInterest ("updateTextureParameters", this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-      gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
    },
    getTarget ()
    {
@@ -5389,12 +5369,17 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X
    {
       this .depth = value;
    },
-   clearTexture ()
+   clearTexture: (() =>
    {
-      const gl = this .getBrowser () .getContext ();
+      const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-      this .setTextureData (1, 1, 1, false, gl .RGBA, defaultData);
-   },
+      return function ()
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         this .setTextureData (1, 1, 1, false, gl .RGBA, defaultData);
+      };
+   })(),
    setTextureData (width, height, depth, transparent, format, data)
    {
       this .width  = width;
@@ -5405,7 +5390,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X
          gl  = this .getBrowser () .getContext (),
          max = gl .getParameter (gl .MAX_3D_TEXTURE_SIZE);
 
-      if (width > max || height > max || depth > max)
+      if (max && (width > max || height > max || depth > max))
       {
          throw new Error (`At least one dimension (${width} × ${height} × ${depth}) is greater than the maximum texture size (${max} px).`);
       }
@@ -5511,7 +5496,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
    },
    update ()
    {
-      const textureNodes = this .textureNodes
+      const textureNodes = this .textureNodes;
 
       if (textureNodes .length === 0 || !this .isComplete ())
       {
@@ -5540,7 +5525,6 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
          {
             if (textureNode .getWidth () === width && textureNode .getHeight () === height)
             {
-               gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
                gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
 
                if (textureNode .getTextureType () === 1)
@@ -5570,6 +5554,11 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
          this .setMipMaps (textureNodes .every (textureNode => textureNode .canMipMaps ()));
          this .updateTextureParameters ();
       }
+   },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const textureNode of this .textureNodes)
+         textureNode .getRenderedTextures (renderedTextures);
    },
 });
 
@@ -5601,9 +5590,9 @@ var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .Expressions"
 const external_X_ITE_X3D_Expressions_namespaceObject = __X_ITE_X3D__ .Expressions;
 var external_X_ITE_X3D_Expressions_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Expressions_namespaceObject);
-// EXTERNAL MODULE: external "__X_ITE_X3D__ .jquery"
-var external_X_ITE_X3D_jquery_ = __webpack_require__(254);
-var external_X_ITE_X3D_jquery_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_jquery_);
+;// external "__X_ITE_X3D__ .helper"
+const external_X_ITE_X3D_helper_namespaceObject = __X_ITE_X3D__ .helper;
+var external_X_ITE_X3D_helper_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_helper_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/NRRDParser.js
 
 
@@ -5632,14 +5621,14 @@ function NRRDParser ()
 
 Object .assign (NRRDParser .prototype,
 {
-   parse (input)
+   async parse (input)
    {
       this .setInput (input);
 
       if (this .getNRRD ())
       {
          this .getFields ();
-         this .getData ();
+         await this .getData ();
       }
 
       return this .nrrd;
@@ -5647,7 +5636,7 @@ Object .assign (NRRDParser .prototype,
    setInput (value)
    {
       this .dataView     = new DataView (value);
-      this .input        = external_X_ITE_X3D_jquery_default().decodeText (value);
+      this .input        = external_X_ITE_X3D_helper_default().decodeText (value);
       this .lastIndex    = 0;
       this .nrrd         = { };
       this .littleEndian = true;
@@ -5837,7 +5826,7 @@ Object .assign (NRRDParser .prototype,
 
       throw new Error ("Unsupported NRRD endian, must be either 'little' or 'big'.");
    },
-   getData ()
+   async getData ()
    {
       switch (this .encoding)
       {
@@ -5858,7 +5847,7 @@ Object .assign (NRRDParser .prototype,
          }
          case "gzip":
          {
-            this .gzip ();
+            await this .gzip ();
             break;
          }
       }
@@ -5996,7 +5985,7 @@ Object .assign (NRRDParser .prototype,
 
       throw new Error ("Invalid NRRD data.");
    },
-   gzip ()
+   async gzip ()
    {
       try
       {
@@ -6005,7 +5994,7 @@ Object .assign (NRRDParser .prototype,
 
          const
             input       = this .dataView .buffer .slice (this .lastIndex),
-            arrayBuffer = external_X_ITE_X3D_jquery_default().ungzip (input);
+            arrayBuffer = await external_X_ITE_X3D_helper_default().gunzip (input);
 
          this .dataView = new DataView (arrayBuffer);
 
@@ -6013,7 +6002,7 @@ Object .assign (NRRDParser .prototype,
       }
       catch (error)
       {
-         throw new Error (`Invalid NRRD data: ${error}.`);
+         throw new Error (`Invalid NRRD data.`, { cause: error });
       }
    },
 });
@@ -7179,10 +7168,10 @@ var Decoder = class _Decoder {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(770);
-/* provided dependency */ var jpegDecode = __webpack_require__(418);
-/* provided dependency */ var CharLS = __webpack_require__(280);
-/* provided dependency */ var OpenJPEG = __webpack_require__(234);
+/* provided dependency */ var dicomParser = __webpack_require__(735);
+/* provided dependency */ var jpegDecode = __webpack_require__(703);
+/* provided dependency */ var CharLS = __webpack_require__(629);
+/* provided dependency */ var OpenJPEG = __webpack_require__(71);
 
 
 
@@ -8306,10 +8295,11 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
    unloadData ()
    {
       this .clearTexture ();
+      this .updateOutputs (0, 0, 0, 0);
    },
    loadData ()
    {
-      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, (data, fileURL) =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
@@ -8320,7 +8310,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^data:image\/ktx2[;,]/))
+            if (/\.ktx2?(?:\.gz)?$/ .test (fileURL .pathname) || /^\s*data:image\/ktx2[;,]/ .test (fileURL .href))
             {
                this .setLinear (true);
                this .setMipMaps (false);
@@ -8333,7 +8323,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
             this .setLinear (false);
             this .setMipMaps (true);
 
-            const nrrd = new Texturing3D_NRRDParser () .parse (data);
+            const nrrd = await new Texturing3D_NRRDParser () .parse (data);
 
             if (nrrd .nrrd)
             {
@@ -8365,7 +8355,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
                return;
             }
 
-            throw new Error ("ImageTexture3D: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },
@@ -8377,7 +8367,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
          if (fileURL .protocol !== "data:")
-            console .info (`Done loading image texture 3D '${decodeURI (fileURL)}'.`);
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
       const { baseWidth, baseHeight, baseDepth, numComponents } = texture;
@@ -8436,7 +8426,6 @@ const ImageTexture3D_default_ = ImageTexture3D;
 
 /* harmony default export */ const Texturing3D_ImageTexture3D = (external_X_ITE_X3D_Namespace_default().add ("ImageTexture3D", ImageTexture3D_default_));
 ;// ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
-/* provided dependency */ var $ = __webpack_require__(254);
 
 
 
@@ -8457,9 +8446,6 @@ function ImageTextureAtlas (executionContext)
    external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ImageTextureAtlas);
-
-   this .image    = $("<img></img>");
-   this .urlStack = new (external_X_ITE_X3D_Fields_default()).MFString ();
 }
 
 Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3D_X3DTexture3DNode .prototype),
@@ -8470,146 +8456,113 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
       Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
-      this .image
-         .on ("load", this .setImage .bind (this))
-         .on ("abort error", this .setError .bind (this))
-         .attr ("crossorigin", "anonymous");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    unloadData ()
    {
       this .clearTexture ();
+      this .updateOutputs (0, 0, 0, 0);
    },
    loadData ()
    {
-      this .urlStack .setValue (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .urlStack .length === 0)
-      {
-         this .clearTexture ();
-         this .updateOutputs (0, 0, 0, 0);
-         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
-         return;
-      }
-
-      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL, mimeType) =>
       {
          if (data === null)
          {
-            this .loadNext ();
+            this .clearTexture ();
+            this .updateOutputs (0, 0, 0, 0);
+            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
          {
-            this .fileURL = new URL (fileURL);
+            fileURL = new URL (fileURL);
 
             this .setLinear (false);
             this .setMipMaps (true);
 
-            this .objectURL = URL .createObjectURL (new Blob ([data]));
+            const objectURL = URL .createObjectURL (new Blob ([data], { type: mimeType }));
 
-            this .image .attr ("src", this .objectURL);
+            try
+            {
+               this .setImage (await this .loadImage (objectURL), fileURL);
+            }
+            finally
+            {
+               URL .revokeObjectURL (objectURL);
+            }
          }
          else
          {
-            throw new Error ("ImageTexture: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
-
-      URL .revokeObjectURL (this .objectURL);
-
-      this .loadNext ();
-   },
-   setImage ()
+   setImage (image, fileURL)
    {
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
-      try
+      const
+         gl          = this .getBrowser () .getContext (),
+         w           = image .width,
+         h           = image .height,
+         texture     = gl .createTexture (),
+         frameBuffer = gl .createFramebuffer ();
+
+      // Slice me nice.
+
+      const
+         slicesOverX    = this ._slicesOverX .getValue (),
+         slicesOverY    = this ._slicesOverY .getValue (),
+         maxSlices      = slicesOverX * slicesOverY,
+         width          = Math .floor (w / slicesOverX),
+         height         = Math .floor (h / slicesOverY),
+         depth          = Math .min (this ._numberOfSlices .getValue (), maxSlices),
+         defaultData    = new Uint8Array (w * h * 4),
+         data           = defaultData .subarray (0, width * height * depth * 4);
+
+      gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+      gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+      gl .bindTexture (gl .TEXTURE_2D, texture);
+      gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, w, h, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
+      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
+
+      let transparent = false;
+
+      for (let y = 0, i = 0; y < slicesOverY && i < depth; ++ y)
       {
-         const
-            gl          = this .getBrowser () .getContext (),
-            image       = this .image [0],
-            w           = image .width,
-            h           = image .height,
-            texture     = gl .createTexture (),
-            frameBuffer = gl .createFramebuffer ();
-
-         // Slice me nice.
-
-         const
-            slicesOverX    = this ._slicesOverX .getValue (),
-            slicesOverY    = this ._slicesOverY .getValue (),
-            maxSlices      = slicesOverX * slicesOverY,
-            width          = Math .floor (w / slicesOverX),
-            height         = Math .floor (h / slicesOverY),
-            depth          = Math .min (this ._numberOfSlices .getValue (), maxSlices),
-            defaultData    = new Uint8Array (w * h * 4),
-            data           = defaultData .subarray (0, width * height * depth * 4);
-
-         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-         gl .bindTexture (gl .TEXTURE_2D, texture);
-         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, w, h, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
-         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
-
-         let transparent = false;
-
-         for (let y = 0, i = 0; y < slicesOverY && i < depth; ++ y)
+         for (let x = 0; x < slicesOverX && i < depth; ++ x, ++ i)
          {
-            for (let x = 0; x < slicesOverX && i < depth; ++ x, ++ i)
-            {
-               const
-                  sx = Math .floor (x * w / slicesOverX),
-                  sy = Math .floor (y * h / slicesOverY);
+            const
+               sx = Math .floor (x * w / slicesOverX),
+               sy = Math .floor (y * h / slicesOverY);
 
-               // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, width, height);
+            // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, width, height);
 
-               gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
-               gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, width, height, 1, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, width, height, 1, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-               transparent ||= this .isImageTransparent (data);
-            }
+            transparent ||= this .isImageTransparent (data);
          }
-
-         gl .deleteFramebuffer (frameBuffer);
-         gl .deleteTexture (texture);
-
-         // Determine image alpha.
-
-         this .setTransparent (transparent);
-         this .setWidth (width);
-         this .setHeight (height);
-         this .setDepth (depth);
-         this .updateTextureParameters ();
-         this .updateOutputs (width, height, depth, transparent ? 4 : 3);
-         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
       }
-      catch (error)
-      {
-         if ((external_X_ITE_X3D_DEVELOPMENT_default()))
-            console .log (error)
 
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
-      finally
-      {
-         URL .revokeObjectURL (this .objectURL);
-      }
+      gl .deleteFramebuffer (frameBuffer);
+      gl .deleteTexture (texture);
+
+      // Determine image alpha.
+
+      this .setTransparent (transparent);
+      this .setWidth (width);
+      this .setHeight (height);
+      this .setDepth (depth);
+      this .updateTextureParameters ();
+      this .updateOutputs (width, height, depth, transparent ? 4 : 3);
+      this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
    },
    updateOutputs (width, height, depth, colorDepth)
    {
@@ -8711,7 +8664,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
                depth       = image [DEPTH],
                transparent = !(components & 1),
                size3D      = width * height * depth,
-               length      = OFFSET + size3D;;
+               length      = OFFSET + size3D;
 
             let data, format;
 

@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -272,7 +266,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
 
             for (let i = 0; i < numPickedTargets; ++ i)
             {
-               if (pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i]))
+               if ((pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i])))
                   break;
             }
 
@@ -319,7 +313,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    },
    set_live__ ()
    {
-      if (this .getLive () .getValue () && this ._enabled .getValue () && ! this .objectType .has ("NONE"))
+      if (this .getLive () .getValue () && this ._enabled .getValue () && !this .objectType .has ("NONE"))
       {
          this .getBrowser () .addPickSensor (this);
          this .setPickableObject (true);
@@ -341,11 +335,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    },
    set_matchCriterion__: (() =>
    {
-      const matchCriterions = new Map ([
-         ["MATCH_ANY",      Picking_MatchCriterion .MATCH_ANY],
-         ["MATCH_EVERY",    Picking_MatchCriterion .MATCH_EVERY],
-         ["MATCH_ONLY_ONE", Picking_MatchCriterion .MATCH_ONLY_ONE],
-      ]);
+      const matchCriterions = new Map (Object .entries (Picking_MatchCriterion));
 
       return function ()
       {
@@ -355,10 +345,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    })(),
    set_intersectionType__: (() =>
    {
-      const intersectionTypes = new Map ([
-         ["BOUNDS",   Picking_IntersectionType .BOUNDS],
-         ["GEOMETRY", Picking_IntersectionType .GEOMETRY],
-      ]);
+      const intersectionTypes = new Map (Object .entries (Picking_IntersectionType));
 
       return function ()
       {
@@ -368,12 +355,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    })(),
    set_sortOrder__: (() =>
    {
-      const sortOrders = new Map ([
-         ["ANY",        Picking_SortOrder .ANY],
-         ["CLOSEST",    Picking_SortOrder .CLOSEST],
-         ["ALL",        Picking_SortOrder .ALL],
-         ["ALL_SORTED", Picking_SortOrder .ALL_SORTED],
-      ]);
+      const sortOrders = new Map (Object .entries (Picking_SortOrder));
 
       return function ()
       {
@@ -732,19 +714,15 @@ Object .assign ((external_X_ITE_X3D_X3DGeometryNode_default()).prototype,
    intersectsLine: (() =>
    {
       const
-         invModelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
-         uvt                = { u: 0, v: 0, t: 0 },
-         v0                 = new (external_X_ITE_X3D_Vector3_default()) (),
-         v1                 = new (external_X_ITE_X3D_Vector3_default()) (),
-         v2                 = new (external_X_ITE_X3D_Vector3_default()) ();
+         uvt = { u: 0, v: 0, t: 0 },
+         v0  = new (external_X_ITE_X3D_Vector3_default()) (),
+         v1  = new (external_X_ITE_X3D_Vector3_default()) (),
+         v2  = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (hitRay, intersections)
       {
          if (!this .intersectsBBox (hitRay))
             return intersections .length;
-
-         // Apply transformations from geometry primitives and Text with ScreenFontStyle.
-         hitRay .multLineMatrix (invModelViewMatrix .assign (this .getMatrix ()) .inverse ());
 
          const
             texCoords   = this .multiTexCoords [0] .getValue (),
@@ -781,10 +759,10 @@ Object .assign ((external_X_ITE_X3D_X3DGeometryNode_default()).prototype,
             const i3 = i * 3;
 
             const normal = new (external_X_ITE_X3D_Vector3_default()) (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
-                                          u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
-                                          u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
+                                        u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                        u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
 
-            intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
+            intersections .push ({ texCoord, normal, point });
          }
 
          return intersections .length;
@@ -1008,7 +986,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (external_X_IT
                }
                case Picking_MatchCriterion .MATCH_EVERY:
                {
-                  if (intersection !== pickSensor .getObjectType () .size)
+                  if (intersection !== pickSensorNode .getObjectType () .size)
                      continue;
 
                   break;

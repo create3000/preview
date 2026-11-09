@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -63,7 +57,7 @@ function Arc2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 }
 
 Object .setPrototypeOf (Arc2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype);
@@ -90,7 +84,7 @@ function ArcClose2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 }
 
 Object .setPrototypeOf (ArcClose2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype);
@@ -129,7 +123,7 @@ function Circle2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 }
 
 Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
@@ -220,7 +214,7 @@ function Disk2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 
    this .diskTexCoords = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
    this .diskNormals   = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();

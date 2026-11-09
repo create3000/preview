@@ -1,39 +1,33 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		const getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 	// define getter/value functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
+/******/ 		}
+/******/ 	};
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 	
 /************************************************************************/
 
@@ -92,11 +86,10 @@ Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, (external_X_IT
 
       if (value)
          this ._inputTrue = true;
-
       else
          this ._inputFalse = false;
 
-      this ._inputNegate = ! value;
+      this ._inputNegate = !value;
    },
 });
 
@@ -303,7 +296,7 @@ Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (external_X_IT
    set_boolean__ ()
    {
       if (this ._set_boolean .getValue ())
-         this ._toggle = ! this ._toggle .getValue ();
+         this ._toggle = !this ._toggle .getValue ();
    },
 });
 
@@ -370,7 +363,8 @@ Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilitie
    },
    set_triggerTime__ ()
    {
-      this ._triggerTrue = true;
+      this ._triggerTrue  = true;
+      this ._triggerFalse = false;
    },
 });
 
@@ -383,6 +377,7 @@ Object .defineProperties (BooleanTrigger,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_triggerTime", new (external_X_ITE_X3D_Fields_default()).SFTime ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "triggerTrue",     new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "triggerFalse",    new (external_X_ITE_X3D_Fields_default()).SFBool ()), // experimental
       ]),
       enumerable: true,
    },
@@ -472,7 +467,8 @@ Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilitie
    },
    set_boolean__ ()
    {
-      this ._triggerValue = this ._integerKey;
+      if (this ._set_boolean .getValue () || this .getExecutionContext () .getSpecificationVersion () <= 3.3)
+         this ._triggerValue = this ._integerKey;
    },
 });
 
@@ -520,7 +516,8 @@ Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X
    },
    set_boolean__ ()
    {
-      this ._triggerTime = this .getBrowser () .getCurrentTime ();
+      if (this ._set_boolean .getValue () || this .getExecutionContext () .getSpecificationVersion () <= 3.3)
+         this ._triggerTime = this .getBrowser () .getCurrentTime ();
    },
 });
 
