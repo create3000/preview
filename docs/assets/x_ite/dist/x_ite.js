@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 850
+/***/ 464
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 224
+/***/ 506
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 852
+/***/ 930
 (module) {
 
 /**
@@ -31247,7 +31247,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(852);
+/* provided dependency */ var libtess = __webpack_require__(930);
 
 
 const Triangle3 =
@@ -48306,7 +48306,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(852);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(930);
 
 
 
@@ -64957,6 +64957,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
+            this .touchX = event .pageX;
+            this .touchY = event .pageY;
+
             this .mousedown (event);
 
             // Show context menu on long tab.
@@ -64965,8 +64968,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
 
             if (!hit .id || !hit .sensors .size)
             {
-               this .touchX       = event .pageX;
-               this .touchY       = event .pageY;
                this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
             }
             break;
@@ -64980,9 +64981,13 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
    },
    touchend (event)
    {
-      event = this .getBrowser () .copyEvent (event);
+      const browser = this .getBrowser ();
+
+      event = browser .copyEvent (event);
 
       event .button = 0;
+      event .pageX  = this .touchX;
+      event .pageY  = this .touchY;
 
       this .mouseup (event);
 
@@ -65002,6 +65007,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
             event .button = 0;
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
+
+            this .touchX = event .pageX;
+            this .touchY = event .pageY;
 
             this .mousemove (event);
 
@@ -65473,12 +65481,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this [_pointingTime] .start ();
 
       // Pick.
-
-      if (!Number .isFinite (x))
-         x = this [_pointer] .x;
-
-      if (!Number .isFinite (y))
-         y = this [_pointer] .y;
 
       hit .type = type;
 
@@ -92022,8 +92024,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(850);
-/* provided dependency */ var APNG = __webpack_require__(224);
+/* provided dependency */ var SuperGif = __webpack_require__(464);
+/* provided dependency */ var APNG = __webpack_require__(506);
 
 
 
@@ -94667,7 +94669,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(852);
+/* provided dependency */ var libtess_libtess = __webpack_require__(930);
 const libtess_default_ = libtess_libtess;
 ;
 
