@@ -19541,6 +19541,8 @@ function HoverabilityExtension (executionContext)
    X_ITE_X3DInteractivitySensorNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HoverabilityExtension);
+
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "isActive", new (external_X_ITE_X3D_Fields_default()).SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (HoverabilityExtension .prototype, X_ITE_X3DInteractivitySensorNode .prototype),
@@ -19569,7 +19571,6 @@ Object .defineProperties (HoverabilityExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "hoverable",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isOver",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -20507,7 +20508,10 @@ function SelectabilityExtension (executionContext)
 {
    X_ITE_X3DInteractivitySensorNode .call (this, executionContext);
 
-   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SelectabilityExtension);}
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SelectabilityExtension);
+
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "isOver", new (external_X_ITE_X3D_Fields_default()).SFBool (),);
+}
 
 Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X_ITE_X3DInteractivitySensorNode .prototype),
 {
@@ -20534,7 +20538,6 @@ Object .defineProperties (SelectabilityExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description", new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "selectable",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isOver",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
