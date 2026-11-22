@@ -4,8 +4,6 @@ import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-pars
 import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@latest/dist/x_ite-off-parser.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-vrml1-parser@latest/dist/x_ite-vrml1-parser.min.js";
 
-import X3D from "../x_ite/dist/x_ite.min.mjs";
-
 const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
 
 class Playground
