@@ -14,14 +14,6 @@ hierarchy .parentElement .classList .remove ("rouge-code");
 {% endif %}
 
 {% if content contains '<x3d-canvas' or content contains '<x3d-script-area' or page.x_ite %}
-{% if jekyll.environment == "production" %}
-<script defer
-   src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"
-   integrity="{{ site.x_ite_min_js_integrity }}"
-   crossorigin="anonymous"></script>
-{% else %}
-<script defer src="https://weiputer/x_ite/dist/x_ite.min.js"></script>
-{% endif %}
 <script type="module">
 function changeColorScheme ()
 {
