@@ -1,6 +1,6 @@
 <script type="module">
-document .querySelector ("a[href='/preview/']")
-   .setAttribute ("href", "/x_ite/");
+for (const element of document .querySelectorAll ("a[href='/preview/']"))
+   element .setAttribute ("href", "/x_ite/");
 </script>
 
 {% if page.reference %}
