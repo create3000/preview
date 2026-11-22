@@ -1,4 +1,4 @@
-/* X_ITE v16.7.1 */
+/* X_ITE v16.8.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
@@ -628,17 +628,11 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       {
          const childNode = this .childNode;
 
-         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+         childNode ._childFlags .removeInterest ("requestRebuild", this);
 
          if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._hidden      .removeInterest ("requestRebuild", this);
             childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
          }
       }
@@ -659,13 +653,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
 
       if (childNode)
       {
-         childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .addInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .addInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .addInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .addInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .addInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
+         childNode ._childFlags .addInterest ("requestRebuild", this);
 
          this .childNode = childNode;
 
@@ -695,7 +683,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
 
          if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
          {
-            childNode ._display     .addInterest ("requestRebuild", this);
+            childNode ._hidden      .addInterest ("requestRebuild", this);
             childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
             if (childNode .isBBoxVisible ())
@@ -764,8 +752,11 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
-            renderObject .setShapeParent (this);
+            renderObject .getHierarchy () .push (this);
+
             this .pointingObject ?.traverse (type, renderObject);
+
+            renderObject .getHierarchy () .pop (this);
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).CAMERA:

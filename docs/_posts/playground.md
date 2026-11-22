@@ -1,13 +1,16 @@
 ---
 title: Early Preview Playground
 date: 2025-03-02
-layout: wide
 categories: []
 tags: [Playground]
+layout: app
+jquery: true
+monaco: true
 ---
 <style>
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block);
 @import url(https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css);
+
 
 .material-symbols-outlined {
   font-variation-settings:
@@ -27,8 +30,7 @@ tags: [Playground]
 /* Table */
 .playground {
   box-sizing: border-box;
-  height: 100%;
-  height: calc(100vh - 128px);
+  height: calc(100dvh - 128px);
 }
 
 .toolbar {
@@ -80,6 +82,7 @@ tags: [Playground]
 /* Editor */
 
 #editor, .console {
+  position: relative; /* Fix monaco tooltips. */
   border: none;
   width: 100%;
   height: 100%;
@@ -90,18 +93,13 @@ tags: [Playground]
   white-space: pre;
 }
 
-.monaco-editor,
-.monaco-editor .margin,
-.monaco-editor-background,
-canvas.minimap-decorations-layer {
-  outline: none;
-  background-color: inherit;
+/* Hide monaco tooltips. */
+#editor .context-view {
+  display: none !important;
 }
 
-.console {
-  background: var(--playground-console-background);
-  padding: 0.5rem;
-  height: 50%;
+#editor .monaco-editor .slider {
+  border-radius: 14px;
 }
 
 .content x3d-canvas, x3d-canvas {
@@ -115,18 +113,86 @@ canvas.minimap-decorations-layer {
 
 .console {
   overflow: scroll;
+  background: var(--system-gray7);
+  height: 50%;
+  padding: 0.5rem;
 }
 
-span.info {
+.console p {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+  margin: 0;
+  padding: 1px 2px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-family: monospace;
+  font-size: 8pt;
+}
+
+.console p:where(.warn, .error):before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.console p:first-child {
+  margin-top: 0px;
+}
+
+.console .info {
   color: var(--system-blue);
 }
 
-span.warn {
-  color: var(--system-yellow);
+.console p.warn {
+  border-top: 1px solid var(--system-yellow);
+  border-bottom: 1px solid var(--system-yellow);
+  color: black;
 }
 
-span.error {
-  color: var(--system-red);
+.console p.warn:before {
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-yellow), white 50%), transparent 30%);
+}
+
+.console p.error {
+  border-top: 1px solid var(--system-red);
+  border-bottom: 1px solid var(--system-red);
+  color: black;
+}
+
+.console p.error:before {
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), transparent 30%);
+}
+
+.console p.warn:has(+ p.warn),
+.console p.error:has(+ p.error) {
+  border-bottom: none;
+}
+
+.console p.warn + p.warn,
+.console p.error + p.error {
+  border-top: none;
+}
+
+.console p.warn:not(:has(+ p.warn)),
+.console p.error:not(:has(+ p.error)) {
+  margin-bottom: 2px;
+}
+
+.console p.splitter {
+  margin: 5px 0px;
+  border-top: 1px solid var(--system-gray3);
+  padding: 0px;
+}
+
+.console p.splitter:first-child {
+  display: none;
 }
 
 body {
@@ -143,17 +209,15 @@ body {
 }
 </style>
 
-<!-- Also change version in playground.js! -->
-<script defer src="https://cdn.jsdelivr.net/npm/monaco-editor@0.54.0/min/vs/loader.js"></script>
 <script type="module" src="../assets/playground/playground.mjs"></script>
 
 <div class="playground">
   <div class="toolbar"></div>
   <div class="viewer-row">
-     <div class="viewer-column1 viewer-column">
-       <x3d-canvas splashScreen="false" debug="true" contentScale="auto" xrSessionMode="IMMERSIVE_AR"></x3d-canvas>
-       <div class="console"></div>
-     </div>
-     <div class="viewer-column2 viewer-column"><div id="editor"></div></div>
+    <div class="viewer-column1 viewer-column">
+      <x3d-canvas splashScreen="false" debug="true" contentScale="auto" update="auto"></x3d-canvas>
+      <div class="console"></div>
+    </div>
+    <div class="viewer-column2 viewer-column"><div id="editor"></div></div>
   </div>
 </div>

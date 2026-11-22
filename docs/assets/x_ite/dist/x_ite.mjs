@@ -1,7 +1,7 @@
-/* X_ITE v16.7.1 */
+/* X_ITE v16.8.1 */
 var __webpack_modules__ = ({
 
-/***/ 464
+/***/ 169
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 506
+/***/ 667
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 930
+/***/ 919
 (module) {
 
 /**
@@ -18869,7 +18869,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.7.1";
+const BROWSER_VERSION_default_ = "16.8.1";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -21999,6 +21999,24 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       for (const callback of map .values ())
          callback ();
    },
+   getNodeFlag (field, index)
+   {
+      return !! (field .getValue () & (1 << index));
+   },
+   setNodeFlag (field, index, value)
+   {
+      const mask = 1 << index;
+
+      let flags = field .getValue ();
+
+      if (value)
+         flags |= mask;
+      else
+         flags &= ~mask;
+
+      if (flags !== field .getValue ())
+         field .setValue (flags);
+   },
    toStream (generator)
    {
       generator .string += this .getTypeName ();
@@ -22928,6 +22946,17 @@ const TraverseType_default_ = TraverseType;
 
 
 
+let X3DChildNode_i = 0;
+
+const
+   BOUNDED_INDEX   = X3DChildNode_i ++,
+   POINTING_INDEX  = X3DChildNode_i ++,
+   CAMERA_INDEX    = X3DChildNode_i ++,
+   PICKABLE_INDEX  = X3DChildNode_i ++,
+   COLLISION_INDEX = X3DChildNode_i ++,
+   SHADOW_INDEX    = X3DChildNode_i ++,
+   VISIBLE_INDEX   = X3DChildNode_i;
+
 function X3DChildNode (executionContext)
 {
    if (this .getExecutionContext ())
@@ -22937,79 +22966,74 @@ function X3DChildNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DChildNode);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "isBoundedObject",   new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "isPointingObject",  new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "isCameraObject",    new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "isPickableObject",  new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "isCollisionObject", new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "isShadowObject",    new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "isVisibleObject",   new x_ite_Fields .SFBool ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "childFlags", new x_ite_Fields .SFInt32 ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, Core_X3DNode .prototype),
 {
+   getChildFlag (index)
+   {
+      return this .getNodeFlag (this ._childFlags, index);
+   },
+   setChildFlag (index, value)
+   {
+      this .setNodeFlag (this ._childFlags, index, value);
+   },
    setBoundedObject (value)
    {
-      if (!!value !== this ._isBoundedObject .getValue ())
-         this ._isBoundedObject = value;
+      this .setChildFlag (BOUNDED_INDEX, value);
    },
    isBoundedObject ()
    {
-      return this ._isBoundedObject .getValue ();
+      return this .getChildFlag (BOUNDED_INDEX);
    },
    setPointingObject (value)
    {
-      if (!!value !== this ._isPointingObject .getValue ())
-         this ._isPointingObject = value;
+      this .setChildFlag (POINTING_INDEX, value);
    },
    isPointingObject ()
    {
-      return this ._isPointingObject .getValue ();
+      return this .getChildFlag (POINTING_INDEX);
    },
    setCameraObject (value)
    {
-      if (!!value !== this ._isCameraObject .getValue ())
-         this ._isCameraObject = value;
+      this .setChildFlag (CAMERA_INDEX, value);
    },
    isCameraObject ()
    {
-      return this ._isCameraObject .getValue ();
+      return this .getChildFlag (CAMERA_INDEX);
    },
    setPickableObject (value)
    {
-      if (!!value !== this ._isPickableObject .getValue ())
-         this ._isPickableObject = value;
+      this .setChildFlag (PICKABLE_INDEX, value);
    },
    isPickableObject ()
    {
-      return this ._isPickableObject .getValue ();
+      return this .getChildFlag (PICKABLE_INDEX);
    },
    setShadowObject (value)
    {
-      if (!!value !== this ._isShadowObject .getValue ())
-         this ._isShadowObject = value;
+      this .setChildFlag (SHADOW_INDEX, value);
    },
    isShadowObject ()
    {
-      return this ._isShadowObject .getValue ();
+      return this .getChildFlag (SHADOW_INDEX);
    },
    setCollisionObject (value)
    {
-      if (!!value !== this ._isCollisionObject .getValue ())
-         this ._isCollisionObject = value;
+      this .setChildFlag (COLLISION_INDEX, value);
    },
    isCollisionObject ()
    {
-      return this ._isCollisionObject .getValue ();
+      return this .getChildFlag (COLLISION_INDEX);
    },
    setVisibleObject (value)
    {
-      if (!!value !== this ._isVisibleObject .getValue ())
-         this ._isVisibleObject = value;
+      this .setChildFlag (VISIBLE_INDEX, value);
    },
    isVisibleObject ()
    {
-      return this ._isVisibleObject .getValue ();
+      return this .getChildFlag (VISIBLE_INDEX);
    },
    isVisible ()
    {
@@ -23018,59 +23042,40 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, Core_X3DNode .p
    },
    connectChildNode (childNode, excludes)
    {
-      if (!excludes ?.includes (Rendering_TraverseType .BBOX))
-      {
-         childNode ._isBoundedObject .addFieldInterest (this ._isBoundedObject);
-         this .setBoundedObject (childNode .isBoundedObject ());
-      }
+      childNode ._childFlags .addInterest ("updateFlagsFromChildNode", this, excludes);
 
-      if (!excludes ?.includes (Rendering_TraverseType .POINTER))
-      {
-         childNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
-         this .setPointingObject (childNode .isPointingObject ());
-      }
-
-      if (!excludes ?.includes (Rendering_TraverseType .CAMERA))
-      {
-         childNode ._isCameraObject .addFieldInterest (this ._isCameraObject);
-         this .setCameraObject (childNode .isCameraObject ());
-      }
-
-      if (!excludes ?.includes (Rendering_TraverseType .PICKING))
-      {
-         childNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-         this .setPickableObject (childNode .isPickableObject ());
-      }
-
-      if (!excludes ?.includes (Rendering_TraverseType .COLLISION))
-      {
-         childNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-         this .setCollisionObject (childNode .isCollisionObject ());
-      }
-
-      if (!excludes ?.includes (Rendering_TraverseType .SHADOW))
-      {
-         childNode ._isShadowObject .addFieldInterest (this ._isShadowObject);
-         this .setShadowObject (childNode .isShadowObject ());
-      }
-
-      if (!excludes ?.includes (Rendering_TraverseType .DISPLAY))
-      {
-         childNode ._isVisibleObject .addFieldInterest (this ._isVisibleObject);
-         this .setVisibleObject (childNode .isVisibleObject ());
-      }
+      this .updateFlagsFromChildNode (excludes, childNode ._childFlags);
    },
    disconnectChildNode (childNode)
    {
-      childNode ._isBoundedObject   .removeFieldInterest (this ._isBoundedObject);
-      childNode ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
-      childNode ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
-      childNode ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
-      childNode ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
-      childNode ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
-      childNode ._isVisibleObject   .removeFieldInterest (this ._isVisibleObject);
+      childNode ._childFlags .removeInterest ("updateFlagsFromChildNode", this);
    },
-   getShapes (shapes, modelMatrix)
+   updateFlagsFromChildNode (excludes, childFlags)
+   {
+      const flags = childFlags .getValue ();
+
+      if (!excludes ?.includes (Rendering_TraverseType .BBOX))
+         this .setBoundedObject (flags & (1 << BOUNDED_INDEX));
+
+      if (!excludes ?.includes (Rendering_TraverseType .POINTER))
+         this .setPointingObject (flags & (1 << POINTING_INDEX));
+
+      if (!excludes ?.includes (Rendering_TraverseType .CAMERA))
+         this .setCameraObject (flags & (1 << CAMERA_INDEX));
+
+      if (!excludes ?.includes (Rendering_TraverseType .PICKING))
+         this .setPickableObject (flags & (1 << PICKABLE_INDEX));
+
+      if (!excludes ?.includes (Rendering_TraverseType .COLLISION))
+         this .setCollisionObject (flags & (1 << COLLISION_INDEX));
+
+      if (!excludes ?.includes (Rendering_TraverseType .SHADOW))
+         this .setShadowObject (flags & (1 << SHADOW_INDEX));
+
+      if (!excludes ?.includes (Rendering_TraverseType .DISPLAY))
+         this .setVisibleObject (flags & (1 << VISIBLE_INDEX));
+   },
+   getShapes (shapes /* , modelMatrix */)
    {
       return shapes;
    },
@@ -23824,8 +23829,7 @@ function X3DBoundedObject (/* executionContext */)
 {
    this .addType (Base_X3DConstants .X3DBoundedObject);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "hidden",           new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "display",          new x_ite_Fields .SFBool (true),
+   this .addChildObjects (Base_X3DConstants .outputOnly, "hidden",           new x_ite_Fields .SFInt32 (),
                           Base_X3DConstants .outputOnly, "transformSensors", new x_ite_Fields .SFTime ());
 
    // Units
@@ -23844,27 +23848,31 @@ Object .assign (X3DBoundedObject .prototype,
    childBBox: new Geometry_Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
-      this ._hidden     .addInterest ("set_visible_and_hidden__",      this);
-      this ._visible    .addInterest ("set_visible_and_hidden__",      this);
-      this ._bboxSize   .addInterest ("set_bboxSize_and_bboxCenter__", this);
-      this ._bboxCenter .addInterest ("set_bboxSize_and_bboxCenter__", this);
+      this ._visible    .addInterest ("set_visible__",           this);
+      this ._bboxSize   .addInterest ("set_bboxSizeAndCenter__", this);
+      this ._bboxCenter .addInterest ("set_bboxSizeAndCenter__", this);
 
-      this .set_visible_and_hidden__ ();
+      this .set_visible__ ();
+   },
+   set_visible__ ()
+   {
+      this .setNodeFlag (this ._hidden, 1, !this ._visible .getValue ());
+   },
+   set_bboxSizeAndCenter__ ()
+   {
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
    isVisible ()
    {
-      return this ._display .getValue ();
+      return !this ._hidden .getValue ();
    },
    isHidden ()
    {
-      return this ._hidden .getValue ();
+      return !! (this ._hidden .getValue () & 0b1);
    },
    setHidden (value)
    {
-      if (value === this ._hidden .getValue ())
-         return;
-
-      this ._hidden = value;
+      this .setNodeFlag (this ._hidden, 0, value);
    },
    isDefaultBBoxSize ()
    {
@@ -23915,19 +23923,6 @@ Object .assign (X3DBoundedObject .prototype,
    getTransformSensors ()
    {
       return this .transformSensorNodes;
-   },
-   set_visible_and_hidden__ ()
-   {
-      const value = this ._visible .getValue () && !this ._hidden .getValue ();
-
-      if (value === this ._display .getValue ())
-         return;
-
-      this ._display = value;
-   },
-   set_bboxSize_and_bboxCenter__ ()
-   {
-      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
    dispose ()
    { },
@@ -24422,7 +24417,7 @@ const
    _autoRefreshCompleteTime = Symbol (),
    _autoRefreshId           = Symbol ();
 
-function X3DUrlObject (executionContext)
+function X3DUrlObject (/* executionContext */)
 {
    this .addType (Base_X3DConstants .X3DUrlObject);
 
@@ -24517,7 +24512,7 @@ Object .assign (X3DUrlObject .prototype,
 
       if (this ._url .length === 0 && !this .getAllowEmptyUrl ())
       {
-         this .unloadData ();
+         this .requestUnload ();
          return;
       }
 
@@ -24574,7 +24569,7 @@ Object .assign (X3DUrlObject .prototype,
    {
       const loadState = this .checkLoadState ();
 
-      if (loadState === Base_X3DConstants .NOT_STARTED_STATE || loadState === Base_X3DConstants .FAILED_STATE)
+      if (loadState === Base_X3DConstants .NOT_STARTED_STATE)
          return;
 
       this .unloadData ();
@@ -30691,6 +30686,11 @@ Object .assign (X3DOptimizer .prototype,
    optimizeInterpolators: false,
    optimizeSceneGraph (nodes)
    {
+      this .preserveParent = new Set ([
+         Base_X3DConstants .HAnimHumanoid,
+         Base_X3DConstants .X3DViewpointNode,
+      ]);
+
       const removedNodes = [ ];
 
       nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes, new Set ()));
@@ -30737,8 +30737,11 @@ Object .assign (X3DOptimizer .prototype,
 
             if (this .removeEmptyGroups)
             {
-               if (node .children .length === 0)
-                  return [ ];
+               if (!node .metadata)
+               {
+                  if (node .children .length === 0)
+                     return [ ];
+               }
             }
 
             break;
@@ -30793,6 +30796,7 @@ Object .assign (X3DOptimizer .prototype,
          }
       }
 
+
       if (!combine)
          return node;
 
@@ -30807,6 +30811,12 @@ Object .assign (X3DOptimizer .prototype,
 
       if (node .getNodeTypeName () === "Transform")
       {
+         if (parent ?.getNodeTypeName () === "HAnimJoint")
+         {
+            if (node .children .some (child => child ?.getNodeType () .some (type => this .preserveParent .has (type))))
+               return node;
+         }
+
          node = this .combineSingleChild (node, removedNodes);
 
          if (!node .translation ?.getValue () .equals (Numbers_Vector3 .ZERO))
@@ -30967,7 +30977,6 @@ Object .assign (X3DOptimizer .prototype,
                                  child .center .getValue ());
 
       nodeMatrix .multLeft (childMatrix);
-
       nodeMatrix .getTransform (translation, rotation, scale, scaleOrientation, child .center .getValue ());
 
       child .translation      = translation;
@@ -31227,7 +31236,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(930);
+/* provided dependency */ var libtess = __webpack_require__(919);
 
 
 const Triangle3 =
@@ -32364,6 +32373,7 @@ function X3DRenderObject (executionContext)
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Geometry_Line3 ();
+   this .hierarchy                = [ ];
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
    this .path                     = [ ];
@@ -32551,13 +32561,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .hitRay;
    },
-   getShapeParent ()
+   getHierarchy ()
    {
-      return this .shapeParent;
-   },
-   setShapeParent (shapeParent)
-   {
-      this .shapeParent = shapeParent;
+      return this .hierarchy;
    },
    getSensors ()
    {
@@ -32946,9 +32952,9 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
 
-         renderContext .hAnimNode   = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
-         renderContext .shapeParent = this .shapeParent;
-         renderContext .shapeNode   = shapeNode;
+         renderContext .hAnimNode  = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
+         renderContext .parentNode = this .hierarchy .at (-1);
+         renderContext .shapeNode  = shapeNode;
 
          // Clip planes & sensors
 
@@ -34161,17 +34167,11 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
    {
       for (const childNode of this .childNodes)
       {
-         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+         childNode ._childFlags .removeInterest ("requestRebuild", this);
 
          if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._hidden      .removeInterest ("requestRebuild", this);
             childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
          }
       }
@@ -34245,13 +34245,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
             }
             case Base_X3DConstants .X3DChildNode:
             {
-               childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
-               childNode ._isPointingObject  .addInterest ("requestRebuild", this);
-               childNode ._isCameraObject    .addInterest ("requestRebuild", this);
-               childNode ._isPickableObject  .addInterest ("requestRebuild", this);
-               childNode ._isCollisionObject .addInterest ("requestRebuild", this);
-               childNode ._isShadowObject    .addInterest ("requestRebuild", this);
-               childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
+               childNode ._childFlags .addInterest ("requestRebuild", this);
 
                this .childNodes .add (childNode);
 
@@ -34281,7 +34275,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
                if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
                {
-                  childNode ._display     .addInterest ("requestRebuild", this);
+                  childNode ._hidden      .addInterest ("requestRebuild", this);
                   childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                   if (childNode .isBBoxVisible ())
@@ -34342,17 +34336,11 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
             }
             case Base_X3DConstants .X3DChildNode:
             {
-               childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-               childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-               childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-               childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-               childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-               childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-               childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+               childNode ._childFlags .removeInterest ("requestRebuild", this);
 
                if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
                {
-                  childNode ._display     .removeInterest ("requestRebuild", this);
+                  childNode ._hidden      .removeInterest ("requestRebuild", this);
                   childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
                }
 
@@ -34433,7 +34421,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
                   renderObject .getSensors () .push (sensors);
             }
 
-            renderObject .setShapeParent (this);
+            renderObject .getHierarchy () .push (this);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
@@ -34447,6 +34435,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
             if (sensors .length)
                renderObject .getSensors () .pop ();
 
+            renderObject .getHierarchy () .pop ();
             return;
          }
          case Rendering_TraverseType .CAMERA:
@@ -38136,8 +38125,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (Base_X3DConstants .X3DLayerNode);
 
-   this .addChildObjects (Base_X3DConstants .inputOutput, "hidden",  new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly,  "display", new x_ite_Fields .SFBool (true));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "hidden", new x_ite_Fields .SFInt32 ());
 
    // Legacy
 
@@ -38200,11 +38188,10 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
       Core_X3DNode         .prototype .initialize .call (this);
       Rendering_X3DRenderObject .prototype .initialize .call (this);
 
-      this ._hidden         .addInterest ("set_visible_and_hidden__", this);
-      this ._visible        .addInterest ("set_visible_and_hidden__", this);
-      this ._viewport       .addInterest ("set_viewport__",           this);
-      this ._addChildren    .addInterest ("set_addChildren__",        this);
-      this ._removeChildren .addInterest ("set_removeChildren__",     this);
+      this ._visible        .addInterest ("set_visible__",        this);
+      this ._viewport       .addInterest ("set_viewport__",       this);
+      this ._addChildren    .addInterest ("set_addChildren__",    this);
+      this ._removeChildren .addInterest ("set_removeChildren__", this);
 
       this ._children .addFieldInterest (this .groupNode ._children);
       this .groupNode ._children .addFieldInterest (this ._children);
@@ -38230,19 +38217,20 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
       this .backgrounds     .setup ();
       this .fogs            .setup ();
 
-      this .set_visible_and_hidden__ ();
+      this .set_visible__ ();
       this .set_viewport__ ();
+   },
+   isVisible ()
+   {
+      return !this ._hidden .getValue ();
    },
    isHidden ()
    {
-      return this ._hidden .getValue ();
+      return !! (this ._hidden .getValue () & 0b1);
    },
    setHidden (value)
    {
-      if (value === this ._hidden .getValue ())
-         return;
-
-      this ._hidden = value;
+      this .setNodeFlag (this ._hidden, 0, value);
    },
    getBBox (bbox, shadows)
    {
@@ -38344,14 +38332,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    {
       this .getViewpoint () .straightenView (this);
    },
-   set_visible_and_hidden__ ()
+   set_visible__ ()
    {
-      const value = this ._visible .getValue () && !this ._hidden .getValue ();
-
-      if (value === this ._display .getValue ())
-         return;
-
-      this ._display = value;
+      this .setNodeFlag (this ._hidden, 1, !this ._visible .getValue ());
    },
    set_viewport__ ()
    {
@@ -38671,6 +38654,25 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
 {
    initialize ()
    {
+      const browser = this .getBrowser ();
+
+      // Initialize Events
+
+      if (this .getExecutionContext () .getSpecificationVersion () >= 4.1)
+      {
+         if (this ._loop .getValue ())
+         {
+            if (this ._stopTime .getValue () <= this ._startTime .getValue ())
+               this ._startTime = browser .getCurrentTime ();
+         }
+      }
+      else
+      {
+         this ._initialized = browser .getCurrentTime ();
+      }
+
+      // Events
+
       this .getLive () .addInterest ("set_live__", this);
       this ._evenLive  .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
 
@@ -38682,12 +38684,12 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
       this ._resumeTime  .addInterest ("set_resumeTime__", this);
       this ._stopTime    .addInterest ("set_stopTime__",   this);
 
+      // Initialize Times
+
       this .startTimeValue  = this ._startTime  .getValue ();
       this .pauseTimeValue  = this ._pauseTime  .getValue ();
       this .resumeTimeValue = this ._resumeTime .getValue ();
       this .stopTimeValue   = this ._stopTime   .getValue ();
-
-      this ._initialized = this .getBrowser () .getCurrentTime ();
    },
    checkLiveState ()
    {
@@ -40429,6 +40431,50 @@ const Layer_default_ = Layer;
 ;
 
 /* harmony default export */ const Layering_Layer = (x_ite_Namespace .add ("Layer", Layer_default_));
+;// ./src/x_ite/Parser/GLTFExtensions.js
+const GLTFExtensions_default_ = new Set ([
+   "EXT_lights_image_based",
+   "EXT_mesh_gpu_instancing",
+   "EXT_meshopt_compression",
+   "EXT_texture_avif",
+   "EXT_texture_video",
+   "EXT_texture_webp",
+   "KHR_accessor_float16",
+   "KHR_accessor_float64",
+   "KHR_animation_pointer",
+   "KHR_draco_mesh_compression",
+   "KHR_gaussian_splatting",
+   // "KHR_implicit_shapes",
+   "KHR_interactivity",
+   "KHR_lights_punctual",
+   "KHR_materials_anisotropy",
+   "KHR_materials_clearcoat",
+   "KHR_materials_diffuse_transmission",
+   "KHR_materials_dispersion",
+   "KHR_materials_emissive_strength",
+   "KHR_materials_ior",
+   "KHR_materials_iridescence",
+   "KHR_materials_pbrSpecularGlossiness",
+   "KHR_materials_retroreflection",
+   "KHR_materials_scatter",
+   "KHR_materials_sheen",
+   "KHR_materials_specular",
+   "KHR_materials_transmission",
+   "KHR_materials_unlit",
+   "KHR_materials_variants",
+   "KHR_materials_volume",
+   "KHR_mesh_quantization",
+   "KHR_meshopt_compression",
+   "KHR_node_hoverability",
+   "KHR_node_selectability",
+   "KHR_node_visibility",
+   "KHR_texture_basisu",
+   "KHR_texture_transform",
+   "KHR_xmp_json_ld",
+]);
+;
+
+/* harmony default export */ const GLTFExtensions = (x_ite_Namespace .add ("GLTFExtensions", GLTFExtensions_default_));
 ;// ./src/x_ite/Parser/GLTFPointerAliases.js
 class GLTFPointerAliases
 {
@@ -40465,20 +40511,47 @@ class GLTFPointerAliases
             return false;
       }
    }
+
+   static isSpecularColor (node, field)
+   {
+      switch (node .getTypeName ())
+      {
+         case "SpecularMaterialExtension":
+            return field .getName () === "specularColor";
+         default:
+            return false;
+      }
+   }
 }
 
-GLTFPointerAliases .addAlias ("OrthoViewpoint", "zfar",           "farDistance");
-GLTFPointerAliases .addAlias ("OrthoViewpoint", "znear",          "nearDistance");
-GLTFPointerAliases .addAlias ("PointLight",     "range",          "radius");
-GLTFPointerAliases .addAlias ("Script",         "offset",         "translation");
-GLTFPointerAliases .addAlias ("SpotLight",      "innerConeAngle", "beamWidth");
-GLTFPointerAliases .addAlias ("SpotLight",      "outerConeAngle", "cutOffAngle");
-GLTFPointerAliases .addAlias ("SpotLight",      "range",          "radius");
-GLTFPointerAliases .addAlias ("Switch",         "scene",          "whichChoice");
-GLTFPointerAliases .addAlias ("UnlitMaterial",  "baseColor",      "emissiveColor");
-GLTFPointerAliases .addAlias ("Viewpoint",      "yfov",           "fieldOfView");
-GLTFPointerAliases .addAlias ("Viewpoint",      "zfar",           "farDistance");
-GLTFPointerAliases .addAlias ("Viewpoint",      "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("IndexedTriangleFanSet",        "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("IndexedTriangleSet",           "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("IndexedTriangleStripSet",      "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("IORMaterialExtension",         "ior",            "indexOfRefraction");
+GLTFPointerAliases .addAlias ("IridescenceMaterialExtension", "iridescenceIor", "iridescenceIndexOfRefraction");
+GLTFPointerAliases .addAlias ("OrthoViewpoint",               "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("OrthoViewpoint",               "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("PhysicalMaterial",             "emissive",       "emissiveColor");
+GLTFPointerAliases .addAlias ("PhysicalMaterial",             "scale",          "normalScale");
+GLTFPointerAliases .addAlias ("PhysicalMaterial",             "strength",       "occlusionStrength");
+GLTFPointerAliases .addAlias ("PointLight",                   "range",          "radius");
+GLTFPointerAliases .addAlias ("Script",                       "offset",         "translation");
+GLTFPointerAliases .addAlias ("SpecularGlossinessMaterial",   "emissive",       "emissiveColor");
+GLTFPointerAliases .addAlias ("SpecularGlossinessMaterial",   "scale",          "normalScale");
+GLTFPointerAliases .addAlias ("SpecularGlossinessMaterial",   "strength",       "occlusionStrength");
+GLTFPointerAliases .addAlias ("SpotLight",                    "innerConeAngle", "beamWidth");
+GLTFPointerAliases .addAlias ("SpotLight",                    "outerConeAngle", "cutOffAngle");
+GLTFPointerAliases .addAlias ("SpotLight",                    "range",          "radius");
+GLTFPointerAliases .addAlias ("Switch",                       "scene",          "whichChoice");
+GLTFPointerAliases .addAlias ("TriangleFanSet",               "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("TriangleSet",                  "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("TriangleSet",                  "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("TriangleStripSet",             "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("UnlitMaterial",                "baseColor",      "emissiveColor");
+GLTFPointerAliases .addAlias ("Viewpoint",                    "yfov",           "fieldOfView");
+GLTFPointerAliases .addAlias ("Viewpoint",                    "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("Viewpoint",                    "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("Viewpoint",                    "znear",          "nearDistance");
 
 const GLTFPointerAliases_default_ = GLTFPointerAliases;
 ;
@@ -40505,11 +40578,14 @@ const GLTFPointerAliases_default_ = GLTFPointerAliases;
 
 
 
+// import DEVELOPMENT        from "../DEVELOPMENT.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
 
-const SAMPLES_PER_SECOND = 30; // in 1/s
+const
+   REFERENCE          = Networking_URLs .getProviderURL (),
+   SAMPLES_PER_SECOND = 30; // in 1/s
 
 function GLTF2Parser (scene)
 {
@@ -40525,8 +40601,6 @@ function GLTF2Parser (scene)
    // Globals
 
    this .extensions            = new Set ();
-   this .envLights             = [ ];
-   this .lights                = [ ];
    this .materialVariants      = [ ];
    this .materialVariantNodes  = [ ];
    this .buffers               = [ ];
@@ -40537,12 +40611,10 @@ function GLTF2Parser (scene)
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
-   this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .skeletons             = new Map ();
    this .joints                = new Set ();
-   this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
    this .physicsNodes          = [ ];
 }
@@ -40565,7 +40637,9 @@ Object .assign (GLTF2Parser,
          "extensions",
          "extensionsRequired",
          "extensionsUsed",
+         "externalAssets",
          "extras",
+         "files",
          "images",
          "materials",
          "meshes",
@@ -40573,8 +40647,10 @@ Object .assign (GLTF2Parser,
          "samplers",
          "scene",
          "scenes",
+         "shapes",
          "skins",
          "textures",
+         "uniqueIds",
       ]);
 
       return function (input)
@@ -40634,15 +40710,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       await this .extensionsArray (glTF .extensionsUsed, this .extensions);
       await browser .loadComponents (scene);
 
-      this .extensionsObject (glTF .extensions);
+      this .extensionsObject (glTF, glTF .extensions);
 
       await this .buffersArray (glTF .buffers);
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
 
-      await this .imagesArray (glTF .images);
-      await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
+      await this .filesArray (glTF, "files");
+      await this .filesArray (glTF, "images");
+      await this .filesArray (glTF .extensions ?.EXT_texture_video, "videos");
 
       this .texturesArray   (glTF .textures);
       this .materialsArray  (glTF .materials);
@@ -40682,7 +40759,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          if (typeof value !== "string")
             continue;
 
-         if (key === "version")
+         if (/^(?:thumbnail|version)$/ .test (key))
             continue;
 
          scene .addMetaData (key, value);
@@ -40719,7 +40796,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    async extensionsArray (extensions, set)
    {
-      if (!(extensions instanceof Array))
+      if (!Array .isArray (extensions))
          return;
 
       const
@@ -40729,6 +40806,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       for (const extension of extensions)
       {
+         if (!GLTFExtensions .has (extension))
+            console .warn (`glTF extension'${extension}' is not supported by ${browser .name}. It will be ignored.`);
+
          set .add (extension);
 
          switch (extension)
@@ -40757,7 +40837,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
             case "KHR_node_hoverability":
             case "KHR_node_selectability":
@@ -40817,7 +40896,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          return library;
       })();
    },
-   extensionsObject (extensions)
+   extensionsObject (glTF, extensions)
    {
       if (!(extensions instanceof Object))
          return;
@@ -40826,13 +40905,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       {
          switch (key)
          {
+            case "KHR_interactivity":
+               this .hhrInteractivity (glTF, value);
+               break;
             case "EXT_lights_image_based":
                this .extLightsImageBasedObject (value);
                break;
-            case "KHR_interactivity":
-               this .hhrInteractivity (value);
-               break;
-            // https://github.com/KhronosGroup/glTF/pull/1956
+               // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
             //    this .khrLightsEnvironment (value);
             //    break;
@@ -40845,6 +40924,245 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
       }
    },
+   hhrInteractivity (glTF, KHR_interactivity)
+   {
+      if (!(KHR_interactivity instanceof Object))
+         return;
+
+      if (!(KHR_interactivity .graphs instanceof Array))
+         return;
+
+      const
+         scene          = this .getScene (),
+         behaviorEngine = scene .createNode ("BehaviorEngine", false);
+
+      behaviorEngine ._version = glTF .asset .version;
+      behaviorEngine ._graph   = KHR_interactivity .graph;
+      behaviorEngine ._graphs  = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
+
+      scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
+
+      this .behavior       = [{ node: behaviorEngine }];
+      this .behaviorEngine = behaviorEngine;
+      this .behaviorNodes  = new Set ();
+
+   },
+   addBehaviorNodes (glTF, KHR_interactivity)
+   {
+      if (!this .behavior)
+         return;
+
+      // Collect pointers.
+
+      const pointers = new Set ();
+
+      for (const graph of KHR_interactivity .graphs)
+      {
+         if (!(graph .nodes instanceof Array))
+            continue;
+
+         for (const node of graph .nodes)
+         {
+            const value = node ?.configuration ?.pointer ?.value;
+
+            if (!Array .isArray (value))
+               continue;
+
+            for (const pointer of value)
+               pointers .add (pointer);
+         }
+      }
+
+      // Collect behavior nodes.
+
+      // Add all scene pointers.
+
+      pointers .add ("/scenes");
+
+      if (Array .isArray (glTF .scenes))
+      {
+         for (const s of glTF .scenes .keys ())
+            pointers .add (`/scenes/${s}`);
+      }
+
+      // Add all camera pointers.
+
+      if (Array .isArray (glTF .cameras))
+      {
+         for (const c of glTF .cameras .keys ())
+            pointers .add (`/cameras/${c}`);
+      }
+
+      // Add all materials pointers.
+
+      if (Array .isArray (glTF .materials))
+      {
+         for (const c of glTF .materials .keys ())
+            pointers .add (`/materials/${c}`);
+      }
+
+      // Add all primitives pointers.
+
+      if (Array .isArray (glTF .meshes))
+      {
+         const numMeshes = glTF .meshes .length;
+
+         for (let m = 0; m < numMeshes; ++ m)
+         {
+            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
+
+            for (let p = 0; p < numPrimitives; ++ p)
+               pointers .add (`/meshes/${m}/primitives/${p}/material`);
+         }
+      }
+
+      // Add all nodes matrix pointer if KHR_node_hoverability and KHR_node_selectability.
+
+      if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
+      {
+         const length = glTF .nodes ?.length ?? 0;
+
+         for (let n = 0; n < length; ++ n)
+            pointers .add (`/nodes/${n}/matrix`);
+      }
+
+      // Collect nodes from pointers.
+
+      for (const pointer of pointers)
+      {
+         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
+
+         if (key)
+         {
+            // Top level pointers
+
+            const length = glTF [key [1]] ?.length ?? 0;
+
+            for (let i = 0; i < length; ++ i)
+               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
+         }
+         else if (/^\/extensions\/KHR_lights_punctual\/lights\/[{[].*?[\]}]/ .test (pointer))
+         {
+            // Top level pointers
+
+            const length = glTF .extensions ?.KHR_lights_punctual ?.lights ?.length ?? 0;
+
+            for (let i = 0; i < length; ++ i)
+               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
+         }
+         else
+         {
+            this .addBehaviorNode (pointer, this .behaviorNodes);
+         }
+      }
+
+      // Make pointers unique.
+
+      for (const node of this .behaviorNodes)
+      {
+         const value = node .getMetaData ("Interactivity/pointer", new x_ite_Fields .MFString ());
+
+         node .setMetaData ("Interactivity/pointer", REFERENCE, x_ite_Fields .MFString .from (new Set (value)));
+      }
+
+      // Add behavior nodes.
+
+      this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
+      this .behaviorEngine .setup ();
+   },
+   addBehaviorNode (pointer, behaviorNodes)
+   {
+      // Replace this just to find an node.
+      const search = pointer
+         .replace (/^(\/scenes|\/scenes\/\d+|\/scenes\/\d+\/nodes\/\d+)$/, "$1/metadata")
+         .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/metadata")
+         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/transparency");
+
+      const [node, field] = this .getPointer (search);
+
+      if (!(node && field))
+      {
+         // if (DEVELOPMENT)
+            // console .warn (`No node found for pointer '${pointer}'.`);
+
+         return;
+      }
+
+      const type = node .getType ();
+
+      for (let t = type .length - 1; t >= 0; -- t)
+      {
+         switch (type [t])
+         {
+            case Base_X3DConstants .X3DLightNode:
+            {
+               const lightIndexMatch = pointer .match (/\/light\/(\d+)/);
+
+               if (!lightIndexMatch)
+                  break;
+
+               const lightIndex = +lightIndexMatch [1];
+
+               node .setMetaData ("Interactivity/light", REFERENCE, new x_ite_Fields .SFInt32 (lightIndex));
+               break;
+            }
+            case Base_X3DConstants .X3DMaterialNode:
+            {
+               const materialIndexMatch = pointer .match (/^\/materials\/(\d+)/);
+
+               if (!materialIndexMatch)
+                  break;
+
+               const materialIndex = +materialIndexMatch [1];
+
+               node .setMetaData ("Interactivity/material", REFERENCE, new x_ite_Fields .SFInt32 (materialIndex));
+               break;
+            }
+            case Base_X3DConstants .X3DTransformMatrix3DNode:
+            {
+               const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
+
+               if (!nodeIndexMatch)
+                  break;
+
+               const
+                  nodeIndex = +nodeIndexMatch [1],
+                  mesh      = this .nodes [nodeIndex] .mesh;
+
+               node .setMetaData ("Interactivity/node", REFERENCE, new x_ite_Fields .SFInt32 (nodeIndex));
+
+               if (mesh !== undefined)
+                  node .setMetaData (`Interactivity/mesh`, REFERENCE, new x_ite_Fields .SFInt32 (mesh));
+
+               break;
+            }
+            case Base_X3DConstants .X3DViewpointNode:
+            {
+               const cameraIndexMatch = pointer .match (/^\/cameras\/(\d+)/);
+
+               if (!cameraIndexMatch)
+                  break;
+
+               const cameraIndex = +cameraIndexMatch [1];
+
+               node .setMetaData ("Interactivity/camera", REFERENCE, new x_ite_Fields .SFInt32 (cameraIndex));
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
+      }
+
+      const value = node .getMetaData ("Interactivity/pointer", new x_ite_Fields .MFString ());
+
+      value .push (pointer);
+      node .setMetaData ("Interactivity/pointer", REFERENCE, value);
+
+      behaviorNodes .add (node);
+   },
    extLightsImageBasedObject (EXT_lights_image_based)
    {
       if (!(EXT_lights_image_based instanceof Object))
@@ -40854,13 +41172,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    envLightsArray (lights)
    {
-      if (!(lights instanceof Array))
+      if (!Array .isArray (lights))
          return;
 
       this .envLights = lights;
    },
-   envLightObject (id, light = this .envLights [id])
+   envLightObject (index)
    {
+      const light = this .envLights ?.[index];
+
       if (!(light instanceof Object))
          return null;
 
@@ -40870,7 +41190,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       const
          scene      = this .getScene (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
-         name       = `EnvironmentLight${id + 1}`,
+         name       = `EnvironmentLight${index + 1}`,
          quaternion = new Numbers_Quaternion ();
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
@@ -40888,7 +41208,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       {
          for (const irradianceCoefficient of light .irradianceCoefficients)
          {
-            if (!(irradianceCoefficient instanceof Array))
+            if (!Array .isArray (irradianceCoefficient))
                continue;
 
             lightNode ._diffuseCoefficients .push (... irradianceCoefficient);
@@ -40901,7 +41221,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             specularTextureNode = scene .createNode ("ComposedCubeMapTexture", false),
             baseImages          = light .specularImages [0];
 
-         if (baseImages instanceof Array)
+         if (Array .isArray (baseImages))
          {
             const faces = ["right", "left", "bottom", "top", "front", "back"];
 
@@ -40933,163 +41253,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       return light .node = lightNode;
    },
-   hhrInteractivity (KHR_interactivity)
-   {
-      if (!(KHR_interactivity instanceof Object))
-         return;
-
-      if (!(KHR_interactivity .graphs instanceof Array))
-         return;
-
-      const
-         scene          = this .getScene (),
-         behaviorEngine = scene .createNode ("BehaviorEngine", false);
-
-      behaviorEngine ._graph  = KHR_interactivity .graph;
-      behaviorEngine ._graphs = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
-
-      scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
-
-      this .behavior       = [{ node: behaviorEngine }];
-      this .behaviorEngine = behaviorEngine;
-   },
-   addBehaviorNodes (glTF, KHR_interactivity)
-   {
-      if (!this .behavior)
-         return;
-
-      // Collect pointers.
-
-      const pointers = new Set ();
-
-      for (const graph of KHR_interactivity .graphs)
-      {
-         if (!(graph .nodes instanceof Array))
-            continue;
-
-         for (const node of graph .nodes)
-         {
-            const value = node ?.configuration ?.pointer ?.value;
-
-            if (!(value instanceof Array))
-               continue;
-
-            for (const pointer of value)
-               pointers .add (pointer);
-         }
-      }
-
-      // Collect behavior nodes.
-
-      this .behaviorNodes = new Set ();
-
-      // Add all nodes matrix pointer if KHR_node_hoverability and KHR_node_selectability.
-
-      if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
-      {
-         const length = glTF .nodes ?.length ?? 0;
-
-         for (let i = 0; i < length; ++ i)
-            pointers .add (`/nodes/${i}/matrix`);
-      }
-
-      // Add all primitives pointers if needed.
-
-      if (Array .from (pointers) .some (pointer => pointer .includes ("/primitives/")))
-      {
-         const numMeshes = glTF .meshes ?.length ?? 0;
-
-         for (let m = 0; m < numMeshes; ++ m)
-         {
-            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
-
-            for (let p = 0; p < numPrimitives; ++ p)
-               pointers .add (`/meshes/${m}/primitives/${p}/material`);
-         }
-      }
-
-      // Collect nodes from pointers.
-
-      for (const pointer of pointers)
-      {
-         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
-
-         if (key)
-         {
-            // Top level pointers
-
-            const length = glTF [key [1]] ?.length ?? 0;
-
-            for (let i = 0; i < length; ++ i)
-               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
-         }
-         else
-         {
-            this .addBehaviorNode (pointer, this .behaviorNodes);
-         }
-      }
-
-      // Make pointers unique.
-
-      for (const node of this .behaviorNodes)
-      {
-         const value = node .getMetaData ("Interactivity/pointer", new x_ite_Fields .MFString ());
-
-         node .setMetaData ("Interactivity/pointer", Networking_URLs .getProviderURL (), x_ite_Fields .MFString .from (new Set (value)));
-      }
-
-      // Add behavior nodes.
-
-      this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
-      this .behaviorEngine .setup ();
-   },
-   addBehaviorNode (pointer, behaviorNodes)
-   {
-      // Replace this just to find an node.
-      const search = pointer
-         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
-         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
-
-      const [node, field] = this .getAnimationPointer (search);
-
-      if (!(node && field))
-      {
-         if (DEVELOPMENT)
-            console .warn (`No node found for pointer '${pointer}'.`);
-
-         return;
-      }
-
-      const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
-
-      if (nodeIndexMatch)
-      {
-         const
-            nodeIndex = +nodeIndexMatch [1],
-            mesh      = this .nodes [nodeIndex] .mesh;
-
-         node .setMetaData ("Interactivity/node", Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (nodeIndex));
-
-         if (mesh !== undefined)
-            node .setMetaData (`Interactivity/mesh`, Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (mesh));
-      }
-
-      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)\//);
-
-      if (materialIndexMatch && node .getType () .includes (Base_X3DConstants .X3DMaterialNode))
-      {
-         const materialIndex = +materialIndexMatch [1];
-
-         node .setMetaData ("Interactivity/material", Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (materialIndex));
-      }
-
-      const value = node .getMetaData ("Interactivity/pointer", new x_ite_Fields .MFString ());
-
-      value .push (pointer);
-      node .setMetaData ("Interactivity/pointer", Networking_URLs .getProviderURL (), value);
-
-      behaviorNodes .add (node);
-   },
    khrLightsPunctualObject (KHR_lights_punctual)
    {
       if (!(KHR_lights_punctual instanceof Object))
@@ -41099,13 +41262,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    lightsArray (lights)
    {
-      if (!(lights instanceof Array))
+      if (!Array .isArray (lights))
          return;
 
       this .lights = lights;
    },
-   lightObject (id, light = this .lights [id])
+   lightObject (extension)
    {
+      const
+         index = extension .light,
+         light = this .lights ?.[index];
+
+      extension .light = light;
+
       if (!(light instanceof Object))
          return null;
 
@@ -41119,7 +41288,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const
          scene = this .getScene (),
-         name  = this .sanitizeName (light .name) || `Light${id + 1}`;
+         name  = this .sanitizeName (light .name) || `Light${index + 1}`;
 
       const color = new Numbers_Color3 (1);
 
@@ -41165,8 +41334,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          lightNode = scene .createNode ("SpotLight", false);
 
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
-      lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
-      lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
+      lightNode ._cutOffAngle = this .numberValue (light .spot ?.outerConeAngle, Math .PI / 4);
+      lightNode ._beamWidth   = this .numberValue (light .spot ?.innerConeAngle, 0);
+
+      light .spot ??= { };
+      light .spot .pointers = [lightNode];
 
       return lightNode;
    },
@@ -41187,7 +41359,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const variants = KHR_materials_variants .variants;
 
-      if (!(variants instanceof Array))
+      if (!Array .isArray (variants))
          return;
 
       this .materialVariants = variants;
@@ -41214,7 +41386,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          {
             const array = value ["@set"] ?? value ["@list"];
 
-            if (array instanceof Array)
+            if (Array .isArray (array))
             {
                const v = array .map (v => v .toString ()) .join (", ");
 
@@ -41241,7 +41413,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    async buffersArray (buffers)
    {
-      if (!(buffers instanceof Array))
+      if (!Array .isArray (buffers))
          return;
 
       this .buffers = await Promise .all (buffers .map ((buffer, i) => this .bufferObject (buffer, i)));
@@ -41266,7 +41438,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    bufferViewsArray (bufferViews)
    {
-      if (!(bufferViews instanceof Array))
+      if (!Array .isArray (bufferViews))
          return;
 
       this .bufferViews = bufferViews;
@@ -41283,6 +41455,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          [5123, 2], // Uint16Array
          [5124, 4], // Int32Array
          [5125, 4], // Uint32Array
+         [5134, 8], // BigInt64Array
+         [5135, 8], // BigUint64Array
          [5131, 2], // Float16Array
          [5126, 4], // Float32Array
          [5130, 8], // Float64Array
@@ -41346,7 +41520,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    })(),
    accessorsArray (accessors)
    {
-      if (!(accessors instanceof Array))
+      if (!Array .isArray (accessors))
          return;
 
       this .accessors = accessors;
@@ -41365,6 +41539,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          [5123, Uint16Array],
          [5124, Int32Array],
          [5125, Uint32Array],
+         [5134, BigInt64Array],
+         [5135, BigUint64Array],
          [5131, Float16Array],
          [5126, Float32Array],
          [5130, Float64Array],
@@ -41495,15 +41671,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             return Float32Array .from (array, v => Math .max (v / 2147483647, -1));
          case 5125: // Uint32Array
             return Float32Array .from (array, v => v / 4294967295);
+         // Their normalized property MUST NOT be set to true:
+         case 5134: // BigInt64Array
+         case 5135: // BigUint64Array
          case 5131: // Float16Array
          case 5126: // Float32Array
          case 5130: // Float64Array
-            return array; // Their normalized property MUST NOT be set to true;
+            return array;
       }
    },
    samplersArray (samplers)
    {
-      if (!(samplers instanceof Array))
+      if (!Array .isArray (samplers))
          return;
 
       this .samplers = samplers;
@@ -41582,43 +41761,38 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          });
       };
    })(),
-   async imagesArray (images)
+   async filesArray (object, property)
    {
-      if (!(images instanceof Array))
+      const files = object ?.[property];
+
+      if (!Array .isArray (files))
          return;
 
-      this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
+      this [property] = await Promise .all (files .map ((file, index) => this .fileObject (file, index)));
    },
-   async videosArray (videos)
+   async fileObject (file, index)
    {
-      if (!(videos instanceof Array))
+      if (!(file instanceof Object))
          return;
 
-      this .videos = await Promise .all (videos .map ((video, index) => this .imageObject (video, index)));
-   },
-   async imageObject (image, index)
-   {
-      if (!(image instanceof Object))
-         return;
+      file .index = index;
 
-      image .index = index;
+      if (file .uri)
+         return file;
 
-      if (image .uri)
-         return image;
-
-      const bufferView = this .bufferViews [image .bufferView];
+      const bufferView = this .bufferViews [file .bufferView];
 
       if (!bufferView)
-         return image;
+         return file;
 
       const
          buffer = bufferView .getBuffer (),
-         blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
+         blob   = new Blob ([new Uint8Array (buffer)], { type: file .mimeType }),
          uri    = await this .blobToDataUrl (blob);
 
-      image .uri = uri;
+      file .uri = uri;
 
-      return image;
+      return file;
    },
    blobToDataUrl (blob)
    {
@@ -41635,7 +41809,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    texturesArray (textures)
    {
-      if (!(textures instanceof Array))
+      if (!Array .isArray (textures))
          return;
 
       this .textures = textures;
@@ -41734,7 +41908,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    materialsArray (materials)
    {
-      if (!(materials instanceof Array))
+      if (!Array .isArray (materials))
          return;
 
       this .materials = materials;
@@ -41769,6 +41943,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
       materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
+
+      // glTF 2.1: Promoted Extension Functionality
+      // https://github.com/KhronosGroup/glTF/issues/2592
+      if (material .emissiveStrength !== undefined && !material .extensions ?.KHR_materials_emissive_strength)
+      {
+         material .extensions ??= { };
+         material .extensions .KHR_materials_emissive_strength = {
+            emissiveStrength: material .emissiveStrength,
+         };
+      }
 
       this .occlusionTextureInfo (material .occlusionTexture, materialNode);
       this .normalTextureInfo    (material .normalTexture,    materialNode);
@@ -41812,7 +41996,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       appearanceNode .setup ();
 
-      material .pointers = [appearanceNode, materialNode];
+      material .pointers = [appearanceNode, appearanceNode ._material .getValue ()];
 
       return material .appearanceNode = appearanceNode;
    },
@@ -41921,6 +42105,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       materialNode ._occlusionStrength       = this .numberValue (occlusionTexture .strength, 1);
       materialNode ._occlusionTexture        = this .textureInfo (occlusionTexture);
       materialNode ._occlusionTextureMapping = this .textureMapping (occlusionTexture);
+
+      occlusionTexture .pointers .push (materialNode);
    },
    normalTextureInfo (normalTexture, materialNode)
    {
@@ -41930,6 +42116,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       materialNode ._normalScale          = this .numberValue (normalTexture .scale, 1);
       materialNode ._normalTexture        = this .textureInfo (normalTexture);
       materialNode ._normalTextureMapping = this .textureMapping (normalTexture);
+
+      normalTexture .pointers .push (materialNode);
    },
    textureInfo (texture)
    {
@@ -41940,6 +42128,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          texture .mapping = this .textureTransformObject (texture .extensions .KHR_texture_transform, texture .texCoord || 0);
       else
          texture .mapping = `TEXCOORD_${texture .texCoord || 0}`;
+
+      texture .pointers = [ ];
 
       return this .textureObject (this .textures [texture .index]);
    },
@@ -41999,7 +42189,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                this .khrMaterialsVolumeObject (value, materialNode);
                break;
             case "KHR_materials_scatter":
-            case "KHR_materials_volume_scatter": // Legacy
                this .khrMaterialsScatterObject (value, materialNode);
                break;
          }
@@ -42191,10 +42380,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
       {
          const
-            specularStrength = Math .max (... specularColorFactor),
-            specularColor    = [... specularColorFactor] .map (c => c / specularStrength);
+            specularStrength = Math .max (... specularColorFactor, 1),
+            specularColor    = [... specularColorFactor .divide (specularStrength)];
 
-         extension ._specularColor    = new Numbers_Color3 (... (specularStrength ? specularColor : [0]));
+         extension ._specularColor    = new Numbers_Color3 (... specularColor);
          extension ._specularStrength = specularStrength;
       }
 
@@ -42329,23 +42518,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          if (this .vectorValue (KHR_texture_transform .scale, scale))
             matrix .scale (vector .set (... scale, 1));
 
-         // Check for existing node.
+         // Check for existing node, but does not work if there are pointers.
 
-         const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
+         // const existing = this .textureTransformNodes
+         //    .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
 
-         if (existing)
-         {
-            Object .defineProperty (KHR_texture_transform, "pointers",
-            {
-               get: () =>
-               {
-                  return this .texCoordExtensionOfNode .get (existing);
-               },
-               configurable: true,
-            });
+         // if (existing)
+         // {
+         //    Object .defineProperty (KHR_texture_transform, "pointers",
+         //    {
+         //       get: () =>
+         //       {
+         //          return this .texCoordExtensionOfNode .get (existing);
+         //       },
+         //       configurable: true,
+         //    });
 
-            return existing ._mapping .getValue ();
-         }
+         //    return existing ._mapping .getValue ();
+         // }
 
          // Create new TextureTransformMatrix3D.
 
@@ -42413,7 +42603,7 @@ function eventsProcessed ()
    })(),
    meshesArray (meshes)
    {
-      if (!(meshes instanceof Array))
+      if (!Array .isArray (meshes))
          return;
 
       this .meshes = meshes;
@@ -42421,24 +42611,23 @@ function eventsProcessed ()
    meshObject (mesh, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!(mesh instanceof Object))
-         return;
+         return [ ];
 
-      if (mesh .shapeNodes && !EXT_mesh_gpu_instancing)
+      if (mesh .meshNodes && !EXT_mesh_gpu_instancing)
       {
          const primitives = mesh .primitives;
 
-         if (!(primitives instanceof Array))
-            return mesh .shapeNodes;
+         if (!Array .isArray (primitives))
+            return mesh .meshNodes;
 
          for (const primitive of primitives)
             this .attributesJointsArray (skin, primitive .attributes ?.JOINTS, primitive .attributes ?.WEIGHTS);
 
-         return mesh .shapeNodes;
+         return mesh .meshNodes;
       }
 
-      // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants
-      // or a GaussianSplats node. TODO: should be called meshNodes.
-      const shapeNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
+      // meshNodes are Shape, InstancedShape, Switch from variants, or GaussianSplats nodes.
+      const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
 
@@ -42448,32 +42637,32 @@ function eventsProcessed ()
 
       if (name)
       {
-         for (const [i, shapeNode] of shapeNodes .entries ())
+         for (const [i, meshNode] of meshNodes .entries ())
          {
-            scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+            scene .addNamedNode (scene .getUniqueName (name), meshNode);
 
-            const geometryNode = shapeNode .getGeometry ?.();
+            const geometryNode = meshNode .getGeometry ?.();
 
             if (geometryNode && !geometryNode .getName ())
                scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), geometryNode);
          }
       }
 
-      return mesh .shapeNodes = shapeNodes;
+      return mesh .meshNodes = meshNodes;
    },
    primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing)
    {
-      if (!(primitives instanceof Array))
+      if (!Array .isArray (primitives))
          return [ ];
 
-      const shapeNodes = [ ];
+      const meshNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, shapeNodes);
+         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes);
 
-      return shapeNodes;
+      return meshNodes;
    },
-   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, shapeNodes)
+   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -42482,7 +42671,7 @@ function eventsProcessed ()
       this .targetsArray     (primitive .targets);
 
       if (primitive .extensions ?.KHR_gaussian_splatting)
-         return this .khrGaussianSplatting (primitive, shapeNodes);
+         return this .khrGaussianSplatting (primitive, meshNodes);
 
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
@@ -42493,9 +42682,9 @@ function eventsProcessed ()
          shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
-      shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+      meshNodes .push (primitive .meshNode = variantsNode ?? shapeNode);
    },
-   khrGaussianSplatting (primitive, shapeNodes)
+   khrGaussianSplatting (primitive, meshNodes)
    {
       const
          scene                  = this .getScene (),
@@ -42540,36 +42729,46 @@ function eventsProcessed ()
 
       gaussianSplats .setup ();
 
-      shapeNodes .push (primitive .shapeNode = gaussianSplats);
+      meshNodes .push (primitive .meshNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
       if (!(attributes instanceof Object))
          return;
 
-      for (const key in attributes)
-         attributes [key] = this .accessors [attributes [key]];
+      const entries = Object .entries (attributes);
 
       attributes .TEXCOORD = [ ];
       attributes .COLOR    = [ ];
       attributes .JOINTS   = [ ];
       attributes .WEIGHTS  = [ ];
 
-      for (let i = 0; attributes ["TEXCOORD_" + i]; ++ i)
-         attributes .TEXCOORD .push (attributes ["TEXCOORD_" + i]);
+      for (const [key, accessorIndex] of entries)
+      {
+         attributes [key] = this .accessors [accessorIndex];
 
-      for (let i = 0; attributes ["COLOR_" + i]; ++ i)
-         attributes .COLOR .push (attributes ["COLOR_" + i]);
+         const match = key .match (/^(\w+)_(\d+)$/);
 
-      for (let i = 0; attributes ["JOINTS_" + i]; ++ i)
-         attributes .JOINTS .push (attributes ["JOINTS_" + i]);
+         if (!match)
+            continue;
 
-      for (let i = 0; attributes ["WEIGHTS_" + i]; ++ i)
-         attributes .WEIGHTS .push (attributes ["WEIGHTS_" + i]);
+         switch (match [1])
+         {
+            case "COLOR":
+               // Only first color is used.
+               attributes .COLOR .push (attributes [key]);
+               break;
+            case "TEXCOORD":
+            case "JOINTS":
+            case "WEIGHTS":
+               attributes [match [1]] [match [2]] = attributes [key];
+               break;
+         }
+      }
    },
    targetsArray (targets)
    {
-      if (!(targets instanceof Array))
+      if (!Array .isArray (targets))
          return;
    },
    primitiveExtensionsObject (extensions, primitive)
@@ -42667,10 +42866,10 @@ function eventsProcessed ()
             }
          }
 
-         for (const [key, id] of Object .entries (attributes))
+         for (const [key, index] of Object .entries (attributes))
          {
             const
-               attribute     = decoder .GetAttributeByUniqueId (geometry, id),
+               attribute     = decoder .GetAttributeByUniqueId (geometry, index),
                numComponents = attribute .num_components (),
                numPoints     = geometry .num_points (),
                numValues     = numPoints * numComponents,
@@ -42704,12 +42903,14 @@ function eventsProcessed ()
    },
    khrMaterialsVariantsExtension (KHR_materials_variants, shapeNode)
    {
+      // https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_variants/README.md
+
       if (!(KHR_materials_variants instanceof Object))
          return;
 
       const mappings = KHR_materials_variants .mappings;
 
-      if (!(mappings instanceof Array))
+      if (!Array .isArray (mappings))
          return;
 
       if (!mappings .length)
@@ -42732,14 +42933,13 @@ function eventsProcessed ()
 
       // Fall back to default material if no active variant.
       for (const i of variantsNode ._children .keys ())
-      {
-         if (!variantsNode ._children [i])
-            variantsNode ._children [i] = shapeNode;
-      }
+         variantsNode ._children [i] ??= shapeNode;
 
       variantsNode .setup ();
 
       this .materialVariantNodes .push (variantsNode);
+
+      KHR_materials_variants .pointers = [variantsNode];
 
       return variantsNode;
    },
@@ -42753,32 +42953,39 @@ function eventsProcessed ()
       if (!mapping .material)
          return;
 
-      const
-         scene          = this .getScene (),
-         variantNode    = this .getScene () .createNode ("Shape", false),
-         appearanceNode = this .materialObject (mapping),
-         variant        = mapping .variants ?.[0] ?? 0,
-         name           = this .sanitizeName (this .materialVariants [variant] ?.name ?? "");
+      if (!Array .isArray (mapping .variants))
+         return;
 
-      if (name)
-         scene .addNamedNode (scene .getUniqueName (name), variantNode);
+      for (const variant of mapping .variants)
+      {
+         const
+            scene          = this .getScene (),
+            variantNode    = this .getScene () .createNode ("Shape", false),
+            appearanceNode = this .materialObject (mapping),
+            name           = this .sanitizeName (this .materialVariants [variant] ?.name ?? "");
 
-      variantNode ._appearance = appearanceNode;
-      variantNode ._geometry   = shapeNode ._geometry;
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), variantNode);
 
-      variantNode .setup ();
+         variantNode ._appearance = appearanceNode;
+         variantNode ._geometry   = shapeNode ._geometry;
 
-      variantsNode ._children [variant] = variantNode;
+         variantNode .setup ();
+
+         variantsNode ._children [variant] = variantNode;
+      }
    },
    camerasArray (cameras)
    {
-      if (!(cameras instanceof Array))
+      if (!Array .isArray (cameras))
          return;
 
       this .cameras = cameras;
    },
-   cameraObject (id, camera)
+   cameraObject (index)
    {
+      const camera = this .cameras ?.[index];
+
       if (!(camera instanceof Object))
          return null;
 
@@ -42802,10 +43009,13 @@ function eventsProcessed ()
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${index + 1}`);
       viewpointNode ._position    = Numbers_Vector3 .ZERO;
 
-      return camera .node = viewpointNode;
+      camera .pointers = [viewpointNode];
+      camera .node     = viewpointNode;
+
+      return camera;
    },
    cameraType (camera)
    {
@@ -42900,13 +43110,45 @@ function eventsProcessed ()
 
       viewpointNode .setup ();
 
-      camera .pointers = [viewpointNode];
-
       return viewpointNode;
+   },
+   externalAsset (index)
+   {
+      const externalAsset = this .input .externalAssets ?.[index];
+
+      if (!(externalAsset instanceof Object))
+         return;
+
+      if (externalAsset .node)
+         return externalAsset;
+
+      const file = this .files ?.[externalAsset .file];
+
+      if (!(file instanceof Object))
+         return;
+
+      const
+         scene      = this .getScene (),
+         inlineNode = scene .createNode ("Inline", false),
+         name       = this .sanitizeName (externalAsset .name);
+
+      inlineNode ._description = this .description (externalAsset .name);
+      inlineNode ._url         = [file .uri];
+
+      inlineNode .setup ();
+
+      // Name
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), inlineNode);
+
+      externalAsset .node = inlineNode;
+
+      return externalAsset;
    },
    nodesArray (nodes)
    {
-      if (!(nodes instanceof Array))
+      if (!Array .isArray (nodes))
          return;
 
       this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
@@ -42989,15 +43231,11 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
-         // Get mesh.
-
-         const
-            EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
-
          // Add camera.
 
-         const viewpointNode = this .cameraObject (node .camera, this .cameras [node .camera]);
+         node .camera = this .cameraObject (node .camera);
+
+         const viewpointNode = node .camera ?.node;
 
          if (viewpointNode)
             transformNode ._children .push (viewpointNode);
@@ -43006,7 +43244,16 @@ function eventsProcessed ()
 
          this .nodeExtensions (node, index);
 
-         // Add children.
+         // Handle external assets.
+
+         node .externalAsset = this .externalAsset (node .externalAsset);
+
+         const inlineNode = node .externalAsset ?.node;
+
+         if (inlineNode)
+            transformNode ._children .push (inlineNode);
+
+         // Add child nodes.
 
          let children = this .nodeChildrenArray (node .children);
 
@@ -43016,7 +43263,11 @@ function eventsProcessed ()
 
             children = children .map (childNode =>
             {
-               if (childNode .getType () .at (-1) !== Base_X3DConstants .HAnimJoint)
+               if (childNode .getType () .includes (Base_X3DConstants .X3DGroupingNode))
+               {
+                  return childNode;
+               }
+               else
                {
                   const groupNode = scene .createNode ("Group", false);
 
@@ -43026,14 +43277,16 @@ function eventsProcessed ()
 
                   return groupNode;
                }
-               else
-               {
-                  return childNode;
-               }
             });
          }
 
          transformNode ._children .push (... children);
+
+         // Add mesh nodes.
+
+         const
+            EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+            meshNodes               = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
 
          if (skin)
          {
@@ -43041,13 +43294,13 @@ function eventsProcessed ()
 
             const humanoidNode = skin .humanoidNode;
 
-            if (!shapeNodes ?.length)
-               return;
+            if (meshNodes .length)
+            {
+               humanoidNode ._skinNormal = meshNodes [0] ._geometry .normal;
+               humanoidNode ._skinCoord  = meshNodes [0] ._geometry .coord;
 
-            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-
-            humanoidNode ._skin .push (... shapeNodes);
+               humanoidNode ._skin .push (... meshNodes);
+            }
          }
          else
          {
@@ -43074,10 +43327,9 @@ function eventsProcessed ()
                   transformNode ._scale = scale;
             }
 
-            // Add Shape nodes.
+            // Add mesh nodes.
 
-            if (shapeNodes)
-               transformNode ._children .push (... shapeNodes);
+            transformNode ._children .push (... meshNodes);
 
             transformNode .setup ();
          }
@@ -43097,7 +43349,9 @@ function eventsProcessed ()
          {
             case "KHR_lights_punctual":
             {
-               const lightNode = this .lightObject (extension .light);
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_lights_punctual
+
+               const lightNode = this .lightObject (extension);
 
                if (!lightNode)
                   break;
@@ -43140,8 +43394,9 @@ function eventsProcessed ()
             case "KHR_node_visibility":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+
                extension .pointers           = [node .transformNode];
-               node .transformNode ._visible = extension .visible ?? true;
+               node .transformNode ._visible = extension .visible ?? node .visible ?? true;
                break;
             }
          }
@@ -43149,7 +43404,7 @@ function eventsProcessed ()
    },
    nodeChildrenArray (children)
    {
-      if (!(children instanceof Array))
+      if (!Array .isArray (children))
          return [ ];
 
       const nodes = Array .from (new Set (children
@@ -43163,10 +43418,10 @@ function eventsProcessed ()
    },
    skinsArray (skins, nodes)
    {
-      if (!(skins instanceof Array))
+      if (!Array .isArray (skins))
          return;
 
-      if (!(nodes instanceof Array))
+      if (!Array .isArray (nodes))
          return;
 
       this .skins = skins;
@@ -43223,7 +43478,7 @@ function eventsProcessed ()
    },
    jointsArray (joints, add)
    {
-      if (!(joints instanceof Array))
+      if (!Array .isArray (joints))
          return [ ];
 
       // If skin is not references anywhere, don't create HAnimJoint nodes.
@@ -43251,7 +43506,7 @@ function eventsProcessed ()
 
       const children = node .children;
 
-      if (!(children instanceof Array))
+      if (!Array .isArray (children))
          return;
 
       for (const child of children)
@@ -43382,15 +43637,15 @@ function eventsProcessed ()
          bboxSize   = bbox .size,
          bboxCenter = bbox .center;
 
-      for (const shapeNode of humanoidNode ._skin)
+      for (const meshNode of humanoidNode ._skin)
       {
-         shapeNode .bboxSize   = bboxSize;
-         shapeNode .bboxCenter = bboxCenter;
+         meshNode .bboxSize   = bboxSize;
+         meshNode .bboxCenter = bboxCenter;
       }
    },
    scenesArray (glTF, scenes, sceneNumber = 0)
    {
-      if (!(scenes instanceof Array))
+      if (!Array .isArray (scenes))
          return;
 
       const
@@ -43405,7 +43660,7 @@ function eventsProcessed ()
          }
          case 1:
          {
-            if (sceneNumber === 0)
+            if (glTF .asset .version >= 2.1 || (sceneNumber === 0 && !this .behavior))
             {
                scene .getRootNodes () .push (children [0]);
                return;
@@ -43429,30 +43684,27 @@ function eventsProcessed ()
 
             switchNode .setup ();
 
-            glTF .pointers = [switchNode];
+            scenes .pointers = [switchNode];
 
             scene .getRootNodes () .push (switchNode);
             return;
          }
       }
    },
-   sceneObject (scene, index)
+   sceneObject (sceneObject, index)
    {
-      if (!(scene instanceof Object))
+      if (!(sceneObject instanceof Object))
          return null;
 
       const
-         lightNode = this .envLightObject (scene .extensions ?.EXT_lights_image_based ?.light),
-         nodes     = this .sceneNodesArray (scene .nodes);
+         lightNode = this .envLightObject (sceneObject .extensions ?.EXT_lights_image_based ?.light),
+         nodes     = this .sceneNodesArray (sceneObject .nodes);
+
+      if (Array .isArray (sceneObject .nodes))
+         sceneObject .nodes = sceneObject .nodes .map (index => this .nodes [index]);
 
       if (lightNode)
          nodes .unshift (lightNode);
-
-      if (this .extensions .has ("KHR_node_hoverability"))
-         nodes .unshift (this .getScene () .createNode ("HoverabilityExtension"));
-
-      if (this .extensions .has ("KHR_node_selectability"))
-         nodes .unshift (this .getScene () .createNode ("SelectabilityExtension"));
 
       switch (nodes .length)
       {
@@ -43469,6 +43721,8 @@ function eventsProcessed ()
             if (!node .getName ())
                scene .addNamedNode (scene .getUniqueName (`Scene-${index}`), node);
 
+            sceneObject .pointers = [node];
+
             return node;
          }
          default:
@@ -43484,6 +43738,8 @@ function eventsProcessed ()
 
             groupNode .setup ();
 
+            sceneObject .pointers = [groupNode];
+
             return groupNode;
          }
       }
@@ -43494,7 +43750,7 @@ function eventsProcessed ()
    },
    exportGroup (name, array)
    {
-      if (!(array instanceof Array))
+      if (!Array .isArray (array))
          return;
 
       const nodes = array .map (object => object .node) .filter (node => node);
@@ -43533,7 +43789,7 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-      switchNode .setMetaData ("Interactivity/materialVariants", Networking_URLs .getProviderURL (), x_ite_Fields .MFString .fromArray (names));
+      switchNode .setMetaData ("Interactivity/materialVariants", REFERENCE, x_ite_Fields .MFString .fromArray (names));
 
       for (const variantNode of this .materialVariantNodes)
          scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");
@@ -43542,13 +43798,13 @@ function eventsProcessed ()
    },
    animationsArray (animations)
    {
-      if (!(animations instanceof Array))
+      if (!Array .isArray (animations))
          return;
 
       for (const [i, animation] of animations .entries ())
          this .animationObject (i, animation);
    },
-   animationObject (id, animation)
+   animationObject (index, animation)
    {
       if (!(animation instanceof Object))
          return null;
@@ -43565,12 +43821,12 @@ function eventsProcessed ()
          groupNode = scene .createNode ("Group", false),
          name      = this .sanitizeName (animation .name);
 
-      scene .addNamedNode (scene .getUniqueName (name || `Animation${id + 1}`), groupNode);
-      scene .addNamedNode (scene .getUniqueName (`Timer${id + 1}`), timeSensorNode);
-      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${id + 1}`), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName (`Timer${id + 1}`), timeSensorNode);
+      scene .addNamedNode (scene .getUniqueName (name || `Animation${index + 1}`), groupNode);
+      scene .addNamedNode (scene .getUniqueName (`Timer${index + 1}`), timeSensorNode);
+      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${index + 1}`), groupNode);
+      scene .addExportedNode (scene .getUniqueExportName (`Timer${index + 1}`), timeSensorNode);
 
-      timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
+      timeSensorNode ._description = this .description (animation .name) || `Animation ${index + 1}`;
 
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
@@ -43579,15 +43835,18 @@ function eventsProcessed ()
 
       animation .node = groupNode;
 
-      if (this .behaviorEngine)
-         this .behaviorEngine ._animations [id] = timeSensorNode;
+      if (this .behavior)
+      {
+         timeSensorNode .setMetaData ("Interactivity/animation", REFERENCE, index);
+         this .behaviorNodes .add (timeSensorNode);
+      }
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {
-      if (!(channels instanceof Array))
+      if (!Array .isArray (channels))
          return [ ];
 
-      if (!(samplers instanceof Array))
+      if (!Array .isArray (samplers))
          return [ ];
 
       // Determine cycleInterval.
@@ -43697,6 +43956,8 @@ function eventsProcessed ()
       shapeNode ._geometry   = primitive .geometryNode;
 
       shapeNode .setup ();
+
+      primitive .material ?.pointers .push (primitive .geometryNode);
 
       return shapeNode;
    },
@@ -44193,7 +44454,13 @@ function eventsProcessed ()
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      switch (texCoords .length === 1 ? 1 : material .texCoordMappings .size)
+      const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
+         .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
+         .sort ((a, b) => a [1] - b [1])
+         .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
+         .filter (node => node);
+
+      switch (textureCoordinateNodes .length)
       {
          case 0:
          {
@@ -44201,18 +44468,10 @@ function eventsProcessed ()
          }
          case 1:
          {
-            return texCoords .textureCoordinateNode = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
+            return texCoords .textureCoordinateNode = textureCoordinateNodes [0];
          }
          default:
          {
-            const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-               .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
-               .sort ((a, b) => a [1] - b [1])
-               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping));
-
-            if (!textureCoordinateNodes .length)
-               return null;
-
             const
                scene                 = this .getScene (),
                textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
@@ -44258,7 +44517,7 @@ function eventsProcessed ()
 
       normalNode ._vector = normal .array;
 
-      if ((targets instanceof Array) && (weights instanceof Array))
+      if (Array .isArray (targets) && Array .isArray (weights))
       {
          normal .field = normalNode ._vector .copy ();
 
@@ -44317,7 +44576,7 @@ function eventsProcessed ()
 
       coordinateNode ._point = position .array;
 
-      if ((targets instanceof Array) && (weights instanceof Array))
+      if (Array .isArray (targets) && Array .isArray (weights))
       {
          position .field = coordinateNode ._point .copy ();
 
@@ -44342,10 +44601,10 @@ function eventsProcessed ()
       if (!(skin instanceof Object))
          return;
 
-      if (!(joints instanceof Array))
+      if (!Array .isArray (joints))
          return;
 
-      if (!(weights instanceof Array))
+      if (!Array .isArray (weights))
          return;
 
       for (let i = 0, length = joints .length; i < length; ++ i)
@@ -44480,7 +44739,7 @@ function eventsProcessed ()
       {
          case "pointer":
          {
-            const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
+            const [node, field] = this .getPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
 
             return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
          }
@@ -44500,12 +44759,12 @@ function eventsProcessed ()
                primitives        = mesh ?.primitives,
                interpolatorNodes = [ ];
 
-            if (!(primitives instanceof Array))
+            if (!Array .isArray (primitives))
                return null;
 
-            for (const { shapeNode, targets, attributes } of primitives)
+            for (const { meshNode, targets, attributes } of primitives)
             {
-               const geometryNode = shapeNode ._geometry .getValue ();
+               const geometryNode = meshNode ._geometry .getValue ();
 
                if (!geometryNode || !geometryNode ._coord .getValue ())
                   continue;
@@ -44530,9 +44789,9 @@ function eventsProcessed ()
                scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
             }
 
-            for (const { shapeNode, targets, attributes } of primitives)
+            for (const { meshNode, targets, attributes } of primitives)
             {
-               const geometryNode = shapeNode ._geometry .getValue ();
+               const geometryNode = meshNode ._geometry .getValue ();
 
                if (!geometryNode || !geometryNode ._normal .getValue ())
                   continue;
@@ -44736,7 +44995,7 @@ function eventsProcessed ()
          }
       };
    })(),
-   getAnimationPointer (pointer = "")
+   getPointer (pointer = "")
    {
       const path = pointer .split ("/") .filter (p => p);
 
@@ -45104,7 +45363,7 @@ function eventsProcessed ()
    },
    vectorValue (array, vector)
    {
-      if (!(array instanceof Array))
+      if (!Array .isArray (array))
          return false;
 
       if (array .length !== vector .length)
@@ -45237,21 +45496,14 @@ Object .assign (Object .setPrototypeOf (GLBParser .prototype, Parser_X3DParser .
 
       for (const string of this .json)
       {
-         try
-         {
-            const json = JSON .parse (string);
+         const json = JSON .parse (string);
 
-            if (!Parser_GLTF2Parser .isValid (json))
-               continue;
-
-            parser .setInput (json);
-
-            await parser .rootObject (parser .input);
-         }
-         catch
-         {
+         if (!Parser_GLTF2Parser .isValid (json))
             continue;
-         }
+
+         parser .setInput (json);
+
+         await parser .rootObject (parser .input);
       }
 
       return this .getScene ();
@@ -48286,7 +48538,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(930);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(919);
 
 
 
@@ -51040,8 +51292,6 @@ const SVGParser_default_ = SVGParser;
 
 class GoldenGate extends Parser_X3DParser
 {
-   #inputs = new Map ();
-
    static #parsers = [
       Parser_XMLParser,
       Parser_VRMLParser,
@@ -51070,6 +51320,8 @@ class GoldenGate extends Parser_X3DParser
    {
       return this .#parsers .slice ();
    }
+
+   #inputs = new Map ();
 
    parseIntoScene (x3dSyntax, resolve, reject)
    {
@@ -51105,8 +51357,8 @@ class GoldenGate extends Parser_X3DParser
 
       if (this .getScene () .worldURL .startsWith ("data:"))
          throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
-      else
-         throw new Error (`Couldn't parse X3D. No suitable file handler found for '${this .getScene () .worldURL}'.`);
+
+      throw new Error (`Couldn't parse X3D. No suitable file handler found for '${this .getScene () .worldURL}'.`);
    }
 
    getInput (encoding, x3dSyntax)
@@ -51263,7 +51515,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
          }
       }
 
-      if (!activeLayerNode ?._display .getValue ())
+      if (!activeLayerNode ?.isVisible ())
          activeLayerNode = null;
 
       if (this ._activeLayerNode .getValue () !== activeLayerNode)
@@ -51274,7 +51526,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
       const layers = this ._layers .getValue ();
 
       for (const layerNode of this .layerNodes)
-         layerNode ._display .removeInterest ("set_layers__", this);
+         layerNode ._hidden .removeInterest ("set_layers__", this);
 
       this .layerNodes .length = 0;
 
@@ -51282,7 +51534,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
       {
          if (index === 0)
          {
-            this .layerNode0 ._display .addInterest ("set_layers__", this);
+            this .layerNode0 ._hidden .addInterest ("set_layers__", this);
             this .layerNodes .push (this .layerNode0);
          }
          else
@@ -51296,9 +51548,9 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
                if (!layerNode)
                   continue;
 
-               layerNode ._display .addInterest ("set_layers__", this);
+               layerNode ._hidden .addInterest ("set_layers__", this);
 
-               if (layerNode ._display .getValue ())
+               if (layerNode .isVisible ())
                   this .layerNodes .push (layerNode);
             }
          }
@@ -55063,7 +55315,7 @@ function X3DCoreContext (element)
          const link = document .createElement ("link");
 
          if (!DEVELOPMENT)
-            link .integrity = "sha384-R4Z2SisYPIAtBlzqB1lbEs1filJuLfAqQibEeR1JP13+AA1DPi0xXsMTKl3zyx+I";
+            link .integrity = "sha384-MAr9kMEk8rHQvm6L8WW0ph/qy33A+012CNW7Cp5S31XRn3fpqh/6OxN44YKZUSW8";
 
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
@@ -58178,18 +58430,18 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
       if (this .appearanceNode)
       {
          this .appearanceNode ._alphaMode     .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transparent   .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transmission  .removeInterest ("set_transmission__", this);
-         this .appearanceNode ._scatter .removeInterest ("set_scatter__",      this);
+         this .appearanceNode ._materialFlags .removeInterest ("set_transparent__",  this);
+         this .appearanceNode ._materialFlags .removeInterest ("set_transmission__", this);
+         this .appearanceNode ._materialFlags .removeInterest ("set_scatter__",      this);
       }
 
       this .appearanceNode = Base_X3DCast (Base_X3DConstants .X3DAppearanceNode, this ._appearance)
          ?? this .getBrowser () .getDefaultAppearance ();
 
       this .appearanceNode ._alphaMode     .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transparent   .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transmission  .addInterest ("set_transmission__", this);
-      this .appearanceNode ._scatter .addInterest ("set_scatter__",      this);
+      this .appearanceNode ._materialFlags .addInterest ("set_transparent__",  this);
+      this .appearanceNode ._materialFlags .addInterest ("set_transmission__", this);
+      this .appearanceNode ._materialFlags .addInterest ("set_scatter__",      this);
 
       this .set_transparent__ ();
       this .set_transmission__ ();
@@ -61196,7 +61448,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor .setup ();
 
-      this .timeSensor ._fraction_changed  .addInterest ("spin", this);
+      this .timeSensor ._fraction_changed .addInterest ("spin", this);
 
       this .set_activeViewpoint__ ();
    },
@@ -61331,6 +61583,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       // Look at.
 
       const browser = this .getBrowser ();
+
+      if (!browser .getHit () .dblclick)
+         return;
 
       const { x, y } = browser .getPointerFromEvent (event);
 
@@ -63086,6 +63341,9 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
 
       const browser = this .getBrowser ();
 
+      if (!browser .getHit () .dblclick)
+         return;
+
       const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();
@@ -63510,6 +63768,9 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
 
       const browser = this .getBrowser ();
 
+      if (!browser .getHit () .dblclick)
+         return;
+
       const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();
@@ -63866,7 +64127,7 @@ function X3DLightNode (executionContext)
 
    // Private properties
 
-   this .enabled = true;
+   this .enabled = true; // Used in X3DTextureProjectorNode.
 }
 
 Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, Core_X3DChildNode .prototype),
@@ -63875,9 +64136,8 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, Core_X3DChildNo
    {
       Core_X3DChildNode .prototype .initialize .call (this);
 
-      this ._global    .addInterest ("set_global__", this);
-      this ._on        .addInterest ("set_on__",     this);
-      this ._intensity .addInterest ("set_on__",     this);
+      this ._global .addInterest ("set_global__", this);
+      this ._on     .addInterest ("set_on__",     this);
 
       this .set_global__ ();
       this .set_on__ ();
@@ -63888,7 +64148,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, Core_X3DChildNo
    },
    set_on__ ()
    {
-      if (this ._on .getValue () && this .getIntensity () > 0 && this .enabled)
+      if (this ._on .getValue () && this .enabled)
       {
          delete this .push;
          delete this .pop;
@@ -63910,6 +64170,8 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, Core_X3DChildNo
    setEnabled (value)
    {
       this .enabled = value;
+
+      this .set_on__ ();
    },
    getGlobal ()
    {
@@ -64855,7 +65117,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
          }
       }
    },
-   mouseup (event)
+   mouseup (event, touch)
    {
       if (event .button !== 0)
          return;
@@ -64876,12 +65138,15 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
       browser .buttonReleaseEvent (x, y);
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
 
-      this .onverifymotion (x, y);
+      if (touch)
+         this .onverifymotion (NaN, NaN);
+      else
+         this .onverifymotion (x, y);
 
       if (!this .over)
          return;
 
-      // Stop event propagation.
+      // Stop event propagation and prevent dblclick.
 
       event .preventDefault ();
    },
@@ -64937,9 +65202,12 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .touchX = event .pageX;
-            this .touchY = event .pageY;
+            this .startTouchX = event .pageX;
+            this .startTouchY = event .pageY;
+            this .touchX      = event .pageX;
+            this .touchY      = event .pageY;
 
+            this .mousemove (event);
             this .mousedown (event);
 
             // Show context menu on long tab.
@@ -64947,9 +65215,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
             const hit = browser .getHit ();
 
             if (!hit .id || !hit .sensors .size)
-            {
                this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
-            }
+
             break;
          }
          case 2:
@@ -64969,7 +65236,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
       event .pageX  = this .touchX;
       event .pageY  = this .touchY;
 
-      this .mouseup (event);
+      this .mouseup (event, true);
 
       clearTimeout (this .touchTimeout);
    },
@@ -64993,7 +65260,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
 
             this .mousemove (event);
 
-            if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
+            if (Math .hypot (this .startTouchX - this .touchX, this .startTouchY - this .touchY) > 7)
                clearTimeout (this .touchTimeout);
 
             break;
@@ -65004,10 +65271,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
    {
       const browser = this .getBrowser ();
 
-      this .over = browser .motionNotifyEvent (x, y);
-
       if (browser .getViewer () .isActive ())
          return;
+
+      this .over = browser .motionNotifyEvent (x, y);
 
       if (this .over)
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
@@ -65220,6 +65487,7 @@ function X3DPointingDeviceSensorContext ()
 
    this [_hit] = {
       id: 0,
+      dblclick: true,
       pointer: new Numbers_Vector2 (),
       ray: new Geometry_Line3 (),
       sensors: new Map (),
@@ -65235,6 +65503,7 @@ function X3DPointingDeviceSensorContext ()
       {
          return {
             id: this .id,
+            dblclick: true,
             pointer: this .pointer .copy (),
             ray: this .ray .copy (),
             sensors: new Map (this .sensors),
@@ -65369,6 +65638,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (hit === this [_hit])
          this .touch (PointingDeviceSensor_PointingType .PRESS, x, y);
+      else // WebXR
+         hit .type = PointingDeviceSensor_PointingType .PRESS;
 
       if (!hit .id)
          return false;
@@ -65405,6 +65676,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (hit === this [_hit])
          this .touch (PointingDeviceSensor_PointingType .RELEASE, x, y);
+      else // WebXR
+         hit .type = PointingDeviceSensor_PointingType .RELEASE;
 
       this .motion (hit);
 
@@ -65438,6 +65711,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (hit === this [_hit])
          this .touch (PointingDeviceSensor_PointingType .MOVE, x, y);
+      else // WebXR
+         hit .type = PointingDeviceSensor_PointingType .MOVE;
 
       this .motion (hit);
 
@@ -65452,9 +65727,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    { },
    touch (type, x, y, hit = this [_hit], inputSource = null)
    {
-      if (this .getViewer () .isActive ())
-         return false;
-
       if (Boolean (this .getPose ()) !== Boolean (inputSource))
          return false;
 
@@ -65462,7 +65734,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
-      hit .type = type;
+      hit .type     = type;
+      hit .dblclick = true;
 
       this [_currentHit]    = hit;
       this [_inputSource]   = inputSource;
@@ -65481,7 +65754,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [X3DPointingDeviceSensorContext_id])
       {
          const
-            { renderObject, sensors, modelViewMatrix, shapeParent, shapeNode } = this [_pointingContexts] [hit .id],
+            { renderObject, sensors, modelViewMatrix, parentNode, shapeNode } = this [_pointingContexts] [hit .id],
             geometryContext = shapeNode .getGeometryContext ();
 
          hit .ray .assign (renderObject .getHitRay ());
@@ -65492,9 +65765,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             hit .sensors .set (sensor .node, sensor);
          }
 
-         hit .layerNode   = renderObject;
-         hit .shapeParent = shapeParent;
-         hit .shapeNode   = shapeNode;
+         hit .layerNode  = renderObject;
+         hit .parentNode = parentNode;
+         hit .shapeNode  = shapeNode;
 
          hit .viewMatrix      .assign (renderObject .getViewpoint () .getViewMatrix ());
          hit .modelViewMatrix .assign (modelViewMatrix);
@@ -65514,9 +65787,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          if (hit .pointingLayerNode)
             hit .ray .assign (hit .pointingLayerNode .getHitRay ());
 
-         hit .layerNode   = null;
-         hit .shapeParent = null;
-         hit .shapeNode   = null;
+         hit .layerNode  = null;
+         hit .parentNode = null;
+         hit .shapeNode  = null;
 
          hit .viewMatrix      .assign (Numbers_Matrix4 .IDENTITY);
          hit .modelViewMatrix .assign (Numbers_Matrix4 .IDENTITY);
@@ -66789,7 +67062,7 @@ in mat4 x3d_InstanceMatrix;vec4 getInstanceVertex(const in vec4 vertex){return x
 ;// ./src/assets/shaders/webgl2/common/Lighting2.glsl.js
 const Lighting2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_LIGHTING)
-float getAttenuation(const in vec3 attenuation,const in float distanceToLight){return 1./max(dot(attenuation,vec3(1.,distanceToLight,distanceToLight*distanceToLight)),1.);}float getSpotFactor(const in vec3 pointToLight,const in vec3 direction,const in float cutOffAngle,const in float beamWidth){float spotAngle=acos(clamp(dot(-pointToLight,direction),-1.,1.));if(spotAngle>=cutOffAngle)return 0.;else if(spotAngle<=beamWidth)return 1.;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
+float getAttenuation(const in vec3 attenuation,const in float distanceToLight){return 1./max(dot(attenuation,vec3(1.,distanceToLight,distanceToLight*distanceToLight)),1.);}float getSpotFactor(const in vec3 l,const in vec3 direction,const in float cutOffAngle,const in float beamWidth){float spotAngle=acos(clamp(dot(-l,direction),-1.,1.));if(spotAngle>=cutOffAngle)return 0.;else if(spotAngle<=beamWidth)return 1.;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
 #endif
 `
 ;
@@ -67524,7 +67797,7 @@ textureColor=sRGBToLinear(textureColor);
 #endif
 return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}
 #endif
-vec3 getIBLGGXFresnel(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.,1.);vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0),vec2(1));vec2 f_ab=texture(x3d_EnvironmentLightSource.ggxLUTTexture,brdfSamplePoint).rg;vec3 Fr=max(vec3(1.-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.-NdotV,5.);vec3 FssEss=specularWeight*(k_S*f_ab.x+f_ab.y);float Ems=(1.-(f_ab.x+f_ab.y));vec3 F_avg=specularWeight*(F0+(1.-F0)/21.);vec3 FmsEms=Ems*FssEss*F_avg/(1.-F_avg*Ems);return FssEss+FmsEms;}vec3 getIBLRadianceGGX(const in vec3 n,const in vec3 v,const in float roughness){float NdotV=clamp(dot(n,v),0.,1.);float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=normalize(reflect(-v,n));vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
+vec3 getIBLGGXFresnel(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.,1.);vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0),vec2(1));vec2 f_ab=texture(x3d_EnvironmentLightSource.ggxLUTTexture,brdfSamplePoint).rg;vec3 Fr=max(vec3(1.-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.-NdotV,5.);vec3 FssEss=specularWeight*(k_S*f_ab.x+f_ab.y);float Ems=(1.-(f_ab.x+f_ab.y));vec3 F_avg=specularWeight*(F0+(1.-F0)/21.);vec3 FmsEms=Ems*FssEss*F_avg/(1.-F_avg*Ems);return FssEss+FmsEms;}vec3 getIBLRadianceGGX(const in vec3 n,const in vec3 v,const in float roughness){float NdotV=clamp(dot(n,v),0.,1.);float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=reflect(-v,n);vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)
 uniform sampler2D x3d_TransmissionSamplerEXT;vec3 getTransmissionSample(const in vec2 fragCoord,const in float roughness,const in float ior){int framebufferSize=max(x3d_Viewport.z,x3d_Viewport.w);float framebufferLod=log2(float(framebufferSize))*applyIorToRoughness(roughness,ior);vec3 transmittedLight=textureLod(x3d_TransmissionSamplerEXT,fragCoord,framebufferLod).rgb;return transmittedLight;}vec3 getIBLVolumeRefraction(const in vec3 n,const in vec3 v,const in float perceptualRoughness,const in vec3 baseColor,const in vec3 position,const in mat4 modelMatrix,const in mat4 projMatrix,const in float ior,const in float thickness,const in vec3 attenuationColor,const in float attenuationDistance,const in float dispersion){
 #if defined(X3D_DISPERSION_MATERIAL_EXT)
@@ -67535,10 +67808,10 @@ vec3 transmissionRay=getVolumeTransmissionRay(n,v,thickness,ior,modelMatrix);flo
 vec3 attenuatedColor=applyVolumeAttenuation(transmittedLight,transmissionRayLength,attenuationColor,attenuationDistance);return attenuatedColor*baseColor;}
 #endif
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
-vec3 getIBLRadianceAnisotropy(const in vec3 n,const in vec3 v,const in float roughness,const in float anisotropy,const in vec3 anisotropyDirection){float NdotV=clamp(dot(n,v),0.,1.);float tangentRoughness=mix(roughness,1.,anisotropy*anisotropy);vec3 anisotropicTangent=cross(anisotropyDirection,v);vec3 anisotropicNormal=cross(anisotropicTangent,anisotropyDirection);float bendFactor=1.-anisotropy*(1.-roughness);float bendFactorPow4=bendFactor*bendFactor*bendFactor*bendFactor;vec3 bentNormal=normalize(mix(anisotropicNormal,n,bendFactorPow4));float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=normalize(reflect(-v,bentNormal));vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
+vec3 getIBLRadianceAnisotropy(const in vec3 n,const in vec3 v,const in float roughness,const in float anisotropy,const in vec3 anisotropyDirection){float NdotV=clamp(dot(n,v),0.,1.);float tangentRoughness=mix(roughness,1.,anisotropy*anisotropy);vec3 anisotropicTangent=cross(anisotropyDirection,v);vec3 anisotropicNormal=cross(anisotropicTangent,anisotropyDirection);float bendFactor=1.-anisotropy*(1.-roughness);float bendFactorPow4=bendFactor*bendFactor*bendFactor*bendFactor;vec3 bentNormal=normalize(mix(anisotropicNormal,n,bendFactorPow4));float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=reflect(-v,bentNormal);vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
 #endif
 #if defined(X3D_SHEEN_MATERIAL_EXT)
-vec3 getIBLRadianceCharlie(const in vec3 n,const in vec3 v,const in float sheenRoughness,const in vec3 sheenColor){float NdotV=clamp(dot(n,v),0.,1.);float lod=sheenRoughness*float(x3d_EnvironmentLightSource.sheenTextureLevels);vec3 reflection=normalize(reflect(-v,n));vec2 brdfSamplePoint=clamp(vec2(NdotV,sheenRoughness),vec2(0),vec2(1));float brdf=texture(x3d_EnvironmentLightSource.charlieLUTTexture,brdfSamplePoint).b;vec3 sheenLight=getSheenLight(reflection,lod);return sheenLight*sheenColor*brdf;}
+vec3 getIBLRadianceCharlie(const in vec3 n,const in vec3 v,const in float sheenRoughness,const in vec3 sheenColor){float NdotV=clamp(dot(n,v),0.,1.);float lod=sheenRoughness*float(x3d_EnvironmentLightSource.sheenTextureLevels);vec3 reflection=reflect(-v,n);vec2 brdfSamplePoint=clamp(vec2(NdotV,sheenRoughness),vec2(0),vec2(1));float brdf=texture(x3d_EnvironmentLightSource.charlieLUTTexture,brdfSamplePoint).b;vec3 sheenLight=getSheenLight(reflection,lod);return sheenLight*sheenColor*brdf;}
 #endif
 #endif
 `
@@ -67621,15 +67894,13 @@ return info;}
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 ${MaterialTextures .texture ("x3d_ScatterStrengthTextureEXT", "a", "linear")}
 ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
-uniform float x3d_ScatterStrengthEXT;uniform vec3 x3d_MultiscatterColorEXT;uniform float x3d_ScatterAnisotropyEXT;MaterialInfo getScatterInfo(in MaterialInfo info){float scatterStrength=x3d_ScatterStrengthEXT;
+uniform float x3d_ScatterStrengthEXT;uniform vec3 x3d_MultiscatterColorEXT;uniform float x3d_ScatterAnisotropyEXT;MaterialInfo getScatterInfo(in MaterialInfo info){info.scatterStrength=x3d_ScatterStrengthEXT;info.multiscatterColor=x3d_MultiscatterColorEXT;info.scatterAnisotropy=x3d_ScatterAnisotropyEXT;
 #if defined(X3D_SCATTER_STRENGTH_TEXTURE_EXT)
-scatterStrength*=getScatterStrengthTextureEXT();
+info.scatterStrength*=getScatterStrengthTextureEXT();
 #endif
-info.multiscatterColor=x3d_MultiscatterColorEXT;
 #if defined(X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
 info.multiscatterColor*=getMultiscatterColorTextureEXT();
 #endif
-info.scatterAnisotropy=x3d_ScatterAnisotropyEXT;
 #if!defined(X3D_VOLUME_MATERIAL_EXT)
 info.thickness=0.;info.attenuationColor=vec3(1);info.attenuationDistance=0.;
 #endif
@@ -67739,11 +68010,11 @@ uniform ivec4 x3d_Viewport;
 #endif
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)||defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)||defined(X3D_SCATTER_MATERIAL_EXT)
 uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
-#endif
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;mat4 eye(const in mat4 modelViewMatrix){return x3d_EyeMatrix*modelViewMatrix;}
 #else
 #define eye(x)(x)
+#endif
 #endif
 #if defined(X3D_LIGHTING)
 uniform x3d_LightSourceParameters x3d_LightSource[X3D_NUM_LIGHTS];
@@ -67758,7 +68029,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #include<Scatter>
 #else
 vec4 getMaterialColor(const in vec4 fragCoord){
-#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined(X3D_TRANSMISSION_MATERIAL_EXT)||defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)||defined(X3D_SCATTER_MATERIAL_EXT)
 mat4 modelViewMatrix=eye(x3d_ModelViewMatrix);
 #endif
 vec4 baseColor=getBaseColor();
@@ -67769,7 +68040,7 @@ vec3 color=vec3(0);vec3 v=normalize(-vertex);
 #if defined(X3D_USE_IBL)||defined(X3D_LIGHTING)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;float NdotV=clamp(dot(n,v),0.,1.);
 #if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
-vec3 v_retro=normalize(reflect(-v,n));
+vec3 v_retro=reflect(-v,n);
 #endif
 #endif
 MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0_dielectric=vec3(.04);materialInfo.specularWeight=1.;materialInfo.f90=vec3(1);materialInfo.f90_dielectric=materialInfo.f90;
@@ -67879,16 +68150,16 @@ float ao=getOcclusionFactor();color*=1.+x3d_Material.occlusionStrength*(ao-1.);
 #endif
 f_diffuse=vec3(0);f_specular_dielectric=vec3(0);f_specular_metal=vec3(0);vec3 f_dielectric_brdf=vec3(0);vec3 f_metal_brdf=vec3(0);
 #if defined(X3D_LIGHTING)
-for(int i=0;i<X3D_NUM_LIGHTS;++i){x3d_LightSourceParameters light=x3d_LightSource[i];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}if(distanceToLight<=light.radius||light.radius<0.){vec3 l=normalize(pointToLight);vec3 h=normalize(l+v);float NdotL=clamp(dot(n,l),0.,1.);float NdotH=clamp(dot(n,h),0.,1.);float VdotH=clamp(dot(v,h),0.,1.);vec3 dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH));vec3 metal_fresnel=F_Schlick(baseColor.rgb,vec3(1),abs(VdotH));vec3 lightIntensity=getLightIntensity(light,l,distanceToLight);vec3 l_diffuse=lightIntensity*NdotL*BRDF_lambertian(baseColor.rgb);vec3 l_specular_dielectric=vec3(0);vec3 l_specular_metal=vec3(0);vec3 l_dielectric_brdf=vec3(0);vec3 l_metal_brdf=vec3(0);vec3 l_clearcoat_brdf=vec3(0);vec3 l_sheen=vec3(0);float l_albedoSheenScaling=1.;vec3 l_diffuse_btdf=vec3(0);
+for(int i=0;i<X3D_NUM_LIGHTS;++i){x3d_LightSourceParameters light=x3d_LightSource[i];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}if(distanceToLight<=light.radius||light.radius<0.){vec3 l=normalize(pointToLight);vec3 h=normalize(l+v);float NdotL=clamp(dot(n,l),0.,1.);float NdotH=clamp(dot(n,h),0.,1.);float VdotH=clamp(dot(v,h),0.,1.);vec3 dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH));vec3 metal_fresnel=F_Schlick(baseColor.rgb,vec3(1),abs(VdotH));vec3 lightIntensity=getLightIntensity(light,l,distanceToLight);vec3 l_diffuse=lightIntensity*NdotL*BRDF_lambertian(baseColor.rgb);vec3 l_specular_dielectric=vec3(0);vec3 l_specular_metal=vec3(0);vec3 l_dielectric_brdf=vec3(0);vec3 l_metal_brdf=vec3(0);vec3 l_clearcoat_brdf=vec3(0);vec3 l_sheen=vec3(0);float l_albedoSheenScaling=1.;vec3 l_diffuse_btdf=vec3(0);vec3 l_transmission=vec3(0);
 #if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-l_diffuse*=1.-materialInfo.diffuseTransmissionFactor;if(dot(n,l)<0.){float diffuseNdotL=clamp(dot(-n,l),0.,1.);l_diffuse_btdf=lightIntensity*diffuseNdotL*BRDF_lambertian(materialInfo.diffuseTransmissionColorFactor);vec3 l_mirror=normalize(reflect(l,n));float diffuseVdotH=clamp(dot(v,normalize(l_mirror+v)),0.,1.);dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(diffuseVdotH));
+l_diffuse*=1.-materialInfo.diffuseTransmissionFactor;if(dot(n,l)<0.){float diffuseNdotL=clamp(dot(-n,l),0.,1.);l_diffuse_btdf=lightIntensity*diffuseNdotL*BRDF_lambertian(materialInfo.diffuseTransmissionColorFactor);
 #if defined(X3D_VOLUME_MATERIAL_EXT)
 l_diffuse_btdf=applyVolumeAttenuation(l_diffuse_btdf,diffuseTransmissionThickness,materialInfo.attenuationColor,materialInfo.attenuationDistance);
 #endif
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 l_diffuse_btdf*=(1.-singleScatter);
 #endif
-l_diffuse+=l_diffuse_btdf*materialInfo.diffuseTransmissionFactor;}
+}
 #endif
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)
 vec3 transmissionRay=getVolumeTransmissionRay(n,v,materialInfo.thickness,materialInfo.ior,modelViewMatrix);pointToLight-=transmissionRay;l=normalize(pointToLight);vec3 transmittedLight=lightIntensity*getPunctualRadianceTransmission(n,v,l,materialInfo.alphaRoughness,baseColor.rgb,materialInfo.ior);
@@ -67898,7 +68169,7 @@ transmittedLight=applyVolumeAttenuation(transmittedLight,length(transmissionRay)
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 if(materialInfo.thickness<=0.){float forwardFraction=(1.+materialInfo.scatterAnisotropy)*.5;float backwardFraction=(1.-materialInfo.scatterAnisotropy)*.5;vec3 scatterLobe=vec3(0);if(dot(n,l)<0.){float scatterNdotL=clamp(dot(-n,l),0.,1.);scatterLobe=lightIntensity*scatterNdotL*BRDF_lambertian(materialInfo.multiscatterColor)*forwardFraction;}else{scatterLobe=lightIntensity*NdotL*BRDF_lambertian(materialInfo.multiscatterColor)*backwardFraction;}transmittedLight=mix(transmittedLight,scatterLobe,materialInfo.scatterStrength);}
 #endif
-l_diffuse=mix(l_diffuse,transmittedLight,materialInfo.transmissionFactor);
+l_diffuse*=(1.-materialInfo.transmissionFactor);l_transmission=transmittedLight;
 #endif
 vec3 intensity=getLightIntensity(light,l,length(light.matrix*pointToLight));
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
@@ -67929,16 +68200,29 @@ l_clearcoat_brdf=intensity*getPunctualRadianceClearCoat(materialInfo.clearcoatNo
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 l_sheen=intensity*getPunctualRadianceSheen(materialInfo.sheenColorFactor,materialInfo.sheenRoughnessFactor,NdotL,NdotV,NdotH);l_albedoSheenScaling=min(1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotV,materialInfo.sheenRoughnessFactor),1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotL,materialInfo.sheenRoughnessFactor));
 #endif
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)||defined(X3D_TRANSMISSION_MATERIAL_EXT)
+vec3 transmittance=1.-F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,NdotV);
+#endif
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+float diffuseTransmissionScale=materialInfo.diffuseTransmissionFactor;
+#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
+diffuseTransmissionScale*=1.-materialInfo.transmissionFactor;
+#endif
+l_dielectric_brdf+=l_diffuse_btdf*diffuseTransmissionScale*transmittance;
+#endif
+#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
+l_dielectric_brdf+=l_transmission*materialInfo.transmissionFactor*transmittance;
+#endif
 vec3 l_color=mix(l_dielectric_brdf,l_metal_brdf,materialInfo.metallic);l_color=l_sheen+l_color*l_albedoSheenScaling;l_color=mix(l_color,l_clearcoat_brdf,clearcoatFactor*clearcoatFresnel);
 #if defined(X3D_SHADOWS)
 l_color=mix(l_color,light.shadowColor,getShadowIntensity(i,light));
 #endif
 color+=l_color;}}
 #endif
-#if defined(X3D_SCATTER_MATERIAL_EXT)&&defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)
-if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 l_color=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);float iridescenceMask=1.;
-#ifdef MATERIAL_IRIDESCENCE
-iridescenceMask=1.-materialInfo.iridescenceFactor;
+#if defined(X3D_SCATTER_MATERIAL_EXT)&&defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)&&(defined(X3D_USE_IBL)||defined(X3D_LIGHTING))
+if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 singleScattering=getVolumeSingleScattering(v,n,materialInfo.ior,materialInfo.attenuationColor,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,vertex,materialInfo.thickness,modelViewMatrix);vec3 diffuseScattering=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);vec3 l_color=singleScattering+diffuseScattering;float iridescenceMask=1.;
+#if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
+iridescenceMask-=materialInfo.iridescenceFactor;
 #endif
 color+=l_color*(1.-materialInfo.metallic)*(1.-clearcoatFactor*clearcoatFresnel)*iridescenceMask*materialInfo.transmissionFactor;}
 #endif
@@ -67963,7 +68247,7 @@ float applyIorToRoughness(const in float roughness,const in float ior){return ro
 #endif
 #if defined(X3D_LIGHTING)
 #include<Lighting>
-float getRangeAttenuation(const in float radius,const in float distanceToLight){if(radius<=0.){return 1./pow(distanceToLight,2.);}return max(min(1.-pow(distanceToLight/radius,4.),1.),0.)/pow(distanceToLight,2.);}float getSpotAttenuation(const in vec3 pointToLight,const in vec3 spotDirection,const in float outerConeCos,const in float innerConeCos){float actualCos=dot(normalize(spotDirection),normalize(-pointToLight));if(actualCos>outerConeCos){if(actualCos<innerConeCos){float angularAttenuation=(actualCos-outerConeCos)/(innerConeCos-outerConeCos);return angularAttenuation*angularAttenuation;}return 1.;}return 0.;}vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 pointToLight,const in float distanceToLight){float intensity=light.intensity;if(light.type!=x3d_DirectionalLight){intensity*=getAttenuation(light.attenuation,distanceToLight);intensity*=getRangeAttenuation(light.radius,distanceToLight);}if(light.type==x3d_SpotLight){intensity*=getSpotAttenuation(pointToLight,light.direction,cos(light.cutOffAngle),cos(light.beamWidth));}return intensity*light.color;}
+float getRangeAttenuation(const in float radius,const in float distanceToLight){if(radius<=0.){return 1./pow(distanceToLight,2.);}return max(min(1.-pow(distanceToLight/radius,4.),1.),0.)/pow(distanceToLight,2.);}float getSpotAttenuation(const in vec3 l,const in vec3 spotDirection,const in float outerConeCos,const in float innerConeCos){float actualCos=dot(spotDirection,-l);if(actualCos>outerConeCos){if(actualCos<innerConeCos){float angularAttenuation=(actualCos-outerConeCos)/(innerConeCos-outerConeCos);return angularAttenuation*angularAttenuation;}return 1.;}return 0.;}vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 l,const in float distanceToLight){float intensity=light.intensity;if(light.type!=x3d_DirectionalLight){intensity*=getAttenuation(light.attenuation,distanceToLight);intensity*=getRangeAttenuation(light.radius,distanceToLight);}if(light.type==x3d_SpotLight){intensity*=getSpotAttenuation(l,light.direction,cos(light.cutOffAngle),cos(light.beamWidth));}return intensity*light.color;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 vec3 getPunctualRadianceSheen(const in vec3 sheenColor,const in float sheenRoughness,const in float NdotL,const in float NdotV,const in float NdotH){return NdotL*BRDF_specularSheen(sheenColor,sheenRoughness,NdotL,NdotV,NdotH);}
 #endif
@@ -67972,7 +68256,7 @@ vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,
 #endif
 #endif
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)||defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-vec3 getPunctualRadianceTransmission(const in vec3 normal,const in vec3 view,const in vec3 pointToLight,const in float alphaRoughness,const in vec3 baseColor,const in float ior){float transmissionRoughness=applyIorToRoughness(alphaRoughness,ior);vec3 n=normalize(normal);vec3 v=normalize(view);vec3 l=normalize(pointToLight);vec3 l_mirror=normalize(l+2.*n*dot(-l,n));vec3 h=normalize(l_mirror+v);float D=D_GGX(clamp(dot(n,h),0.,1.),transmissionRoughness);float Vis=V_GGX(clamp(dot(n,l_mirror),0.,1.),clamp(dot(n,v),0.,1.),transmissionRoughness);return baseColor*D*Vis;}vec3 applyVolumeAttenuation(const in vec3 radiance,const in float transmissionDistance,const in vec3 attenuationColor,const in float attenuationDistance){if(attenuationDistance==0.){return radiance;}else{vec3 attenuationCoefficient=log(attenuationColor)/attenuationDistance;vec3 transmittance=exp(attenuationCoefficient*transmissionDistance);return transmittance*radiance;}}vec3 getVolumeTransmissionRay(const in vec3 n,const in vec3 v,const in float thickness,const in float ior,in mat4 modelMatrix){vec3 refractionVector=refract(-v,normalize(n),1./ior);vec3 modelScale;modelScale.x=length(modelMatrix[0].xyz);modelScale.y=length(modelMatrix[1].xyz);modelScale.z=length(modelMatrix[2].xyz);return normalize(refractionVector)*thickness*modelScale;}
+vec3 getPunctualRadianceTransmission(const in vec3 n,const in vec3 v,const in vec3 l,const in float alphaRoughness,const in vec3 baseColor,const in float ior){float transmissionRoughness=applyIorToRoughness(alphaRoughness,ior);vec3 l_mirror=reflect(l,n);vec3 h=normalize(l_mirror+v);float D=D_GGX(abs(dot(n,h)),transmissionRoughness);float Vis=V_GGX(abs(dot(n,l_mirror)),abs(dot(n,v)),transmissionRoughness);return baseColor*D*Vis;}vec3 applyVolumeAttenuation(const in vec3 radiance,const in float transmissionDistance,const in vec3 attenuationColor,const in float attenuationDistance){if(attenuationDistance==0.){return radiance;}else{vec3 attenuationCoefficient=log(attenuationColor)/attenuationDistance;vec3 transmittance=exp(attenuationCoefficient*transmissionDistance);return transmittance*radiance;}}vec3 getVolumeTransmissionRay(const in vec3 n,const in vec3 v,const in float thickness,const in float ior,in mat4 modelMatrix){vec3 refractionVector=refract(-v,n,1./ior);vec3 modelScale;modelScale.x=length(modelMatrix[0].xyz);modelScale.y=length(modelMatrix[1].xyz);modelScale.z=length(modelMatrix[2].xyz);return refractionVector*thickness*modelScale;}
 #endif
 #include<SubsurfaceScattering>
 `
@@ -70751,7 +71035,21 @@ const X3DShadersContext_default_ = X3DShadersContext;
 ;
 
 /* harmony default export */ const Shaders_X3DShadersContext = (x_ite_Namespace .add ("X3DShadersContext", X3DShadersContext_default_));
+;// ./src/x_ite/Browser/Shape/MaterialFlag.js
+let MaterialFlag_i = 0;
+
+const MaterialFlag = Object .freeze ({
+   TRANSPARENT:  MaterialFlag_i ++,
+   TRANSMISSION: MaterialFlag_i ++,
+   SCATTER:      MaterialFlag_i ++,
+});
+
+const MaterialFlag_default_ = MaterialFlag;
+;
+
+/* harmony default export */ const Shape_MaterialFlag = (x_ite_Namespace .add ("MaterialFlag", MaterialFlag_default_));
 ;// ./src/x_ite/Components/Shape/X3DAppearanceNode.js
+
 
 
 
@@ -70762,39 +71060,42 @@ function X3DAppearanceNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DAppearanceNode);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent",  new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "transmission", new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "scatter",      new x_ite_Fields .SFBool ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "materialFlags", new x_ite_Fields .SFInt32 ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, Core_X3DNode .prototype),
 {
+   getMaterialFlag (index)
+   {
+      return this .getNodeFlag (this ._materialFlags, index);
+   },
+   setMaterialFlag (index, value)
+   {
+      this .setNodeFlag (this ._materialFlags, index, value);
+   },
    setTransparent (value)
    {
-      if (!!value !== this ._transparent .getValue ())
-         this ._transparent = value;
+      this .setMaterialFlag (Shape_MaterialFlag .TRANSPARENT, value);
    },
    isTransparent ()
    {
-      return this ._transparent .getValue ();
+      return this .getMaterialFlag (Shape_MaterialFlag .TRANSPARENT);
    },
    setTransmission (value)
    {
-      if (!!value !== this ._transmission .getValue ())
-         this ._transmission = value;
+      this .setMaterialFlag (Shape_MaterialFlag .TRANSMISSION, value);
    },
    isTransmission ()
    {
-      return this ._transmission .getValue ();
+      return this .getMaterialFlag (Shape_MaterialFlag .TRANSMISSION);
    },
    setScatter (value)
    {
-      if (!!value !== this ._scatter .getValue ())
-         this ._scatter = value;
+      this .setMaterialFlag (Shape_MaterialFlag .SCATTER, value);
    },
    isScatter ()
    {
-      return this ._scatter .getValue ();
+      return this .getMaterialFlag (Shape_MaterialFlag .SCATTER);
    },
 });
 
@@ -71002,18 +71303,18 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
    {
       if (this .materialNode)
       {
-         this .materialNode ._transparent      .removeInterest ("set_transparent__",      this);
-         this .materialNode ._transmission     .removeInterest ("set_transmission__",     this);
-         this .materialNode ._scatter    .removeInterest ("set_scatter__",          this);
+         this .materialNode ._materialFlags    .removeInterest ("set_transparent__",      this);
+         this .materialNode ._materialFlags    .removeInterest ("set_transmission__",     this);
+         this .materialNode ._materialFlags    .removeInterest ("set_scatter__",          this);
          this .materialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
       this .materialNode = Base_X3DCast (Base_X3DConstants .X3DMaterialNode, this ._material)
          ?? this .getBrowser () .getDefaultMaterial ();
 
-      this .materialNode ._transparent      .addInterest ("set_transparent__",      this);
-      this .materialNode ._transmission     .addInterest ("set_transmission__",     this);
-      this .materialNode ._scatter    .addInterest ("set_scatter__",          this);
+      this .materialNode ._materialFlags    .addInterest ("set_transparent__",      this);
+      this .materialNode ._materialFlags    .addInterest ("set_transmission__",     this);
+      this .materialNode ._materialFlags    .addInterest ("set_scatter__",          this);
       this .materialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
 
       this .set_transmission__ ();
@@ -71030,9 +71331,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
    {
       if (this .backMaterialNode)
       {
-         this .backMaterialNode ._transparent      .removeInterest ("set_transparent__",      this);
-         this .backMaterialNode ._transmission     .removeInterest ("set_transmission__",     this);
-         this .backMaterialNode ._scatter    .removeInterest ("set_scatter__",          this);
+         this .backMaterialNode ._materialFlags    .removeInterest ("set_transparent__",      this);
+         this .backMaterialNode ._materialFlags    .removeInterest ("set_transmission__",     this);
+         this .backMaterialNode ._materialFlags    .removeInterest ("set_scatter__",          this);
          this .backMaterialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
@@ -71040,9 +71341,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
 
       if (this .backMaterialNode)
       {
-         this .backMaterialNode ._transparent      .addInterest ("set_transparent__",      this);
-         this .backMaterialNode ._transmission     .addInterest ("set_transmission__",     this);
-         this .backMaterialNode ._scatter    .addInterest ("set_scatter__",          this);
+         this .backMaterialNode ._materialFlags    .addInterest ("set_transparent__",      this);
+         this .backMaterialNode ._materialFlags    .addInterest ("set_transmission__",     this);
+         this .backMaterialNode ._materialFlags    .addInterest ("set_scatter__",          this);
          this .backMaterialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
       }
 
@@ -71189,7 +71490,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
    set_scatter__ ()
    {
       this .setScatter (this .materialNode ?.isScatter () ||
-                              this .backMaterialNode ?.isScatter ());
+                        this .backMaterialNode ?.isScatter ());
    },
    set_renderedTextures__ ()
    {
@@ -71485,15 +71786,14 @@ const LineProperties_default_ = LineProperties;
 
 
 
+
 function X3DMaterialNode (executionContext)
 {
    Shape_X3DAppearanceChildNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .X3DMaterialNode);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent",      new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "transmission",     new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "scatter",          new x_ite_Fields .SFBool (),
+   this .addChildObjects (Base_X3DConstants .outputOnly, "materialFlags",    new x_ite_Fields .SFInt32 (),
                           Base_X3DConstants .outputOnly, "renderedTextures", new x_ite_Fields .SFTime ());
 
    // Private properties
@@ -71505,36 +71805,41 @@ function X3DMaterialNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DAppearanceChildNode .prototype),
 {
+   getMaterialFlag (index)
+   {
+      return this .getNodeFlag (this ._materialFlags, index);
+   },
+   setMaterialFlag (index, value)
+   {
+      this .setNodeFlag (this ._materialFlags, index, value);
+   },
    isPhysical ()
    {
       return false;
    },
    setTransparent (value)
    {
-      if (!!value !== this ._transparent .getValue ())
-         this ._transparent = value;
+      this .setMaterialFlag (Shape_MaterialFlag .TRANSPARENT, value);
    },
    isTransparent ()
    {
-      return this ._transparent .getValue ();
+      return this .getMaterialFlag (Shape_MaterialFlag .TRANSPARENT);
    },
    setTransmission (value)
    {
-      if (!!value !== this ._transmission .getValue ())
-         this ._transmission = value;
+      this .setMaterialFlag (Shape_MaterialFlag .TRANSMISSION, value);
    },
    isTransmission ()
    {
-      return this ._transmission .getValue ();
+      return this .getMaterialFlag (Shape_MaterialFlag .TRANSMISSION);
    },
    setScatter (value)
    {
-      if (!!value !== this ._scatter .getValue ())
-         this ._scatter = value;
+      this .setMaterialFlag (Shape_MaterialFlag .SCATTER, value);
    },
    isScatter ()
    {
-      return this ._scatter .getValue ();
+      return this .getMaterialFlag (Shape_MaterialFlag .SCATTER);
    },
    addTexture (index, textureNode)
    {
@@ -75749,15 +76054,21 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
    {
       EnvironmentalSensor_X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this ._size   .addInterest ("set_extents__", this);
-      this ._center .addInterest ("set_extents__", this);
+      this ._enabled   .addInterest ("set_enabled__",   this);
+      this ._traversed .addInterest ("set_traversed__", this);
+      this ._size      .addInterest ("set_extents__",   this);
+      this ._center    .addInterest ("set_extents__",   this);
 
-      this ._enabled   .addFieldInterest (this ._isVisibleObject);
-      this ._traversed .addFieldInterest (this ._isCameraObject);
-
-      this .setVisibleObject (this ._enabled .getValue ());
-
+      this .set_enabled__ ();
       this .set_extents__ ();
+   },
+   set_enabled__ ()
+   {
+      this .setVisibleObject (this ._enabled .getValue ());
+   },
+   set_traversed__ ()
+   {
+      this .setCameraObject (this ._traversed .getValue ());
    },
    set_extents__ ()
    {
@@ -76176,8 +76487,12 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, Environment
    {
       EnvironmentalSensor_X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this ._enabled .addFieldInterest (this ._isVisibleObject);
+      this ._enabled .addInterest ("set_enabled__", this);
 
+      this .set_enabled__ ();
+   },
+   set_enabled__ ()
+   {
       this .setVisibleObject (this ._enabled .getValue ());
    },
    update ()
@@ -83887,6 +84202,8 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
          this .getBrowser () .addPointingDeviceSensor (this);
+
+         delete this .push;
       }
       else
       {
@@ -83897,9 +84214,11 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
 
          if (this ._isOver .getValue ())
             this ._isOver = false;
+
+         this .push = () => true;
       }
    },
-   set_over__ (over, hit)
+   set_over__ (over /*, hit */)
    {
       if (over === this ._isOver .getValue ())
          return;
@@ -83909,20 +84228,17 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
       if (over)
          this .getBrowser () .setDescription (this ._description);
    },
-   set_active__ (active, hit)
+   set_active__ (active /*, hit */)
    {
       if (active === this ._isActive .getValue ())
          return;
 
       this ._isActive = active;
    },
-   set_motion__ (hit)
+   set_motion__ (/* hit */)
    { },
    push (renderObject, sensors)
    {
-      if (!this ._enabled .getValue ())
-         return true;
-
       const sensor = PointingDeviceSensors .pop ();
 
       sensor .set (this,
@@ -92004,8 +92320,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(464);
-/* provided dependency */ var APNG = __webpack_require__(506);
+/* provided dependency */ var SuperGif = __webpack_require__(169);
+/* provided dependency */ var APNG = __webpack_require__(667);
 
 
 
@@ -94649,7 +94965,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(930);
+/* provided dependency */ var libtess_libtess = __webpack_require__(919);
 const libtess_default_ = libtess_libtess;
 ;
 

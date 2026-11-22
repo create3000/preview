@@ -1,4 +1,4 @@
-/* X_ITE v16.7.1 */
+/* X_ITE v16.8.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -303,9 +303,15 @@ const AnisotropyMaterialExtension_default_ = AnisotropyMaterialExtension;
 ;// external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// external "__X_ITE_X3D__ .URLs"
+const external_X_ITE_X3D_URLs_namespaceObject = __X_ITE_X3D__ .URLs;
+var external_X_ITE_X3D_URLs_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_URLs_namespaceObject);
 ;// external "__X_ITE_X3D__ .PointingType"
 const external_X_ITE_X3D_PointingType_namespaceObject = __X_ITE_X3D__ .PointingType;
 var external_X_ITE_X3D_PointingType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PointingType_namespaceObject);
+;// external "__X_ITE_X3D__ .GLTFExtensions"
+const external_X_ITE_X3D_GLTFExtensions_namespaceObject = __X_ITE_X3D__ .GLTFExtensions;
+var external_X_ITE_X3D_GLTFExtensions_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GLTFExtensions_namespaceObject);
 ;// external "__X_ITE_X3D__ .GLTFPointerAliases"
 const external_X_ITE_X3D_GLTFPointerAliases_namespaceObject = __X_ITE_X3D__ .GLTFPointerAliases;
 var external_X_ITE_X3D_GLTFPointerAliases_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GLTFPointerAliases_namespaceObject);
@@ -11348,7 +11354,7 @@ class QuatFromDirections extends BehaveEngineNode {
         // Cross product with [1,0,0]
         perpendicular = [0, -a[2], a[1]];
       } else {
-        // Cross product with [0,1,0]
+        // Cross product with [0,1,0] 
         perpendicular = [-a[2], 0, a[0]];
       }
 
@@ -13888,1087 +13894,9 @@ class OnHoverOut extends BehaveEngineNode {
   }
 }
 
-// Single source of truth for op -> runtime BehaveEngineNode class. registerKnownBehaviorNodes
-// iterates this; tools/tests import it to check parity with the authoring palette (tst/opRegistryParity.test.ts).
-const behaveEngineNodeRegistry = [["event/onStart", OnStartNode], ["event/onTick", OnTickNode], ["flow/branch", Branch], ["flow/setDelay", SetDelay], ["flow/cancelDelay", CancelDelay], ["flow/doN", DoN], ["flow/for", ForLoop], ["flow/multiGate", MultiGate], ["flow/sequence", Sequence], ["flow/switch", Switch], ["flow/throttle", Throttle], ["flow/waitAll", WaitAll], ["flow/while", WhileLoop], ["pointer/get", PointerGet], ["pointer/set", PointerSet], ["pointer/interpolate", PointerInterpolate], ["math/abs", AbsoluteValue], ["event/receive", Receive], ["event/send", Send], ["variable/get", VariableGet], ["variable/set", VariableSet], ["variable/interpolate", VariableInterpolate], ["math/E", Euler], ["math/Inf", Inf], ["math/NaN", NotANumber], ["math/Pi", Pi], ["math/Tau", Tau], ["math/sign", Sign], ["math/trunc", Truncate], ["math/floor", Floor], ["math/fract", Fraction], ["math/ceil", Ceil], ["math/round", Round], ["math/neg", Negate], ["math/add", Add], ["math/sub", Subtract], ["math/mul", Multiply], ["math/div", Divide], ["math/rem", Remainder], ["math/min", Min], ["math/max", Max], ["math/mix", Mix], ["math/saturate", Saturate], ["math/clamp", Clamp], ["math/smoothStep", SmoothStep], ["math/rad", DegreeToRadians], ["math/deg", RadiansToDegrees], ["math/sin", Sine], ["math/cos", Cosine], ["math/tan", Tangent], ["math/asin", Arcsine], ["math/acos", Arccosine], ["math/atan", Arctangent], ["math/atan2", Arctangent2], ["math/sinh", HyperbolicSine], ["math/cosh", HyperbolicCosine], ["math/tanh", HyperbolicTangent], ["math/asinh", InverseHyperbolicSine], ["math/acosh", InverseHyperbolicCosine], ["math/atanh", InverseHyperbolicTangent], ["math/exp", Exponential], ["math/log", Log], ["math/log2", Log2], ["math/log10", Log10], ["math/pow", Power], ["math/sqrt", SquareRoot], ["math/cbrt", CubeRoot], ["math/random", Random], ["math/lt", LessThan], ["math/le", LessThanOrEqualTo], ["math/eq", Equality], ["math/ge", GreaterThanOrEqualTo], ["math/gt", GreaterThan], ["math/dot", Dot], ["math/cross", Cross], ["math/normalize", Normalize], ["math/rotate2D", Rotate2D], ["math/rotate3D", Rotate3D], ["math/length", VectorLength], ["math/slerp", Slerp], ["math/isInf", IsInfNode], ["math/isNaN", IsNaNNode], ["math/select", Select], ["math/switch", MathSwitch], ["math/extract2", Extract2], ["math/extract3", Extract3], ["math/extract4", Extract4], ["math/extract2x2", Extract2x2], ["math/extract3x3", Extract3x3], ["math/extract4x4", Extract4x4], ["math/combine2", Combine2], ["math/combine3", Combine3], ["math/combine4", Combine4], ["math/combine2x2", Combine2x2], ["math/combine3x3", Combine3x3], ["math/combine4x4", Combine4x4], ["type/boolToInt", BoolToInt], ["type/boolToFloat", BoolToFloat], ["type/floatToBool", FloatToBool], ["type/floatToInt", FloatToInt], ["type/intToBool", IntToBool], ["type/intToFloat", IntToFloat], ["math/not", Not], ["math/xor", Xor], ["math/or", Or], ["math/and", And], ["math/lsl", LeftShift], ["math/asr", RightShift], ["math/clz", CountLeadingZeros], ["math/ctz", CountTrailingZeros], ["math/popcnt", CountOneBits], ["math/quatMul", QuatMul], ["math/quatConjugate", QuatConjugate], ["math/quatFromAxisAngle", QuatFromAxisAngle], ["math/quatAngleBetween", QuatAngleBetween], ["math/quatSlerp", QuatSlerp], ["math/quatToAxisAngle", QuatToAxisAngle], ["math/quatFromDirections", QuatFromDirections], ["math/quatFromUpForward", QuatFromUpForward], ["math/quatFromAngles", QuatFromAngles], ["math/matDecompose", MatDecompose], ["math/matCompose", MatCompose], ["math/determinant", Determinant], ["math/transform", Transform], ["math/transpose", Transpose], ["math/matMul", MatMul], ["math/inverse", Inverse], ["debug/log", DebugLog], ["event/stopPropagation", EventStopPropagation], ["ref/eq", RefEquality], ["math/rgbToOkLCh", RgbToOkLCh], ["math/rgbFromOkLCh", RgbFromOkLCh], ["animation/start", AnimationStart], ["animation/stop", AnimationStop], ["animation/stopAt", AnimationStopAt], ["event/onSelect", OnSelect], ["event/onHoverIn", OnHoverIn], ["event/onHoverOut", OnHoverOut]];
-
-/** The graph failed load-time validation; per the spec it is rejected and never runs. */
-class GraphRejectedError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "GraphRejectedError";
-  }
-}
-const defaultNodeHook = _node => {/*no-op*/};
-const defaultFlowHook = _flow => {/*no-op*/};
-class BasicBehaveEngine {
-  registry;
-  executionErrorListener;
-  idToBehaviourNodeMap;
-  eventBus;
-  onTickNodeIndices;
-  _lastTickTime;
-  _pauseTickTime;
-  _pauseDuration;
-  _scheduledDelays;
-  scheduledDelayOwners = new Map();
-  nodes;
-  _variables;
-  events;
-  types;
-  jsonPtrTrie;
-  _fps;
-  // bumped by clearValueEvaluationCache; node output caches from an older epoch are stale
-  valueEvaluationEpoch = 0;
-  compiledOutputs = [];
-  _timerID;
-  hoverableNodesIndices;
-  selectableNodesIndices;
-  selectNodes;
-  lastHoveredNodeIndices;
-  rigidBodyTriggerNodeIndices;
-  propagationCancelled;
-  propagationCancelledPending;
-  animationCompletionCallbacks;
-  constructor(fps, eventBus) {
-    this.registry = new Map();
-    this.idToBehaviourNodeMap = new Map();
-    this.jsonPtrTrie = new JsonPtrTrie();
-    this._fps = fps;
-    this.onTickNodeIndices = [];
-    this._lastTickTime = NaN;
-    this._pauseTickTime = NaN;
-    this._pauseDuration = 0;
-    this.eventBus = eventBus;
-    this._variables = [];
-    this.events = [];
-    this._scheduledDelays = [];
-    this.nodes = [];
-    this.types = [];
-    this._timerID = null;
-    this.hoverableNodesIndices = new Map();
-    this.lastHoveredNodeIndices = new Map();
-    this.selectableNodesIndices = new Map();
-    this.selectNodes = [];
-    this.rigidBodyTriggerNodeIndices = new Map();
-    this.propagationCancelled = new Set();
-    this.propagationCancelledPending = new Set();
-    this.animationCompletionCallbacks = new Map();
-    this.registerKnownBehaviorNodes();
-  }
-  get lastTickTime() {
-    return this._lastTickTime - this._pauseDuration;
-  }
-  get fps() {
-    return this._fps;
-  }
-  get variables() {
-    return this._variables;
-  }
-  completeAnimation(animationIndex) {
-    const callback = this.animationCompletionCallbacks.get(animationIndex);
-    callback?.();
-    this.animationCompletionCallbacks.delete(animationIndex);
-  }
-  startAnimation(animationIndex, startTime, endTime, speed, callback) {
-    // Implemented by decorators
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  stopAnimation(animationIndex) {
-    // Implemented by decorators
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  stopAnimationAt(animationIndex, stopTime, callback) {
-    // Implemented by decorators
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  applyImpulseToRigidBody(nodeIndex, linearImpulse, angularImpulse) {
-    // Implemented by decorators
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  applyPointImpulseToRigidBody(nodeIndex, impulse, position) {
-    // Implemented by decorators
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  rayCastRigidBodies(rayStart, rayEnd, collisionFilterIndex) {
-    // Implemented by decorators
-    return {
-      hitNodeIndex: -1,
-      hitFraction: undefined,
-      hitNormal: undefined
-    };
-  }
-  rigidBodyTriggerEntered(nodeIndex, colliderNodeIndex, motionNodeIndex) {
-    const callback = this.rigidBodyTriggerNodeIndices.get(nodeIndex)?.triggerEntered;
-    if (callback) {
-      callback(colliderNodeIndex, motionNodeIndex);
-    }
-  }
-  rigidBodyTriggerExited(nodeIndex, colliderNodeIndex, motionNodeIndex) {
-    const callback = this.rigidBodyTriggerNodeIndices.get(nodeIndex)?.triggerExited;
-    if (callback) {
-      callback(colliderNodeIndex, motionNodeIndex);
-    }
-  }
-  select(selectedNodeIndex, controllerIndex, selectionPoint, selectionRayOrigin) {
-    const onSelectEventIndex = this.events.findIndex(event => event.id === "onSelect");
-    const eventRef = `/extensions/KHR_interactivity/events/${onSelectEventIndex}`;
-    for (let nodeIndex = selectedNodeIndex;;) {
-      this.flushPendingPropagationCancellations();
-      if (this.propagationCancelled.has(eventRef)) {
-        break;
-      }
-      const callback = this.selectableNodesIndices.get(nodeIndex);
-      if (callback !== undefined) {
-        callback(`/nodes/${selectedNodeIndex}`, controllerIndex, selectionPoint, selectionRayOrigin, eventRef);
-        return;
-      }
-      const parent = this.getParentNodeIndex(nodeIndex);
-      if (parent === undefined) {
-        return;
-      }
-      nodeIndex = parent;
-    }
-  }
-  hoverOn(nodeIndex, controllerIndex) {
-    const lastHoverNodeIndex = this.lastHoveredNodeIndices.get(controllerIndex);
-    if (nodeIndex === lastHoverNodeIndex) {
-      return;
-    }
-    const oldHoverIndicies = new Set();
-    let firstCommonHoverNodeIndex = undefined;
-    if (lastHoverNodeIndex !== undefined && nodeIndex !== undefined) {
-      let currentOldHoverNodeIndex = lastHoverNodeIndex;
-      while (currentOldHoverNodeIndex !== undefined) {
-        oldHoverIndicies.add(currentOldHoverNodeIndex);
-        currentOldHoverNodeIndex = this.getParentNodeIndex(currentOldHoverNodeIndex);
-      }
-      let currentHoverNodeIndex = nodeIndex;
-      while (currentHoverNodeIndex !== undefined) {
-        if (oldHoverIndicies.has(currentHoverNodeIndex)) {
-          firstCommonHoverNodeIndex = currentHoverNodeIndex;
-          break;
-        }
-        currentHoverNodeIndex = this.getParentNodeIndex(currentHoverNodeIndex);
-      }
-    }
-    const lastHoverNodeRef = lastHoverNodeIndex !== undefined ? `/nodes/${lastHoverNodeIndex}` : undefined;
-    const newHoverNodeRef = nodeIndex !== undefined ? `/nodes/${nodeIndex}` : undefined;
-    this.alertOnHoverOut(lastHoverNodeRef, controllerIndex, lastHoverNodeIndex, firstCommonHoverNodeIndex);
-    this.alertOnHoverIn(newHoverNodeRef, controllerIndex, nodeIndex, firstCommonHoverNodeIndex);
-    this.lastHoveredNodeIndices.set(controllerIndex, nodeIndex);
-  }
-  alertOnHoverIn(selectedNodeRef, controllerIndex, currentHoverNodeIndex, firstCommonHoverNodeIndex) {
-    while (currentHoverNodeIndex !== undefined && currentHoverNodeIndex !== firstCommonHoverNodeIndex) {
-      const hoverInformation = this.hoverableNodesIndices.get(currentHoverNodeIndex);
-      if (hoverInformation?.callbackHoverIn !== undefined) {
-        hoverInformation.callbackHoverIn(selectedNodeRef, controllerIndex, firstCommonHoverNodeIndex);
-        break;
-      }
-      currentHoverNodeIndex = this.getParentNodeIndex(currentHoverNodeIndex);
-    }
-  }
-  alertOnHoverOut(selectedNodeRef, controllerIndex, currentHoverNodeIndex, firstCommonHoverNodeIndex) {
-    while (currentHoverNodeIndex !== undefined && currentHoverNodeIndex !== firstCommonHoverNodeIndex) {
-      const hoverInformation = this.hoverableNodesIndices.get(currentHoverNodeIndex);
-      if (hoverInformation?.callbackHoverOut !== undefined) {
-        hoverInformation.callbackHoverOut(selectedNodeRef, controllerIndex, firstCommonHoverNodeIndex);
-        break;
-      }
-      currentHoverNodeIndex = this.getParentNodeIndex(currentHoverNodeIndex);
-    }
-  }
-  clearScheduledDelays() {
-    // actually cancel the pending flow/setDelay timers - dropping the references alone leaves
-    // them queued, so their callbacks keep firing after the graph is torn down
-    for (let index = 0; index < this._scheduledDelays.length; index++) {
-      const delay = this._scheduledDelays[index];
-      if (delay !== undefined) {
-        clearTimeout(delay);
-      }
-      this.removeScheduledDelay(index);
-    }
-    this._scheduledDelays = [];
-    this.scheduledDelayOwners.clear();
-  }
-  dispose = () => {
-    if (this._timerID !== null) {
-      clearTimeout(this._timerID);
-      this._timerID = null;
-    }
-    this.clearScheduledDelays();
-    this.clearEventList();
-    this.clearCustomEventListeners();
-  };
-  get scheduledDelays() {
-    return this._scheduledDelays;
-  }
-  pushScheduledDelay = (delay, removeOwner) => {
-    if (removeOwner) this.scheduledDelayOwners.set(this._scheduledDelays.length, removeOwner);
-    this.jsonPtrTrie.addPath(`/extensions/KHR_interactivity/delays/${this._scheduledDelays.length}`, () => [delay], () => undefined, "ref", true);
-    this._scheduledDelays.push(delay);
-  };
-  getScheduledDelay = index => {
-    if (index >= this._scheduledDelays.length || index < 0) {
-      return undefined;
-    }
-    return this._scheduledDelays[index];
-  };
-  cancelScheduledDelay = index => {
-    const delay = this.getScheduledDelay(index);
-    if (delay !== undefined) {
-      clearTimeout(delay);
-      this.removeScheduledDelay(index);
-    }
-  };
-  removeScheduledDelay = index => {
-    this.scheduledDelayOwners.get(index)?.();
-    this.scheduledDelayOwners.delete(index);
-    if (index >= 0 && index < this._scheduledDelays.length) {
-      this.jsonPtrTrie.removePath(`/extensions/KHR_interactivity/delays/${index}`);
-      this._scheduledDelays[index] = undefined;
-    }
-  };
-  getEventList = () => {
-    return this.eventBus.getEventList();
-  };
-  clearEventList = () => {
-    this.eventBus.clearEventList();
-  };
-  addEvent = event => {
-    this.eventBus.addEvent(event);
-  };
-  clearValueEvaluationCache = () => {
-    this.valueEvaluationEpoch++;
-  };
-  getCompiledOutput = (node, socket) => {
-    const output = this.compiledOutputs[node]?.[socket];
-    if (output && output.version !== this.valueEvaluationEpoch) {
-      output.value = output.evaluate();
-      output.version = this.valueEvaluationEpoch;
-    }
-    return output;
-  };
-  registerJsonPointer = (jsonPtr, getterCallback, setterCallback, typeName, readOnly) => {
-    this.jsonPtrTrie.addPath(jsonPtr, getterCallback, setterCallback, typeName, readOnly);
-  };
-  getRegisteredJsonPointers = () => {
-    return this.jsonPtrTrie.getRegisteredPaths();
-  };
-
-  // object models replace this one lookup; the accessors below all go through it
-  resolveJsonPtr = jsonPtr => {
-    return this.jsonPtrTrie.resolve(jsonPtr);
-  };
-  isValidJsonPtr = jsonPtr => {
-    return this.resolveJsonPtr(jsonPtr) !== undefined;
-  };
-  isReadOnly = jsonPtr => {
-    return this.resolveJsonPtr(jsonPtr)?.readOnly ?? false;
-  };
-  getPathValue = path => {
-    return this.resolveJsonPtr(path)?.getValue(path);
-  };
-  getPathTypeName = path => {
-    return this.resolveJsonPtr(path)?.typeName;
-  };
-  setPathValue = (path, value) => {
-    this.resolveJsonPtr(path)?.setValue(path, value);
-  };
-  addCustomEventListener = (name, func) => {
-    this.eventBus.addCustomEventListener(name, func);
-  };
-  dispatchCustomEvent = (name, vals) => {
-    this.eventBus.dispatchCustomEvent(name, vals);
-  };
-  clearCustomEventListeners = () => {
-    this.eventBus.clearCustomEventListeners();
-  };
-  queueFunctionCall = func => {
-    this.eventBus.addEvent({
-      func
-    });
-  };
-  registerGraphEventPointers = () => {
-    const eventCountWithLifecycleEvents = (this.events?.length ?? 0) + 2;
-    this.registerJsonPointer(`/extensions/KHR_interactivity/events/${eventCountWithLifecycleEvents}`, path => [path], () => undefined, "ref", true);
-  };
-  loadBehaveGraph = (behaveGraph, runGraph = true) => {
-    const runtimeGraph = cloneGraphData(behaveGraph);
-    this.compiledOutputs = [];
-    this.clearValueEvaluationCache();
-    this.hoverableNodesIndices.clear();
-    this.selectableNodesIndices.clear();
-    this.lastHoveredNodeIndices.clear();
-    this.propagationCancelled.clear();
-    this.propagationCancelledPending.clear();
-    this._pauseDuration = 0;
-    this._pauseTickTime = NaN;
-    try {
-      this.validateGraph(runtimeGraph);
-    } catch (e) {
-      throw new GraphRejectedError(`The graph is invalid: ${e instanceof Error ? e.message : e}`);
-    }
-
-    // spec: all top-level graph arrays are optional
-    this.nodes = runtimeGraph.nodes ?? [];
-    this._variables = runtimeGraph.variables ?? [];
-    this.events = runtimeGraph.events ?? [];
-    this.types = runtimeGraph.types ?? [];
-    this.idToBehaviourNodeMap.clear();
-    this.registerGraphEventPointers();
-    const defaultProps = {
-      idToBehaviourNodeMap: this.idToBehaviourNodeMap,
-      variables: this._variables,
-      events: this.events
-    };
-    this._variables.forEach(variable => {
-      if (variable.value === undefined) {
-        // TODO get the default value from the type
-        variable.value = [0];
-      }
-      // sanitize, these need to be arrays
-      if (!Array.isArray(variable.value)) {
-        variable.value = [variable.value];
-      }
-    });
-    let index = 0;
-    this.nodes.forEach(node => {
-      const nodeDeclaration = runtimeGraph.declarations[node.declaration];
-      if (nodeDeclaration === undefined) {
-        throw new GraphRejectedError(`Unrecognized node declaration ${node.declaration} but declerations has ${Object.keys(runtimeGraph.declarations).length} keys`);
-      }
-      const behaviourNodeProps = {
-        ...defaultProps,
-        index: index,
-        flows: node.flows || {},
-        values: node.values || {},
-        configuration: node.configuration || {},
-        variables: this._variables,
-        types: this.types,
-        graphEngine: this,
-        declaration: nodeDeclaration,
-        addEventToWorkQueue: this.addEventToWorkQueue
-      };
-      const nodeType = nodeDeclaration.op;
-      let behaviourNode;
-      try {
-        if (this.registry.get(nodeType) === undefined) {
-          behaviourNode = new NoOpNode(behaviourNodeProps);
-        } else {
-          behaviourNode = this.registry.get(nodeType).init(behaviourNodeProps);
-        }
-      } catch (e) {
-        // node constructors validate their configuration/sockets; a throw there is a load-time rejection
-        throw new GraphRejectedError(`Node ${index} (${nodeType}) is invalid: ${e instanceof Error ? e.message : e}`);
-      }
-      this.idToBehaviourNodeMap.set(index, behaviourNode);
-      index++;
-    });
-    this.compiledOutputs = compileValueOutputs(this, this.idToBehaviourNodeMap, new Map(behaveEngineNodeRegistry), this.types);
-    compileControlNodes(this, this.idToBehaviourNodeMap, new Map(behaveEngineNodeRegistry), this.compiledOutputs, this.types);
-    this.onTickNodeIndices = this.nodes.map((node, idx) => runtimeGraph.declarations[node.declaration].op === "event/onTick" ? idx : -1).filter(idx => idx !== -1);
-    const onStartIndices = this.nodes.map((node, idx) => runtimeGraph.declarations[node.declaration].op === "event/onStart" ? idx : -1).filter(idx => idx !== -1);
-    for (const startNodeIndex of onStartIndices) {
-      const startFlow = {
-        node: startNodeIndex,
-        socket: "start"
-      };
-      this.addEventToWorkQueue(startFlow);
-    }
-    if (this._timerID !== null) {
-      clearTimeout(this._timerID);
-      this._timerID = null;
-    }
-    if (runGraph) {
-      this.executeEventQueue();
-    }
-  };
-  pauseEventQueue = () => {
-    this._pauseTickTime = performance.now();
-    if (this._timerID !== null) {
-      clearTimeout(this._timerID);
-      this._timerID = null;
-    }
-  };
-  playEventQueue = () => {
-    if (this._timerID === null) {
-      this.executeEventQueue();
-    }
-  };
-  processNodeStarted = defaultNodeHook;
-  processAddingNodeToQueue = flowBeingAdded => {
-    //pass
-  };
-  processExecutingNextNode = defaultFlowHook;
-  hasExecutionHooks = () => this.processNodeStarted !== defaultNodeHook || this.processExecutingNextNode !== defaultFlowHook;
-  processDebugLog = (node, message, severity) => {
-    if (severity === 0) {
-      console.log(`[DebugLog #${node.index}]`, message);
-    } else if (severity === 1) {
-      console.warn(`[DebugLog #${node.index}]`, message);
-    } else if (severity === 2) {
-      console.error(`[DebugLog #${node.index}]`, message);
-    }
-  };
-  registerKnownPointers = () => {
-    //pass
-  };
-  getWorld = () => {
-    //pass
-  };
-  getParentNodeIndex = nodeIndex => {
-    //pass
-    return undefined;
-  };
-  isSlerpPath = path => {
-    if (path.endsWith("rotation")) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  animateCubicBezier = (path, p1, p2, initialValue, targetValue, duration, valueType, callback) => {
-    this.clearPointerInterpolation(path);
-    const startTime = this.lastTickTime;
-    const action = async () => {
-      const elapsedDuration = (this.lastTickTime - startTime) / 1000;
-      const t = Math.min(elapsedDuration / duration, 1);
-      // q is the output progress position: the easing curve evaluated at input progress t
-      const q = cubicBezierEase(t, p1, p2);
-      if (valueType === "float3") {
-        const value = [linearFloat(q, initialValue[0], targetValue[0]), linearFloat(q, initialValue[1], targetValue[1]), linearFloat(q, initialValue[2], targetValue[2])];
-        this.setPathValue(path, value);
-      } else if (valueType === "float4") {
-        if (this.isSlerpPath(path)) {
-          const value = slerpFloat4(q, initialValue, targetValue);
-          this.setPathValue(path, value);
-        } else {
-          const value = [linearFloat(q, initialValue[0], targetValue[0]), linearFloat(q, initialValue[1], targetValue[1]), linearFloat(q, initialValue[2], targetValue[2]), linearFloat(q, initialValue[3], targetValue[3])];
-          this.setPathValue(path, value);
-        }
-      } else if (valueType === "float") {
-        const value = [linearFloat(q, initialValue[0], targetValue[0])];
-        this.setPathValue(path, value);
-      } else if (valueType == "float2") {
-        const value = [linearFloat(q, initialValue[0], targetValue[0]), linearFloat(q, initialValue[1], targetValue[1])];
-        this.setPathValue(path, value);
-      }
-      if (elapsedDuration >= duration) {
-        this.setPathValue(path, targetValue);
-        this.clearPointerInterpolation(path);
-        callback();
-      }
-    };
-    this.setPointerInterpolationCallback(path, {
-      action: action
-    });
-  };
-  registerKnownBehaviorNodes = () => {
-    for (const [op, behaveEngineNode] of behaveEngineNodeRegistry) {
-      this.registerBehaveEngineNode(op, behaveEngineNode);
-    }
-  };
-  validateGraph = behaviorGraph => {
-    const nodes = behaviorGraph.nodes ?? [];
-    let index = 0;
-    for (const node of nodes) {
-      // for each node, ensure that it's values do not reference a later node
-      if (node.values !== undefined) {
-        for (const key of Object.keys(node.values)) {
-          if (node.values[key].node !== undefined) {
-            const referencedNode = Number(node.values[key].node);
-            if (referencedNode >= index) {
-              const opOf = idx => {
-                const declIdx = nodes[idx]?.declaration;
-                return behaviorGraph.declarations?.[declIdx]?.op ?? `declaration ${declIdx}`;
-              };
-              throw Error(`Invalid reference: node ${index} ('${opOf(index)}', socket '${key}') references node ${referencedNode} ('${opOf(referencedNode)}'), but a node may only reference nodes that appear earlier in the array (index < ${index}). Reorder the nodes so that node ${referencedNode} comes before node ${index}.`);
-            }
-          }
-        }
-      }
-      index++;
-    }
-  };
-  registerBehaveEngineNode = (type, behaviorNode) => {
-    if (this.registry.has(type)) {
-      console.warn(`Behavior node ${type} is already registered and will be overwritten`);
-    }
-    this.registry.set(type, behaviorNode);
-  };
-  addEventToWorkQueue = flow => {
-    if (flow === undefined || flow.node === undefined) {
-      return;
-    }
-    const nextNode = this.idToBehaviourNodeMap.get(Number(flow.node));
-    if (nextNode === undefined) {
-      return;
-    }
-    this.processAddingNodeToQueue(flow);
-    this.eventBus.addEvent({
-      behaveNode: nextNode,
-      inSocketId: flow.socket
-    });
-  };
-  executeEventQueueTick = () => {
-    this.executeEventQueue(true);
-  };
-  executeEventQueue = (manualStep = false) => {
-    // process events in queue
-    this._lastTickTime = performance.now();
-    if (!isNaN(this._pauseTickTime)) {
-      this._pauseDuration += this._lastTickTime - this._pauseTickTime;
-      this._pauseTickTime = NaN;
-    }
-    this.propagationCancelled.clear();
-    this.propagationCancelledPending.clear();
-
-    // events queued while processing run on the next tick
-    const eventQueue = this.eventBus.getEventList().slice();
-    this.eventBus.clearEventList();
-    for (let i = 0; i < eventQueue.length; i++) {
-      const eventToStart = eventQueue[i];
-      if (eventToStart.behaveNode) {
-        eventToStart.behaveNode.processNode(eventToStart.inSocketId);
-      } else if (eventToStart.func) {
-        eventToStart.func();
-      }
-    }
-
-    // process interpolations
-    for (const interpolation of Object.values(this.eventBus.getVariableInterpolationCallbacks())) {
-      interpolation.action();
-    }
-    for (const interpolation of Object.values(this.eventBus.getPointerInterpolationCallbacks())) {
-      interpolation.action();
-    }
-
-    // process onTick nodes
-    for (const onTickNodeIndex of this.onTickNodeIndices) {
-      const tickFlow = {
-        node: onTickNodeIndex,
-        socket: "tick"
-      };
-      const tickNode = this.idToBehaviourNodeMap.get(Number(tickFlow.node));
-      tickNode.processNode();
-    }
-    if (this._timerID !== null) {
-      clearTimeout(this._timerID);
-    }
-    if (manualStep) {
-      return;
-    }
-    this._timerID = setTimeout(() => {
-      try {
-        this.executeEventQueue();
-      } catch (e) {
-        // a throwing node halts the loop; report it instead of failing silently in a timer
-        this._timerID = null;
-        if (this.executionErrorListener === undefined) {
-          throw e;
-        }
-        this.executionErrorListener(e);
-      }
-    }, 1000 / this.fps);
-  };
-
-  /** Receives runtime errors that stopped the event loop after the initial load. */
-  setExecutionErrorListener = listener => {
-    this.executionErrorListener = listener;
-  };
-  flushPendingPropagationCancellations = () => {
-    for (const event of this.propagationCancelledPending) {
-      this.propagationCancelled.add(event);
-    }
-    this.propagationCancelledPending.clear();
-  };
-  setPointerInterpolationCallback(path, action) {
-    this.eventBus.setPointerInterpolationCallback(path, action);
-  }
-  setVariableInterpolationCallback(variable, action) {
-    this.eventBus.setVariableInterpolationCallback(variable, action);
-  }
-  clearPointerInterpolation(path) {
-    this.eventBus.clearPointerInterpolation(path);
-  }
-  clearVariableInterpolation(variable) {
-    this.eventBus.clearVariableInterpolation(variable);
-  }
-  isEventPropagationCancelled(event) {
-    return this.propagationCancelled.has(event);
-  }
-}
-function cloneGraphData(value) {
-  if (Array.isArray(value)) {
-    return value.map(entry => cloneGraphData(entry));
-  }
-  if (value !== null && typeof value === "object") {
-    return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, cloneGraphData(entry)]));
-  }
-  return value;
-}
-
-class DOMEventBus {
-  eventList;
-  customEventListeners;
-  eventListeners;
-  variableInterpolationCallbacks;
-  pointerInterpolationCallbacks;
-  constructor() {
-    this.eventList = [];
-    this.customEventListeners = {};
-    this.eventListeners = {};
-    this.variableInterpolationCallbacks = {};
-    this.pointerInterpolationCallbacks = {};
-  }
-  getEventList = () => {
-    return this.eventList;
-  };
-  clearEventList = () => {
-    this.eventList = [];
-  };
-  addEvent = event => {
-    this.eventList.push(event);
-  };
-  addCustomEventListener = (name, func) => {
-    if (!this.customEventListeners[name]) {
-      this.customEventListeners[name] = [];
-      const eventListener = e => {
-        this.customEventListeners[name].forEach(func => {
-          this.eventList.push({
-            func: () => func(e),
-            inSocketId: name
-          });
-        });
-      };
-      document.addEventListener(name, eventListener);
-      this.eventListeners[name] = eventListener;
-    }
-    this.customEventListeners[name].push(func);
-  };
-  dispatchCustomEvent = (name, vals) => {
-    const event = new CustomEvent(name, {
-      detail: vals
-    });
-    document.dispatchEvent(event);
-  };
-  getCustomEventsNames = () => {
-    return Object.keys(this.customEventListeners);
-  };
-  clearCustomEventListeners = () => {
-    this.customEventListeners = {};
-    Object.keys(this.eventListeners).forEach(name => {
-      document.removeEventListener(name, this.eventListeners[name]);
-    });
-    this.eventListeners = {};
-  };
-  setVariableInterpolationCallback = (variable, action) => {
-    this.variableInterpolationCallbacks[variable] = action;
-  };
-  clearVariableInterpolation = variable => {
-    if (this.variableInterpolationCallbacks[variable] !== undefined) {
-      delete this.variableInterpolationCallbacks[variable];
-    }
-  };
-  getVariableInterpolationCallbacks = () => {
-    return this.variableInterpolationCallbacks;
-  };
-  setPointerInterpolationCallback = (pointer, action) => {
-    this.pointerInterpolationCallbacks[pointer] = action;
-  };
-  clearPointerInterpolation = pointer => {
-    if (this.pointerInterpolationCallbacks[pointer] !== undefined) {
-      delete this.pointerInterpolationCallbacks[pointer];
-    }
-  };
-  getPointerInterpolationCallbacks = () => {
-    return this.pointerInterpolationCallbacks;
-  };
-}
-
-class ApplyImpulse extends BehaveEngineNode {
-  INPUT_FLOWS = ["in"];
-  REQUIRED_VALUES = {
-    nodeIndex: {},
-    linearImpulse: {},
-    angularImpulse: {}
-  };
-  constructor(props) {
-    super(props);
-    this.name = "ApplyImpulse";
-    this.validateValues(this.values);
-  }
-  processNode(flowSocket) {
-    this.graphEngine.clearValueEvaluationCache();
-    const {
-      nodeIndex,
-      linearImpulse,
-      angularImpulse
-    } = this.evaluateRequiredValues();
-    this.graphEngine.processNodeStarted(this);
-    this.graphEngine.applyImpulseToRigidBody(nodeIndex, linearImpulse, angularImpulse);
-  }
-}
-
-class ApplyPointImpulse extends BehaveEngineNode {
-  INPUT_FLOWS = ["in"];
-  REQUIRED_VALUES = {
-    nodeIndex: {},
-    impulse: {},
-    position: {}
-  };
-  constructor(props) {
-    super(props);
-    this.name = "ApplyPointImpulse";
-    this.validateValues(this.values);
-  }
-  processNode(flowSocket) {
-    this.graphEngine.clearValueEvaluationCache();
-    const {
-      nodeIndex,
-      impulse,
-      position
-    } = this.evaluateRequiredValues();
-    this.graphEngine.processNodeStarted(this);
-    this.graphEngine.applyPointImpulseToRigidBody(nodeIndex, impulse, position);
-  }
-}
-
-class RayCast extends BehaveEngineNode {
-  INPUT_FLOWS = ["in"];
-  REQUIRED_VALUES = {
-    rayStart: {},
-    rayEnd: {},
-    collisionFilterIndex: {}
-  };
-  constructor(props) {
-    super(props);
-    this.name = "RayCast";
-    this.validateValues(this.values);
-    this.outValues.hitNode = {
-      value: [-1],
-      type: this.getTypeIndex('ref')
-    };
-    this.outValues.hitFraction = {
-      value: [NaN],
-      type: this.getTypeIndex('float')
-    };
-    this.outValues.hitNormal = {
-      value: [NaN, NaN, NaN],
-      type: this.getTypeIndex('vec3')
-    };
-  }
-  processNode(flowSocket) {
-    this.graphEngine.clearValueEvaluationCache();
-    const {
-      rayStart,
-      rayEnd,
-      collisionFilterIndex
-    } = this.evaluateRequiredValues();
-    this.graphEngine.processNodeStarted(this);
-    const hitResult = this.graphEngine.rayCastRigidBodies(rayStart, rayEnd, collisionFilterIndex);
-    if (hitResult.hitNodeIndex < 0) {
-      this.outValues.hitNode = {
-        value: [-1],
-        type: this.getTypeIndex('ref')
-      };
-      this.outValues.hitFraction = {
-        value: [NaN],
-        type: this.getTypeIndex('float')
-      };
-      this.outValues.hitNormal = {
-        value: [NaN, NaN, NaN],
-        type: this.getTypeIndex('vec3')
-      };
-      if (this.flows.miss) {
-        this.processFlow(this.flows.miss);
-      }
-    } else {
-      this.outValues.hitNode = {
-        value: [hitResult.hitNodeIndex],
-        type: this.getTypeIndex('ref')
-      };
-      this.outValues.hitFraction = {
-        value: [hitResult.hitFraction],
-        type: this.getTypeIndex('float')
-      };
-      this.outValues.hitNormal = {
-        value: hitResult.hitNormal,
-        type: this.getTypeIndex('vec3')
-      };
-      if (this.flows.hit) {
-        this.processFlow(this.flows.hit);
-      }
-    }
-  }
-}
-
-class TriggerEntered extends BehaveEngineNode {
-  REQUIRED_CONFIGURATIONS = {
-    nodeIndex: {
-      defaultValue: [-1]
-    }
-  };
-  _nodeIndex;
-  constructor(props) {
-    super(props);
-    this.name = 'TriggerEntered';
-    this.validateValues(this.values);
-    this.validateConfigurations(this.configuration);
-    const {
-      nodeIndex
-    } = this.evaluateAllConfigurations(Object.keys(this.REQUIRED_CONFIGURATIONS));
-    this._nodeIndex = Number(nodeIndex[0]);
-    this.outValues.colliderNode = {
-      type: this.getTypeIndex('ref'),
-      value: [-1]
-    };
-    this.outValues.motionNode = {
-      type: this.getTypeIndex('ref'),
-      value: [-1]
-    };
-    this.setUpOnTriggerEntered();
-  }
-  setUpOnTriggerEntered() {
-    const callback = (colliderNodeRef, motionNodeRef) => {
-      this.outValues.colliderNode = {
-        type: this.getTypeIndex('ref'),
-        value: [colliderNodeRef]
-      };
-      this.outValues.motionNode = {
-        type: this.getTypeIndex('ref'),
-        value: [motionNodeRef ?? -1]
-      };
-      console.log("TriggerEntered", {
-        node: this._nodeIndex,
-        outValues: this.outValues
-      });
-      this.addEventToWorkQueue(this.flows.out);
-    };
-    const triggerCallbacks = this.graphEngine.rigidBodyTriggerNodeIndices.get(this._nodeIndex);
-    if (triggerCallbacks) {
-      triggerCallbacks.triggerEntered = callback;
-    } else {
-      this.graphEngine.rigidBodyTriggerNodeIndices.set(this._nodeIndex, {
-        triggerEntered: callback
-      });
-    }
-  }
-}
-
-class TriggerExited extends BehaveEngineNode {
-  REQUIRED_CONFIGURATIONS = {
-    nodeIndex: {
-      defaultValue: [-1]
-    }
-  };
-  _nodeIndex;
-  constructor(props) {
-    super(props);
-    this.name = 'TriggerExited';
-    this.validateValues(this.values);
-    this.validateConfigurations(this.configuration);
-    const {
-      nodeIndex
-    } = this.evaluateAllConfigurations(Object.keys(this.REQUIRED_CONFIGURATIONS));
-    this._nodeIndex = Number(nodeIndex[0]);
-    this.outValues.colliderNode = {
-      type: this.getTypeIndex('ref'),
-      value: [-1]
-    };
-    this.outValues.motionNode = {
-      type: this.getTypeIndex('ref'),
-      value: [-1]
-    };
-    this.setUpOnTriggerExited();
-  }
-  setUpOnTriggerExited() {
-    const callback = (colliderNodeRef, motionNodeRef) => {
-      this.outValues.colliderNode = {
-        type: this.getTypeIndex('ref'),
-        value: [colliderNodeRef]
-      };
-      this.outValues.motionNode = {
-        type: this.getTypeIndex('ref'),
-        value: [motionNodeRef ?? -1]
-      };
-      console.log("TriggerExited", {
-        node: this._nodeIndex,
-        outValues: this.outValues
-      });
-      this.addEventToWorkQueue(this.flows.out);
-    };
-    const triggerCallbacks = this.graphEngine.rigidBodyTriggerNodeIndices.get(this._nodeIndex);
-    if (triggerCallbacks) {
-      triggerCallbacks.triggerExited = callback;
-    } else {
-      this.graphEngine.rigidBodyTriggerNodeIndices.set(this._nodeIndex, {
-        triggerExited: callback
-      });
-    }
-  }
-}
-
-class ADecorator {
-  behaveEngine;
-  constructor(behaveEngine) {
-    this.behaveEngine = behaveEngine;
-  }
-  registerJsonPointer = (jsonPtr, getterCallback, setterCallback, typeName, readOnly) => {
-    this.behaveEngine.registerJsonPointer(jsonPtr, getterCallback, setterCallback, typeName, readOnly);
-  };
-
-  /**
-   * BasicBehaveEngine calls some of its own hooks internally (e.g. `this.getWorld()`,
-   * `this.getParentNodeIndex()`) so the decorator's implementation has to be reachable via the
-   * wrapped engine's own properties, not just via the decorator instance. Subclasses must call
-   * this once, after their own hook fields (getWorld/getParentNodeIndex/startAnimation/
-   * stopAnimation/stopAnimationAt) are assigned, to bridge them onto the engine.
-   */
-  bridgeEngineHooks() {
-    this.behaveEngine.getWorld = this.getWorld;
-    this.behaveEngine.getParentNodeIndex = this.getParentNodeIndex;
-    this.behaveEngine.startAnimation = this.startAnimation;
-    this.behaveEngine.stopAnimation = this.stopAnimation;
-    this.behaveEngine.stopAnimationAt = this.stopAnimationAt;
-  }
-
-  /** Tears down listeners/observers registered by this decorator. Call before discarding it. */
-  dispose() {
-    // stop the wrapped engine (kills its tick loop + scheduled delays), which also clears its
-    // event queue and custom-event listeners - otherwise the old graph keeps running after a
-    // new model/graph replaces this decorator
-    this.behaveEngine.dispose();
-  }
-  registerRigidBodyNodes() {
-    this.behaveEngine.registerBehaveEngineNode("rigid_body/applyImpulse", ApplyImpulse);
-    this.behaveEngine.registerBehaveEngineNode("rigid_body/applyPointImpulse", ApplyPointImpulse);
-    this.behaveEngine.registerBehaveEngineNode("rigid_body/rayCast", RayCast);
-    this.behaveEngine.registerBehaveEngineNode("event/rigid_body_triggerEntered", TriggerEntered);
-    this.behaveEngine.registerBehaveEngineNode("event/rigid_body_triggerExited", TriggerExited);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  applyImpulseToRigidBody(nodeIndex, linearImpulse, angularImpulse) {
-    // Overwrite with application logic here
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  applyPointImpulseToRigidBody(nodeIndex, impulse, position) {
-    // Overwrite with application logic here
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  rayCastRigidBodies(rayStart, rayEnd, collisionFilterIndex) {
-    // Overwrite with application logic here
-    return {
-      hitNodeIndex: -1,
-      hitFraction: undefined,
-      hitNormal: undefined
-    };
-  }
-  rigidBodyTriggerEntered(nodeIndex, colliderNodeIndex, motionNodeIndex) {
-    this.behaveEngine.rigidBodyTriggerEntered(nodeIndex, colliderNodeIndex, motionNodeIndex);
-  }
-  rigidBodyTriggerExited(nodeIndex, colliderNodeIndex, motionNodeIndex) {
-    this.behaveEngine.rigidBodyTriggerExited(nodeIndex, colliderNodeIndex, motionNodeIndex);
-  }
-  hoverOn(nodeIndex, controllerIndex) {
-    this.behaveEngine.hoverOn(nodeIndex, controllerIndex);
-  }
-  select(selectedNodeIndex, controllerIndex, selectionPoint, selectionRayOrigin) {
-    this.behaveEngine.select(selectedNodeIndex, controllerIndex, selectionPoint, selectionRayOrigin);
-  }
-  getEventList() {
-    return this.behaveEngine.getEventList();
-  }
-  clearEventList() {
-    this.behaveEngine.clearEventList();
-  }
-  addEvent(event) {
-    this.behaveEngine.addEvent(event);
-  }
-  addCustomEventListener(name, func) {
-    this.behaveEngine.addCustomEventListener(name, func);
-  }
-  clearCustomEventListeners() {
-    this.behaveEngine.clearCustomEventListeners();
-  }
-  registerBehaveEngineNode(type, behaveEngineNode) {
-    this.behaveEngine.registerBehaveEngineNode(type, behaveEngineNode);
-  }
-  getRegisteredJsonPointers() {
-    return this.behaveEngine.getRegisteredJsonPointers();
-  }
-  resolveJsonPtr(path) {
-    return this.behaveEngine.resolveJsonPtr(path);
-  }
-  isValidJsonPtr(path) {
-    return this.behaveEngine.isValidJsonPtr(path);
-  }
-  isReadOnly(path) {
-    return this.behaveEngine.isReadOnly(path);
-  }
-  isSlerpPath(path) {
-    return this.behaveEngine.isSlerpPath(path);
-  }
-  animateCubicBezier(path, p1, p2, initialValue, targetValue, duration, valueType, callback) {
-    this.behaveEngine.animateCubicBezier(path, p1, p2, initialValue, targetValue, duration, valueType, callback);
-  }
-  get fps() {
-    return this.behaveEngine.fps;
-  }
-  loadBehaveGraph(behaveGraph, runGraph = true) {
-    this.behaveEngine.loadBehaveGraph(behaveGraph, runGraph);
-  }
-  pauseEventQueue() {
-    this.behaveEngine.pauseEventQueue();
-  }
-  playEventQueue() {
-    this.behaveEngine.playEventQueue();
-  }
-  executeEventQueueTick() {
-    this.behaveEngine.executeEventQueueTick();
-  }
-  setExecutionErrorListener(listener) {
-    this.behaveEngine.setExecutionErrorListener?.(listener);
-  }
-  dispatchCustomEvent(name, vals) {
-    this.behaveEngine.dispatchCustomEvent(name, vals);
-  }
-  setPathValue(path, targetValue) {
-    this.behaveEngine.setPathValue(path, targetValue);
-  }
-  getPathValue(path) {
-    return this.behaveEngine.getPathValue(path);
-  }
-  getPathTypeName(path) {
-    return this.behaveEngine.getPathTypeName(path);
-  }
-  clearValueEvaluationCache() {
-    this.behaveEngine.clearValueEvaluationCache();
-  }
-  setPointerInterpolationCallback(path, action) {
-    this.behaveEngine.setPointerInterpolationCallback(path, action);
-  }
-  clearPointerInterpolation(path) {
-    this.behaveEngine.clearPointerInterpolation(path);
-  }
-  setVariableInterpolationCallback(variable, action) {
-    this.behaveEngine.setVariableInterpolationCallback(variable, action);
-  }
-  clearVariableInterpolation(variable) {
-    this.behaveEngine.clearVariableInterpolation(variable);
-  }
-}
-
 // Generated by scripts/generate-runtime-schema.mjs from Khronos schemas and the operation catalogue.
 // Runtime validation rules only; documentation annotations are omitted.
-const INTERACTIVITY_SCHEMAS = (/* unused pure expression or super */ null && ({
+const INTERACTIVITY_SCHEMAS = {
   "declaration.KHR_interactivity.schema.json": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "declaration.KHR_interactivity.schema.json",
@@ -15369,8 +14297,8 @@ const INTERACTIVITY_SCHEMAS = (/* unused pure expression or super */ null && ({
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "extras.schema.json"
   }
-}));
-const OPERATION_SCHEMAS = (/* unused pure expression or super */ null && ({
+};
+const OPERATION_SCHEMAS = {
   "math/E": {
     "inputs": {},
     "outputs": {
@@ -17552,7 +16480,7 @@ const OPERATION_SCHEMAS = (/* unused pure expression or super */ null && ({
       }
     }
   }
-}));
+};
 
 const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
 function fail(message) {
@@ -17602,11 +16530,16 @@ function matches(value, schema, root = schema) {
   return true;
 }
 function validateInteractivityExtension(extension) {
+  validateInteractivityGraph(getDefaultInteractivityGraph(extension));
+}
+
+/** The graph that runs; throws when the extension object itself is invalid. */
+function getDefaultInteractivityGraph(extension) {
   // Non-default graphs may be invalid without invalidating the default graph.
   if (!object(extension) || !Array.isArray(extension.graphs) || extension.graphs.length === 0) fail("graphs must be a nonempty array");
   const index = extension.graph === undefined ? 0 : extension.graph;
   if (!Number.isInteger(index) || index < 0 || index >= extension.graphs.length) fail("default graph index is out of range");
-  validateInteractivityGraph(extension.graphs[index]);
+  return extension.graphs[index];
 }
 function validateInteractivityGraph(graph) {
   if (!matches(graph, INTERACTIVITY_SCHEMAS["graph.KHR_interactivity.schema.json"])) fail("graph does not match the Khronos JSON schema");
@@ -17657,7 +16590,8 @@ function validateInteractivityGraph(graph) {
     if (id === "event") fail("reserved event socket id");
     literal(value);
   }
-  unique(declarations.map(declaration => JSON.stringify([declaration.op, declaration.extension ?? ""])), "declarations");
+  // spec: equal = same op, extension and input socket ids/types; output sockets are not compared
+  unique(declarations.map(declaration => JSON.stringify([declaration.op, declaration.extension ?? "", Object.entries(declaration.inputValueSockets ?? {}).map(([id, socket]) => [id, socket?.type]).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)])), "declarations");
   for (const declaration of declarations) {
     if (!declaration.extension) {
       if (!OPERATION_SCHEMAS[declaration.op] || OPERATION_SCHEMAS[declaration.op].extension) fail(`unknown core operation ${declaration.op}`);
@@ -17756,7 +16690,1086 @@ function validateInteractivityGraph(graph) {
   });
 }
 
+// Single source of truth for op -> runtime BehaveEngineNode class. registerKnownBehaviorNodes
+// iterates this; tools/tests import it to check parity with the authoring palette (tst/opRegistryParity.test.ts).
+const behaveEngineNodeRegistry = [["event/onStart", OnStartNode], ["event/onTick", OnTickNode], ["flow/branch", Branch], ["flow/setDelay", SetDelay], ["flow/cancelDelay", CancelDelay], ["flow/doN", DoN], ["flow/for", ForLoop], ["flow/multiGate", MultiGate], ["flow/sequence", Sequence], ["flow/switch", Switch], ["flow/throttle", Throttle], ["flow/waitAll", WaitAll], ["flow/while", WhileLoop], ["pointer/get", PointerGet], ["pointer/set", PointerSet], ["pointer/interpolate", PointerInterpolate], ["math/abs", AbsoluteValue], ["event/receive", Receive], ["event/send", Send], ["variable/get", VariableGet], ["variable/set", VariableSet], ["variable/interpolate", VariableInterpolate], ["math/E", Euler], ["math/Inf", Inf], ["math/NaN", NotANumber], ["math/Pi", Pi], ["math/Tau", Tau], ["math/sign", Sign], ["math/trunc", Truncate], ["math/floor", Floor], ["math/fract", Fraction], ["math/ceil", Ceil], ["math/round", Round], ["math/neg", Negate], ["math/add", Add], ["math/sub", Subtract], ["math/mul", Multiply], ["math/div", Divide], ["math/rem", Remainder], ["math/min", Min], ["math/max", Max], ["math/mix", Mix], ["math/saturate", Saturate], ["math/clamp", Clamp], ["math/smoothStep", SmoothStep], ["math/rad", DegreeToRadians], ["math/deg", RadiansToDegrees], ["math/sin", Sine], ["math/cos", Cosine], ["math/tan", Tangent], ["math/asin", Arcsine], ["math/acos", Arccosine], ["math/atan", Arctangent], ["math/atan2", Arctangent2], ["math/sinh", HyperbolicSine], ["math/cosh", HyperbolicCosine], ["math/tanh", HyperbolicTangent], ["math/asinh", InverseHyperbolicSine], ["math/acosh", InverseHyperbolicCosine], ["math/atanh", InverseHyperbolicTangent], ["math/exp", Exponential], ["math/log", Log], ["math/log2", Log2], ["math/log10", Log10], ["math/pow", Power], ["math/sqrt", SquareRoot], ["math/cbrt", CubeRoot], ["math/random", Random], ["math/lt", LessThan], ["math/le", LessThanOrEqualTo], ["math/eq", Equality], ["math/ge", GreaterThanOrEqualTo], ["math/gt", GreaterThan], ["math/dot", Dot], ["math/cross", Cross], ["math/normalize", Normalize], ["math/rotate2D", Rotate2D], ["math/rotate3D", Rotate3D], ["math/length", VectorLength], ["math/slerp", Slerp], ["math/isInf", IsInfNode], ["math/isNaN", IsNaNNode], ["math/select", Select], ["math/switch", MathSwitch], ["math/extract2", Extract2], ["math/extract3", Extract3], ["math/extract4", Extract4], ["math/extract2x2", Extract2x2], ["math/extract3x3", Extract3x3], ["math/extract4x4", Extract4x4], ["math/combine2", Combine2], ["math/combine3", Combine3], ["math/combine4", Combine4], ["math/combine2x2", Combine2x2], ["math/combine3x3", Combine3x3], ["math/combine4x4", Combine4x4], ["type/boolToInt", BoolToInt], ["type/boolToFloat", BoolToFloat], ["type/floatToBool", FloatToBool], ["type/floatToInt", FloatToInt], ["type/intToBool", IntToBool], ["type/intToFloat", IntToFloat], ["math/not", Not], ["math/xor", Xor], ["math/or", Or], ["math/and", And], ["math/lsl", LeftShift], ["math/asr", RightShift], ["math/clz", CountLeadingZeros], ["math/ctz", CountTrailingZeros], ["math/popcnt", CountOneBits], ["math/quatMul", QuatMul], ["math/quatConjugate", QuatConjugate], ["math/quatFromAxisAngle", QuatFromAxisAngle], ["math/quatAngleBetween", QuatAngleBetween], ["math/quatSlerp", QuatSlerp], ["math/quatToAxisAngle", QuatToAxisAngle], ["math/quatFromDirections", QuatFromDirections], ["math/quatFromUpForward", QuatFromUpForward], ["math/quatFromAngles", QuatFromAngles], ["math/matDecompose", MatDecompose], ["math/matCompose", MatCompose], ["math/determinant", Determinant], ["math/transform", Transform], ["math/transpose", Transpose], ["math/matMul", MatMul], ["math/inverse", Inverse], ["debug/log", DebugLog], ["event/stopPropagation", EventStopPropagation], ["ref/eq", RefEquality], ["math/rgbToOkLCh", RgbToOkLCh], ["math/rgbFromOkLCh", RgbFromOkLCh], ["animation/start", AnimationStart], ["animation/stop", AnimationStop], ["animation/stopAt", AnimationStopAt], ["event/onSelect", OnSelect], ["event/onHoverIn", OnHoverIn], ["event/onHoverOut", OnHoverOut]];
 
+/** The graph failed load-time validation; per the spec it is rejected and never runs. */
+class GraphRejectedError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "GraphRejectedError";
+  }
+}
+const defaultNodeHook = _node => {/*no-op*/};
+const defaultFlowHook = _flow => {/*no-op*/};
+class BasicBehaveEngine {
+  registry;
+  executionErrorListener;
+  idToBehaviourNodeMap;
+  eventBus;
+  onTickNodeIndices;
+  _lastTickTime;
+  _pauseTickTime;
+  _pauseDuration;
+  _scheduledDelays;
+  scheduledDelayOwners = new Map();
+  nodes;
+  _variables;
+  events;
+  types;
+  jsonPtrTrie;
+  _fps;
+  // bumped by clearValueEvaluationCache; node output caches from an older epoch are stale
+  valueEvaluationEpoch = 0;
+  compiledOutputs = [];
+  _timerID;
+  hoverableNodesIndices;
+  selectableNodesIndices;
+  selectNodes;
+  lastHoveredNodeIndices;
+  rigidBodyTriggerNodeIndices;
+  propagationCancelled;
+  propagationCancelledPending;
+  animationCompletionCallbacks;
+  constructor(fps, eventBus) {
+    this.registry = new Map();
+    this.idToBehaviourNodeMap = new Map();
+    this.jsonPtrTrie = new JsonPtrTrie();
+    this._fps = fps;
+    this.onTickNodeIndices = [];
+    this._lastTickTime = NaN;
+    this._pauseTickTime = NaN;
+    this._pauseDuration = 0;
+    this.eventBus = eventBus;
+    this._variables = [];
+    this.events = [];
+    this._scheduledDelays = [];
+    this.nodes = [];
+    this.types = [];
+    this._timerID = null;
+    this.hoverableNodesIndices = new Map();
+    this.lastHoveredNodeIndices = new Map();
+    this.selectableNodesIndices = new Map();
+    this.selectNodes = [];
+    this.rigidBodyTriggerNodeIndices = new Map();
+    this.propagationCancelled = new Set();
+    this.propagationCancelledPending = new Set();
+    this.animationCompletionCallbacks = new Map();
+    this.registerKnownBehaviorNodes();
+  }
+  get lastTickTime() {
+    return this._lastTickTime - this._pauseDuration;
+  }
+  get fps() {
+    return this._fps;
+  }
+  get variables() {
+    return this._variables;
+  }
+  completeAnimation(animationIndex) {
+    const callback = this.animationCompletionCallbacks.get(animationIndex);
+    callback?.();
+    this.animationCompletionCallbacks.delete(animationIndex);
+  }
+  startAnimation(animationIndex, startTime, endTime, speed, callback) {
+    // Implemented by decorators
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  stopAnimation(animationIndex) {
+    // Implemented by decorators
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  stopAnimationAt(animationIndex, stopTime, callback) {
+    // Implemented by decorators
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  applyImpulseToRigidBody(nodeIndex, linearImpulse, angularImpulse) {
+    // Implemented by decorators
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  applyPointImpulseToRigidBody(nodeIndex, impulse, position) {
+    // Implemented by decorators
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  rayCastRigidBodies(rayStart, rayEnd, collisionFilterIndex) {
+    // Implemented by decorators
+    return {
+      hitNodeIndex: -1,
+      hitFraction: undefined,
+      hitNormal: undefined
+    };
+  }
+  rigidBodyTriggerEntered(nodeIndex, colliderNodeIndex, motionNodeIndex) {
+    const callback = this.rigidBodyTriggerNodeIndices.get(nodeIndex)?.triggerEntered;
+    if (callback) {
+      callback(colliderNodeIndex, motionNodeIndex);
+    }
+  }
+  rigidBodyTriggerExited(nodeIndex, colliderNodeIndex, motionNodeIndex) {
+    const callback = this.rigidBodyTriggerNodeIndices.get(nodeIndex)?.triggerExited;
+    if (callback) {
+      callback(colliderNodeIndex, motionNodeIndex);
+    }
+  }
+  select(selectedNodeIndex, controllerIndex, selectionPoint, selectionRayOrigin) {
+    const onSelectEventIndex = this.events.findIndex(event => event.id === "onSelect");
+    const eventRef = `/extensions/KHR_interactivity/events/${onSelectEventIndex}`;
+    for (let nodeIndex = selectedNodeIndex;;) {
+      this.flushPendingPropagationCancellations();
+      if (this.propagationCancelled.has(eventRef)) {
+        break;
+      }
+      const callback = this.selectableNodesIndices.get(nodeIndex);
+      if (callback !== undefined) {
+        callback(`/nodes/${selectedNodeIndex}`, controllerIndex, selectionPoint, selectionRayOrigin, eventRef);
+        return;
+      }
+      const parent = this.getParentNodeIndex(nodeIndex);
+      if (parent === undefined) {
+        return;
+      }
+      nodeIndex = parent;
+    }
+  }
+  hoverOn(nodeIndex, controllerIndex) {
+    const lastHoverNodeIndex = this.lastHoveredNodeIndices.get(controllerIndex);
+    if (nodeIndex === lastHoverNodeIndex) {
+      return;
+    }
+    const oldHoverIndicies = new Set();
+    let firstCommonHoverNodeIndex = undefined;
+    if (lastHoverNodeIndex !== undefined && nodeIndex !== undefined) {
+      let currentOldHoverNodeIndex = lastHoverNodeIndex;
+      while (currentOldHoverNodeIndex !== undefined) {
+        oldHoverIndicies.add(currentOldHoverNodeIndex);
+        currentOldHoverNodeIndex = this.getParentNodeIndex(currentOldHoverNodeIndex);
+      }
+      let currentHoverNodeIndex = nodeIndex;
+      while (currentHoverNodeIndex !== undefined) {
+        if (oldHoverIndicies.has(currentHoverNodeIndex)) {
+          firstCommonHoverNodeIndex = currentHoverNodeIndex;
+          break;
+        }
+        currentHoverNodeIndex = this.getParentNodeIndex(currentHoverNodeIndex);
+      }
+    }
+    const lastHoverNodeRef = lastHoverNodeIndex !== undefined ? `/nodes/${lastHoverNodeIndex}` : undefined;
+    const newHoverNodeRef = nodeIndex !== undefined ? `/nodes/${nodeIndex}` : undefined;
+    this.alertOnHoverOut(lastHoverNodeRef, controllerIndex, lastHoverNodeIndex, firstCommonHoverNodeIndex);
+    this.alertOnHoverIn(newHoverNodeRef, controllerIndex, nodeIndex, firstCommonHoverNodeIndex);
+    this.lastHoveredNodeIndices.set(controllerIndex, nodeIndex);
+  }
+  alertOnHoverIn(selectedNodeRef, controllerIndex, currentHoverNodeIndex, firstCommonHoverNodeIndex) {
+    while (currentHoverNodeIndex !== undefined && currentHoverNodeIndex !== firstCommonHoverNodeIndex) {
+      const hoverInformation = this.hoverableNodesIndices.get(currentHoverNodeIndex);
+      if (hoverInformation?.callbackHoverIn !== undefined) {
+        hoverInformation.callbackHoverIn(selectedNodeRef, controllerIndex, firstCommonHoverNodeIndex);
+        break;
+      }
+      currentHoverNodeIndex = this.getParentNodeIndex(currentHoverNodeIndex);
+    }
+  }
+  alertOnHoverOut(selectedNodeRef, controllerIndex, currentHoverNodeIndex, firstCommonHoverNodeIndex) {
+    while (currentHoverNodeIndex !== undefined && currentHoverNodeIndex !== firstCommonHoverNodeIndex) {
+      const hoverInformation = this.hoverableNodesIndices.get(currentHoverNodeIndex);
+      if (hoverInformation?.callbackHoverOut !== undefined) {
+        hoverInformation.callbackHoverOut(selectedNodeRef, controllerIndex, firstCommonHoverNodeIndex);
+        break;
+      }
+      currentHoverNodeIndex = this.getParentNodeIndex(currentHoverNodeIndex);
+    }
+  }
+  clearScheduledDelays() {
+    // actually cancel the pending flow/setDelay timers - dropping the references alone leaves
+    // them queued, so their callbacks keep firing after the graph is torn down
+    for (let index = 0; index < this._scheduledDelays.length; index++) {
+      const delay = this._scheduledDelays[index];
+      if (delay !== undefined) {
+        clearTimeout(delay);
+      }
+      this.removeScheduledDelay(index);
+    }
+    this._scheduledDelays = [];
+    this.scheduledDelayOwners.clear();
+  }
+  dispose = () => {
+    if (this._timerID !== null) {
+      clearTimeout(this._timerID);
+      this._timerID = null;
+    }
+    this.clearScheduledDelays();
+    this.clearEventList();
+    this.clearCustomEventListeners();
+  };
+  get scheduledDelays() {
+    return this._scheduledDelays;
+  }
+  pushScheduledDelay = (delay, removeOwner) => {
+    if (removeOwner) this.scheduledDelayOwners.set(this._scheduledDelays.length, removeOwner);
+    this.jsonPtrTrie.addPath(`/extensions/KHR_interactivity/delays/${this._scheduledDelays.length}`, () => [delay], () => undefined, "ref", true);
+    this._scheduledDelays.push(delay);
+  };
+  getScheduledDelay = index => {
+    if (index >= this._scheduledDelays.length || index < 0) {
+      return undefined;
+    }
+    return this._scheduledDelays[index];
+  };
+  cancelScheduledDelay = index => {
+    const delay = this.getScheduledDelay(index);
+    if (delay !== undefined) {
+      clearTimeout(delay);
+      this.removeScheduledDelay(index);
+    }
+  };
+  removeScheduledDelay = index => {
+    this.scheduledDelayOwners.get(index)?.();
+    this.scheduledDelayOwners.delete(index);
+    if (index >= 0 && index < this._scheduledDelays.length) {
+      this.jsonPtrTrie.removePath(`/extensions/KHR_interactivity/delays/${index}`);
+      this._scheduledDelays[index] = undefined;
+    }
+  };
+  getEventList = () => {
+    return this.eventBus.getEventList();
+  };
+  clearEventList = () => {
+    this.eventBus.clearEventList();
+  };
+  addEvent = event => {
+    this.eventBus.addEvent(event);
+  };
+  clearValueEvaluationCache = () => {
+    this.valueEvaluationEpoch++;
+  };
+  getCompiledOutput = (node, socket) => {
+    const output = this.compiledOutputs[node]?.[socket];
+    if (output && output.version !== this.valueEvaluationEpoch) {
+      output.value = output.evaluate();
+      output.version = this.valueEvaluationEpoch;
+    }
+    return output;
+  };
+  registerJsonPointer = (jsonPtr, getterCallback, setterCallback, typeName, readOnly) => {
+    this.jsonPtrTrie.addPath(jsonPtr, getterCallback, setterCallback, typeName, readOnly);
+  };
+  getRegisteredJsonPointers = () => {
+    return this.jsonPtrTrie.getRegisteredPaths();
+  };
+
+  // object models replace this one lookup; the accessors below all go through it
+  resolveJsonPtr = jsonPtr => {
+    return this.jsonPtrTrie.resolve(jsonPtr);
+  };
+  isValidJsonPtr = jsonPtr => {
+    return this.resolveJsonPtr(jsonPtr) !== undefined;
+  };
+  isReadOnly = jsonPtr => {
+    return this.resolveJsonPtr(jsonPtr)?.readOnly ?? false;
+  };
+  getPathValue = path => {
+    return this.resolveJsonPtr(path)?.getValue(path);
+  };
+  getPathTypeName = path => {
+    return this.resolveJsonPtr(path)?.typeName;
+  };
+  setPathValue = (path, value) => {
+    this.resolveJsonPtr(path)?.setValue(path, value);
+  };
+  addCustomEventListener = (name, func) => {
+    this.eventBus.addCustomEventListener(name, func);
+  };
+  dispatchCustomEvent = (name, vals) => {
+    this.eventBus.dispatchCustomEvent(name, vals);
+  };
+  clearCustomEventListeners = () => {
+    this.eventBus.clearCustomEventListeners();
+  };
+  queueFunctionCall = func => {
+    this.eventBus.addEvent({
+      func
+    });
+  };
+  registerGraphEventPointers = () => {
+    const eventCountWithLifecycleEvents = (this.events?.length ?? 0) + 2;
+    this.registerJsonPointer(`/extensions/KHR_interactivity/events/${eventCountWithLifecycleEvents}`, path => [path], () => undefined, "ref", true);
+  };
+  loadBehaveGraph = (behaveGraph, runGraph = true) => {
+    const runtimeGraph = cloneGraphData(behaveGraph);
+    this.compiledOutputs = [];
+    this.clearValueEvaluationCache();
+    this.hoverableNodesIndices.clear();
+    this.selectableNodesIndices.clear();
+    this.lastHoveredNodeIndices.clear();
+    this.propagationCancelled.clear();
+    this.propagationCancelledPending.clear();
+    this._pauseDuration = 0;
+    this._pauseTickTime = NaN;
+    try {
+      this.validateGraph(runtimeGraph);
+    } catch (e) {
+      throw new GraphRejectedError(`The graph is invalid: ${e instanceof Error ? e.message : e}`);
+    }
+
+    // spec: all top-level graph arrays are optional
+    this.nodes = runtimeGraph.nodes ?? [];
+    this._variables = runtimeGraph.variables ?? [];
+    this.events = runtimeGraph.events ?? [];
+    this.types = runtimeGraph.types ?? [];
+    this.idToBehaviourNodeMap.clear();
+    this.registerGraphEventPointers();
+    const defaultProps = {
+      idToBehaviourNodeMap: this.idToBehaviourNodeMap,
+      variables: this._variables,
+      events: this.events
+    };
+    this._variables.forEach(variable => {
+      if (variable.value === undefined) {
+        // TODO get the default value from the type
+        variable.value = [0];
+      }
+      // sanitize, these need to be arrays
+      if (!Array.isArray(variable.value)) {
+        variable.value = [variable.value];
+      }
+    });
+    let index = 0;
+    this.nodes.forEach(node => {
+      const nodeDeclaration = runtimeGraph.declarations[node.declaration];
+      if (nodeDeclaration === undefined) {
+        throw new GraphRejectedError(`Unrecognized node declaration ${node.declaration} but declerations has ${Object.keys(runtimeGraph.declarations).length} keys`);
+      }
+      const behaviourNodeProps = {
+        ...defaultProps,
+        index: index,
+        flows: node.flows || {},
+        values: node.values || {},
+        configuration: node.configuration || {},
+        variables: this._variables,
+        types: this.types,
+        graphEngine: this,
+        declaration: nodeDeclaration,
+        addEventToWorkQueue: this.addEventToWorkQueue
+      };
+      const nodeType = nodeDeclaration.op;
+      let behaviourNode;
+      try {
+        if (this.registry.get(nodeType) === undefined) {
+          behaviourNode = new NoOpNode(behaviourNodeProps);
+        } else {
+          behaviourNode = this.registry.get(nodeType).init(behaviourNodeProps);
+        }
+      } catch (e) {
+        // node constructors validate their configuration/sockets; a throw there is a load-time rejection
+        throw new GraphRejectedError(`Node ${index} (${nodeType}) is invalid: ${e instanceof Error ? e.message : e}`);
+      }
+      this.idToBehaviourNodeMap.set(index, behaviourNode);
+      index++;
+    });
+    this.compiledOutputs = compileValueOutputs(this, this.idToBehaviourNodeMap, new Map(behaveEngineNodeRegistry), this.types);
+    compileControlNodes(this, this.idToBehaviourNodeMap, new Map(behaveEngineNodeRegistry), this.compiledOutputs, this.types);
+    this.onTickNodeIndices = this.nodes.map((node, idx) => runtimeGraph.declarations[node.declaration].op === "event/onTick" ? idx : -1).filter(idx => idx !== -1);
+    const onStartIndices = this.nodes.map((node, idx) => runtimeGraph.declarations[node.declaration].op === "event/onStart" ? idx : -1).filter(idx => idx !== -1);
+    for (const startNodeIndex of onStartIndices) {
+      const startFlow = {
+        node: startNodeIndex,
+        socket: "start"
+      };
+      this.addEventToWorkQueue(startFlow);
+    }
+    if (this._timerID !== null) {
+      clearTimeout(this._timerID);
+      this._timerID = null;
+    }
+    if (runGraph) {
+      this.executeEventQueue();
+    }
+  };
+  pauseEventQueue = () => {
+    this._pauseTickTime = performance.now();
+    if (this._timerID !== null) {
+      clearTimeout(this._timerID);
+      this._timerID = null;
+    }
+  };
+  playEventQueue = () => {
+    if (this._timerID === null) {
+      this.executeEventQueue();
+    }
+  };
+  processNodeStarted = defaultNodeHook;
+  processAddingNodeToQueue = flowBeingAdded => {
+    //pass
+  };
+  processExecutingNextNode = defaultFlowHook;
+  hasExecutionHooks = () => this.processNodeStarted !== defaultNodeHook || this.processExecutingNextNode !== defaultFlowHook;
+  processDebugLog = (node, message, severity) => {
+    if (severity === 0) {
+      console.log(`[DebugLog #${node.index}]`, message);
+    } else if (severity === 1) {
+      console.warn(`[DebugLog #${node.index}]`, message);
+    } else if (severity === 2) {
+      console.error(`[DebugLog #${node.index}]`, message);
+    }
+  };
+  registerKnownPointers = () => {
+    //pass
+  };
+  getWorld = () => {
+    //pass
+  };
+  getParentNodeIndex = nodeIndex => {
+    //pass
+    return undefined;
+  };
+  isSlerpPath = path => {
+    if (path.endsWith("rotation")) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  animateCubicBezier = (path, p1, p2, initialValue, targetValue, duration, valueType, callback) => {
+    this.clearPointerInterpolation(path);
+    const startTime = this.lastTickTime;
+    const action = async () => {
+      const elapsedDuration = (this.lastTickTime - startTime) / 1000;
+      const t = Math.min(elapsedDuration / duration, 1);
+      // q is the output progress position: the easing curve evaluated at input progress t
+      const q = cubicBezierEase(t, p1, p2);
+      if (valueType === "float3") {
+        const value = [linearFloat(q, initialValue[0], targetValue[0]), linearFloat(q, initialValue[1], targetValue[1]), linearFloat(q, initialValue[2], targetValue[2])];
+        this.setPathValue(path, value);
+      } else if (valueType === "float4") {
+        if (this.isSlerpPath(path)) {
+          const value = slerpFloat4(q, initialValue, targetValue);
+          this.setPathValue(path, value);
+        } else {
+          const value = [linearFloat(q, initialValue[0], targetValue[0]), linearFloat(q, initialValue[1], targetValue[1]), linearFloat(q, initialValue[2], targetValue[2]), linearFloat(q, initialValue[3], targetValue[3])];
+          this.setPathValue(path, value);
+        }
+      } else if (valueType === "float") {
+        const value = [linearFloat(q, initialValue[0], targetValue[0])];
+        this.setPathValue(path, value);
+      } else if (valueType == "float2") {
+        const value = [linearFloat(q, initialValue[0], targetValue[0]), linearFloat(q, initialValue[1], targetValue[1])];
+        this.setPathValue(path, value);
+      }
+      if (elapsedDuration >= duration) {
+        this.setPathValue(path, targetValue);
+        this.clearPointerInterpolation(path);
+        callback();
+      }
+    };
+    this.setPointerInterpolationCallback(path, {
+      action: action
+    });
+  };
+  registerKnownBehaviorNodes = () => {
+    for (const [op, behaveEngineNode] of behaveEngineNodeRegistry) {
+      this.registerBehaveEngineNode(op, behaveEngineNode);
+    }
+  };
+  validateGraph = behaviorGraph => {
+    const nodes = behaviorGraph.nodes ?? [];
+    let index = 0;
+    for (const node of nodes) {
+      // for each node, ensure that it's values do not reference a later node
+      if (node.values !== undefined) {
+        for (const key of Object.keys(node.values)) {
+          if (node.values[key].node !== undefined) {
+            const referencedNode = Number(node.values[key].node);
+            if (referencedNode >= index) {
+              const opOf = idx => {
+                const declIdx = nodes[idx]?.declaration;
+                return behaviorGraph.declarations?.[declIdx]?.op ?? `declaration ${declIdx}`;
+              };
+              throw Error(`Invalid reference: node ${index} ('${opOf(index)}', socket '${key}') references node ${referencedNode} ('${opOf(referencedNode)}'), but a node may only reference nodes that appear earlier in the array (index < ${index}). Reorder the nodes so that node ${referencedNode} comes before node ${index}.`);
+            }
+          }
+        }
+      }
+      index++;
+    }
+    validateInteractivityGraph(behaviorGraph);
+  };
+  registerBehaveEngineNode = (type, behaviorNode) => {
+    if (this.registry.has(type)) {
+      console.warn(`Behavior node ${type} is already registered and will be overwritten`);
+    }
+    this.registry.set(type, behaviorNode);
+  };
+  addEventToWorkQueue = flow => {
+    if (flow === undefined || flow.node === undefined) {
+      return;
+    }
+    const nextNode = this.idToBehaviourNodeMap.get(Number(flow.node));
+    if (nextNode === undefined) {
+      return;
+    }
+    this.processAddingNodeToQueue(flow);
+    this.eventBus.addEvent({
+      behaveNode: nextNode,
+      inSocketId: flow.socket
+    });
+  };
+  executeEventQueueTick = () => {
+    this.executeEventQueue(true);
+  };
+  executeEventQueue = (manualStep = false) => {
+    // process events in queue
+    this._lastTickTime = performance.now();
+    if (!isNaN(this._pauseTickTime)) {
+      this._pauseDuration += this._lastTickTime - this._pauseTickTime;
+      this._pauseTickTime = NaN;
+    }
+    this.propagationCancelled.clear();
+    this.propagationCancelledPending.clear();
+
+    // events queued while processing run on the next tick
+    const eventQueue = this.eventBus.getEventList().slice();
+    this.eventBus.clearEventList();
+    for (let i = 0; i < eventQueue.length; i++) {
+      const eventToStart = eventQueue[i];
+      if (eventToStart.behaveNode) {
+        eventToStart.behaveNode.processNode(eventToStart.inSocketId);
+      } else if (eventToStart.func) {
+        eventToStart.func();
+      }
+    }
+
+    // process interpolations
+    for (const interpolation of Object.values(this.eventBus.getVariableInterpolationCallbacks())) {
+      interpolation.action();
+    }
+    for (const interpolation of Object.values(this.eventBus.getPointerInterpolationCallbacks())) {
+      interpolation.action();
+    }
+
+    // process onTick nodes
+    for (const onTickNodeIndex of this.onTickNodeIndices) {
+      const tickFlow = {
+        node: onTickNodeIndex,
+        socket: "tick"
+      };
+      const tickNode = this.idToBehaviourNodeMap.get(Number(tickFlow.node));
+      tickNode.processNode();
+    }
+    if (this._timerID !== null) {
+      clearTimeout(this._timerID);
+    }
+    if (manualStep) {
+      return;
+    }
+    this._timerID = setTimeout(() => {
+      try {
+        this.executeEventQueue();
+      } catch (e) {
+        // a throwing node halts the loop; report it instead of failing silently in a timer
+        this._timerID = null;
+        if (this.executionErrorListener === undefined) {
+          throw e;
+        }
+        this.executionErrorListener(e);
+      }
+    }, 1000 / this.fps);
+  };
+
+  /** Receives runtime errors that stopped the event loop after the initial load. */
+  setExecutionErrorListener = listener => {
+    this.executionErrorListener = listener;
+  };
+  flushPendingPropagationCancellations = () => {
+    for (const event of this.propagationCancelledPending) {
+      this.propagationCancelled.add(event);
+    }
+    this.propagationCancelledPending.clear();
+  };
+  setPointerInterpolationCallback(path, action) {
+    this.eventBus.setPointerInterpolationCallback(path, action);
+  }
+  setVariableInterpolationCallback(variable, action) {
+    this.eventBus.setVariableInterpolationCallback(variable, action);
+  }
+  clearPointerInterpolation(path) {
+    this.eventBus.clearPointerInterpolation(path);
+  }
+  clearVariableInterpolation(variable) {
+    this.eventBus.clearVariableInterpolation(variable);
+  }
+  isEventPropagationCancelled(event) {
+    return this.propagationCancelled.has(event);
+  }
+}
+function cloneGraphData(value) {
+  if (Array.isArray(value)) {
+    return value.map(entry => cloneGraphData(entry));
+  }
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, cloneGraphData(entry)]));
+  }
+  return value;
+}
+
+class DOMEventBus {
+  eventList;
+  customEventListeners;
+  eventListeners;
+  variableInterpolationCallbacks;
+  pointerInterpolationCallbacks;
+  constructor() {
+    this.eventList = [];
+    this.customEventListeners = {};
+    this.eventListeners = {};
+    this.variableInterpolationCallbacks = {};
+    this.pointerInterpolationCallbacks = {};
+  }
+  getEventList = () => {
+    return this.eventList;
+  };
+  clearEventList = () => {
+    this.eventList = [];
+  };
+  addEvent = event => {
+    this.eventList.push(event);
+  };
+  addCustomEventListener = (name, func) => {
+    if (!this.customEventListeners[name]) {
+      this.customEventListeners[name] = [];
+      const eventListener = e => {
+        this.customEventListeners[name].forEach(func => {
+          this.eventList.push({
+            func: () => func(e),
+            inSocketId: name
+          });
+        });
+      };
+      document.addEventListener(name, eventListener);
+      this.eventListeners[name] = eventListener;
+    }
+    this.customEventListeners[name].push(func);
+  };
+  dispatchCustomEvent = (name, vals) => {
+    const event = new CustomEvent(name, {
+      detail: vals
+    });
+    document.dispatchEvent(event);
+  };
+  getCustomEventsNames = () => {
+    return Object.keys(this.customEventListeners);
+  };
+  clearCustomEventListeners = () => {
+    this.customEventListeners = {};
+    Object.keys(this.eventListeners).forEach(name => {
+      document.removeEventListener(name, this.eventListeners[name]);
+    });
+    this.eventListeners = {};
+  };
+  setVariableInterpolationCallback = (variable, action) => {
+    this.variableInterpolationCallbacks[variable] = action;
+  };
+  clearVariableInterpolation = variable => {
+    if (this.variableInterpolationCallbacks[variable] !== undefined) {
+      delete this.variableInterpolationCallbacks[variable];
+    }
+  };
+  getVariableInterpolationCallbacks = () => {
+    return this.variableInterpolationCallbacks;
+  };
+  setPointerInterpolationCallback = (pointer, action) => {
+    this.pointerInterpolationCallbacks[pointer] = action;
+  };
+  clearPointerInterpolation = pointer => {
+    if (this.pointerInterpolationCallbacks[pointer] !== undefined) {
+      delete this.pointerInterpolationCallbacks[pointer];
+    }
+  };
+  getPointerInterpolationCallbacks = () => {
+    return this.pointerInterpolationCallbacks;
+  };
+}
+
+class ApplyImpulse extends BehaveEngineNode {
+  INPUT_FLOWS = ["in"];
+  REQUIRED_VALUES = {
+    nodeIndex: {},
+    linearImpulse: {},
+    angularImpulse: {}
+  };
+  constructor(props) {
+    super(props);
+    this.name = "ApplyImpulse";
+    this.validateValues(this.values);
+  }
+  processNode(flowSocket) {
+    this.graphEngine.clearValueEvaluationCache();
+    const {
+      nodeIndex,
+      linearImpulse,
+      angularImpulse
+    } = this.evaluateRequiredValues();
+    this.graphEngine.processNodeStarted(this);
+    this.graphEngine.applyImpulseToRigidBody(nodeIndex, linearImpulse, angularImpulse);
+  }
+}
+
+class ApplyPointImpulse extends BehaveEngineNode {
+  INPUT_FLOWS = ["in"];
+  REQUIRED_VALUES = {
+    nodeIndex: {},
+    impulse: {},
+    position: {}
+  };
+  constructor(props) {
+    super(props);
+    this.name = "ApplyPointImpulse";
+    this.validateValues(this.values);
+  }
+  processNode(flowSocket) {
+    this.graphEngine.clearValueEvaluationCache();
+    const {
+      nodeIndex,
+      impulse,
+      position
+    } = this.evaluateRequiredValues();
+    this.graphEngine.processNodeStarted(this);
+    this.graphEngine.applyPointImpulseToRigidBody(nodeIndex, impulse, position);
+  }
+}
+
+class RayCast extends BehaveEngineNode {
+  INPUT_FLOWS = ["in"];
+  REQUIRED_VALUES = {
+    rayStart: {},
+    rayEnd: {},
+    collisionFilterIndex: {}
+  };
+  constructor(props) {
+    super(props);
+    this.name = "RayCast";
+    this.validateValues(this.values);
+    this.outValues.hitNode = {
+      value: [-1],
+      type: this.getTypeIndex('ref')
+    };
+    this.outValues.hitFraction = {
+      value: [NaN],
+      type: this.getTypeIndex('float')
+    };
+    this.outValues.hitNormal = {
+      value: [NaN, NaN, NaN],
+      type: this.getTypeIndex('vec3')
+    };
+  }
+  processNode(flowSocket) {
+    this.graphEngine.clearValueEvaluationCache();
+    const {
+      rayStart,
+      rayEnd,
+      collisionFilterIndex
+    } = this.evaluateRequiredValues();
+    this.graphEngine.processNodeStarted(this);
+    const hitResult = this.graphEngine.rayCastRigidBodies(rayStart, rayEnd, collisionFilterIndex);
+    if (hitResult.hitNodeIndex < 0) {
+      this.outValues.hitNode = {
+        value: [-1],
+        type: this.getTypeIndex('ref')
+      };
+      this.outValues.hitFraction = {
+        value: [NaN],
+        type: this.getTypeIndex('float')
+      };
+      this.outValues.hitNormal = {
+        value: [NaN, NaN, NaN],
+        type: this.getTypeIndex('vec3')
+      };
+      if (this.flows.miss) {
+        this.processFlow(this.flows.miss);
+      }
+    } else {
+      this.outValues.hitNode = {
+        value: [hitResult.hitNodeIndex],
+        type: this.getTypeIndex('ref')
+      };
+      this.outValues.hitFraction = {
+        value: [hitResult.hitFraction],
+        type: this.getTypeIndex('float')
+      };
+      this.outValues.hitNormal = {
+        value: hitResult.hitNormal,
+        type: this.getTypeIndex('vec3')
+      };
+      if (this.flows.hit) {
+        this.processFlow(this.flows.hit);
+      }
+    }
+  }
+}
+
+class TriggerEntered extends BehaveEngineNode {
+  REQUIRED_CONFIGURATIONS = {
+    nodeIndex: {
+      defaultValue: [-1]
+    }
+  };
+  _nodeIndex;
+  constructor(props) {
+    super(props);
+    this.name = 'TriggerEntered';
+    this.validateValues(this.values);
+    this.validateConfigurations(this.configuration);
+    const {
+      nodeIndex
+    } = this.evaluateAllConfigurations(Object.keys(this.REQUIRED_CONFIGURATIONS));
+    this._nodeIndex = Number(nodeIndex[0]);
+    this.outValues.colliderNode = {
+      type: this.getTypeIndex('ref'),
+      value: [-1]
+    };
+    this.outValues.motionNode = {
+      type: this.getTypeIndex('ref'),
+      value: [-1]
+    };
+    this.setUpOnTriggerEntered();
+  }
+  setUpOnTriggerEntered() {
+    const callback = (colliderNodeRef, motionNodeRef) => {
+      this.outValues.colliderNode = {
+        type: this.getTypeIndex('ref'),
+        value: [colliderNodeRef]
+      };
+      this.outValues.motionNode = {
+        type: this.getTypeIndex('ref'),
+        value: [motionNodeRef ?? -1]
+      };
+      console.log("TriggerEntered", {
+        node: this._nodeIndex,
+        outValues: this.outValues
+      });
+      this.addEventToWorkQueue(this.flows.out);
+    };
+    const triggerCallbacks = this.graphEngine.rigidBodyTriggerNodeIndices.get(this._nodeIndex);
+    if (triggerCallbacks) {
+      triggerCallbacks.triggerEntered = callback;
+    } else {
+      this.graphEngine.rigidBodyTriggerNodeIndices.set(this._nodeIndex, {
+        triggerEntered: callback
+      });
+    }
+  }
+}
+
+class TriggerExited extends BehaveEngineNode {
+  REQUIRED_CONFIGURATIONS = {
+    nodeIndex: {
+      defaultValue: [-1]
+    }
+  };
+  _nodeIndex;
+  constructor(props) {
+    super(props);
+    this.name = 'TriggerExited';
+    this.validateValues(this.values);
+    this.validateConfigurations(this.configuration);
+    const {
+      nodeIndex
+    } = this.evaluateAllConfigurations(Object.keys(this.REQUIRED_CONFIGURATIONS));
+    this._nodeIndex = Number(nodeIndex[0]);
+    this.outValues.colliderNode = {
+      type: this.getTypeIndex('ref'),
+      value: [-1]
+    };
+    this.outValues.motionNode = {
+      type: this.getTypeIndex('ref'),
+      value: [-1]
+    };
+    this.setUpOnTriggerExited();
+  }
+  setUpOnTriggerExited() {
+    const callback = (colliderNodeRef, motionNodeRef) => {
+      this.outValues.colliderNode = {
+        type: this.getTypeIndex('ref'),
+        value: [colliderNodeRef]
+      };
+      this.outValues.motionNode = {
+        type: this.getTypeIndex('ref'),
+        value: [motionNodeRef ?? -1]
+      };
+      console.log("TriggerExited", {
+        node: this._nodeIndex,
+        outValues: this.outValues
+      });
+      this.addEventToWorkQueue(this.flows.out);
+    };
+    const triggerCallbacks = this.graphEngine.rigidBodyTriggerNodeIndices.get(this._nodeIndex);
+    if (triggerCallbacks) {
+      triggerCallbacks.triggerExited = callback;
+    } else {
+      this.graphEngine.rigidBodyTriggerNodeIndices.set(this._nodeIndex, {
+        triggerExited: callback
+      });
+    }
+  }
+}
+
+class ADecorator {
+  behaveEngine;
+  constructor(behaveEngine) {
+    this.behaveEngine = behaveEngine;
+  }
+  registerJsonPointer = (jsonPtr, getterCallback, setterCallback, typeName, readOnly) => {
+    this.behaveEngine.registerJsonPointer(jsonPtr, getterCallback, setterCallback, typeName, readOnly);
+  };
+
+  /**
+   * BasicBehaveEngine calls some of its own hooks internally (e.g. `this.getWorld()`,
+   * `this.getParentNodeIndex()`) so the decorator's implementation has to be reachable via the
+   * wrapped engine's own properties, not just via the decorator instance. Subclasses must call
+   * this once, after their own hook fields (getWorld/getParentNodeIndex/startAnimation/
+   * stopAnimation/stopAnimationAt) are assigned, to bridge them onto the engine.
+   */
+  bridgeEngineHooks() {
+    this.behaveEngine.getWorld = this.getWorld;
+    this.behaveEngine.getParentNodeIndex = this.getParentNodeIndex;
+    this.behaveEngine.startAnimation = this.startAnimation;
+    this.behaveEngine.stopAnimation = this.stopAnimation;
+    this.behaveEngine.stopAnimationAt = this.stopAnimationAt;
+  }
+
+  /** Tears down listeners/observers registered by this decorator. Call before discarding it. */
+  dispose() {
+    // stop the wrapped engine (kills its tick loop + scheduled delays), which also clears its
+    // event queue and custom-event listeners - otherwise the old graph keeps running after a
+    // new model/graph replaces this decorator
+    this.behaveEngine.dispose();
+  }
+  registerRigidBodyNodes() {
+    this.behaveEngine.registerBehaveEngineNode("rigid_body/applyImpulse", ApplyImpulse);
+    this.behaveEngine.registerBehaveEngineNode("rigid_body/applyPointImpulse", ApplyPointImpulse);
+    this.behaveEngine.registerBehaveEngineNode("rigid_body/rayCast", RayCast);
+    this.behaveEngine.registerBehaveEngineNode("event/rigid_body_triggerEntered", TriggerEntered);
+    this.behaveEngine.registerBehaveEngineNode("event/rigid_body_triggerExited", TriggerExited);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  applyImpulseToRigidBody(nodeIndex, linearImpulse, angularImpulse) {
+    // Overwrite with application logic here
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  applyPointImpulseToRigidBody(nodeIndex, impulse, position) {
+    // Overwrite with application logic here
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  rayCastRigidBodies(rayStart, rayEnd, collisionFilterIndex) {
+    // Overwrite with application logic here
+    return {
+      hitNodeIndex: -1,
+      hitFraction: undefined,
+      hitNormal: undefined
+    };
+  }
+  rigidBodyTriggerEntered(nodeIndex, colliderNodeIndex, motionNodeIndex) {
+    this.behaveEngine.rigidBodyTriggerEntered(nodeIndex, colliderNodeIndex, motionNodeIndex);
+  }
+  rigidBodyTriggerExited(nodeIndex, colliderNodeIndex, motionNodeIndex) {
+    this.behaveEngine.rigidBodyTriggerExited(nodeIndex, colliderNodeIndex, motionNodeIndex);
+  }
+  hoverOn(nodeIndex, controllerIndex) {
+    this.behaveEngine.hoverOn(nodeIndex, controllerIndex);
+  }
+  select(selectedNodeIndex, controllerIndex, selectionPoint, selectionRayOrigin) {
+    this.behaveEngine.select(selectedNodeIndex, controllerIndex, selectionPoint, selectionRayOrigin);
+  }
+  getEventList() {
+    return this.behaveEngine.getEventList();
+  }
+  clearEventList() {
+    this.behaveEngine.clearEventList();
+  }
+  addEvent(event) {
+    this.behaveEngine.addEvent(event);
+  }
+  addCustomEventListener(name, func) {
+    this.behaveEngine.addCustomEventListener(name, func);
+  }
+  clearCustomEventListeners() {
+    this.behaveEngine.clearCustomEventListeners();
+  }
+  registerBehaveEngineNode(type, behaveEngineNode) {
+    this.behaveEngine.registerBehaveEngineNode(type, behaveEngineNode);
+  }
+  getRegisteredJsonPointers() {
+    return this.behaveEngine.getRegisteredJsonPointers();
+  }
+  resolveJsonPtr(path) {
+    return this.behaveEngine.resolveJsonPtr(path);
+  }
+  isValidJsonPtr(path) {
+    return this.behaveEngine.isValidJsonPtr(path);
+  }
+  isReadOnly(path) {
+    return this.behaveEngine.isReadOnly(path);
+  }
+  isSlerpPath(path) {
+    return this.behaveEngine.isSlerpPath(path);
+  }
+  animateCubicBezier(path, p1, p2, initialValue, targetValue, duration, valueType, callback) {
+    this.behaveEngine.animateCubicBezier(path, p1, p2, initialValue, targetValue, duration, valueType, callback);
+  }
+  get fps() {
+    return this.behaveEngine.fps;
+  }
+  loadBehaveGraph(behaveGraph, runGraph = true) {
+    this.behaveEngine.loadBehaveGraph(behaveGraph, runGraph);
+  }
+  pauseEventQueue() {
+    this.behaveEngine.pauseEventQueue();
+  }
+  playEventQueue() {
+    this.behaveEngine.playEventQueue();
+  }
+  executeEventQueueTick() {
+    this.behaveEngine.executeEventQueueTick();
+  }
+  setExecutionErrorListener(listener) {
+    this.behaveEngine.setExecutionErrorListener?.(listener);
+  }
+  dispatchCustomEvent(name, vals) {
+    this.behaveEngine.dispatchCustomEvent(name, vals);
+  }
+  setPathValue(path, targetValue) {
+    this.behaveEngine.setPathValue(path, targetValue);
+  }
+  getPathValue(path) {
+    return this.behaveEngine.getPathValue(path);
+  }
+  getPathTypeName(path) {
+    return this.behaveEngine.getPathTypeName(path);
+  }
+  clearValueEvaluationCache() {
+    this.behaveEngine.clearValueEvaluationCache();
+  }
+  setPointerInterpolationCallback(path, action) {
+    this.behaveEngine.setPointerInterpolationCallback(path, action);
+  }
+  clearPointerInterpolation(path) {
+    this.behaveEngine.clearPointerInterpolation(path);
+  }
+  setVariableInterpolationCallback(variable, action) {
+    this.behaveEngine.setVariableInterpolationCallback(variable, action);
+  }
+  clearVariableInterpolation(variable) {
+    this.behaveEngine.clearVariableInterpolation(variable);
+  }
+}
+
+;
 //# 
 
 ;// external "__X_ITE_X3D__ .Color3"
@@ -17807,13 +17820,14 @@ var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
+
 //import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 const
-   _cycleInterval = Symbol (),
-   _active        = Symbol (),
-   _doneCallback  = Symbol (),
-   _animation     = Symbol ();
+   _active       = Symbol (),
+   _doneCallback = Symbol (),
+   _animation    = Symbol ();
 
 const Types = new Map ([
    [(external_X_ITE_X3D_X3DConstants_default()).SFBool,       "bool"],
@@ -17836,6 +17850,11 @@ const Types = new Map ([
    [(external_X_ITE_X3D_X3DConstants_default()).SFVec4d,      "float4"],
    [(external_X_ITE_X3D_X3DConstants_default()).SFVec4f,      "float4"],
 ]);
+
+const
+   BASE_COLOR_FLAG     = 0,
+   SPECULAR_COLOR_FLAG = 1,
+   SOLID_FLAG          = 2;
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -17877,6 +17896,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
       this .eventBus = new DOMEventBus ();
       this .engine   = new BasicBehaveEngine (this .fps, this .eventBus);
 
+      this .engine .pauseEventQueue ();
+
       this .engine .getWorld           = () => this .getWorld ();
       this .engine .startAnimation     = (... args) => this .startAnimation (... args);
       this .engine .stopAnimation      = (... args) => this .stopAnimation (... args);
@@ -17887,16 +17908,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._enabled       .addInterest ("set_enabled__",       this);
-      this ._graph         .addInterest ("set_graph__",         this);
-      this ._graphs        .addInterest ("set_graph__",         this);
-      this ._animations    .addInterest ("set_animations__",    this);
-      this ._nodes         .addInterest ("set_nodes__",         this);
+      this ._enabled .addInterest ("set_enabled__", this);
+      this ._graph   .addInterest ("set_graph__",   this);
+      this ._graphs  .addInterest ("set_graph__",   this);
+      this ._nodes   .addInterest ("set_nodes__",   this);
 
-      this .set_enabled__ ();
-      this .set_animations__ ();
       this .set_nodes__ ();
       this .set_graph__ ();
+      this .set_enabled__ ();
    },
    set_enabled__ ()
    {
@@ -17905,11 +17924,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
          browser .pointingEvents () .addInterest ("set_pointing__", this);
+         browser .addPointingDeviceSensor (this);
          this .engine .playEventQueue ();
       }
       else
       {
          browser .pointingEvents () .removeInterest ("set_pointing__", this);
+         browser .removePointingDeviceSensor (this);
          this .engine .pauseEventQueue ();
       }
    },
@@ -17928,6 +17949,46 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
          this .engine .clearValueEvaluationCache ();
 
          this .engine .loadBehaveGraph (JSON .parse (graph), run);
+
+         for (const [i, versionPart] of ["majorVersion", "minorVersion"] .entries ())
+         {
+            this .engine .registerJsonPointer (
+               `/extensions/KHR_interactivity/asset/${versionPart}`,
+               () => [+this ._version .getValue () .split (".") [i]],
+               Function .prototype,
+               "int",
+               true
+            );
+         }
+
+         for (const extension of (external_X_ITE_X3D_GLTFExtensions_default()))
+         {
+            this .engine .registerJsonPointer (
+               `/extensions/KHR_interactivity/asset/extensions/${extension}/enabled`,
+               () => [true],
+               Function .prototype,
+               "bool",
+               true
+            );
+         }
+
+         const limits = [
+            "maxActiveAnimations",
+            "maxActiveDelays",
+            "maxActivePropertyInterpolations",
+            "maxActiveVariableInterpolations",
+         ];
+
+         for (const name of limits)
+         {
+            this .engine .registerJsonPointer (
+               `/extensions/KHR_interactivity/limits/${name}`,
+               () => [2 ** 16],
+               Function .prototype,
+               "int",
+               true
+            );
+         }
       }
       catch (error)
       {
@@ -17938,19 +17999,20 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
    },
    set_animations__ ()
    {
-      this .animations .length = 0;
-
-      for (const node of this ._animations)
-         this .animations .push (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).TimeSensor, node));
-
       for (const timeSensor of this .animations)
-         timeSensor [_cycleInterval] = timeSensor ._cycleInterval .getValue ();
+         timeSensor .setMetaData ("Interactivity/cycleInterval", external_X_ITE_X3D_URLs_default().getProviderURL (), timeSensor ._cycleInterval);
 
       // Register JSON Pointers
 
-      this .world = null;
-
       const numAnimations = this .animations .length;
+
+      this .engine .registerJsonPointer (
+         `/animations.length`,
+         () => [numAnimations],
+         Function .prototype,
+         "int",
+         true
+      );
 
       this .engine .registerJsonPointer (
          `/animations/${numAnimations}`,
@@ -17968,7 +18030,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [!! timeSensor ?.[_active]];
+            return [timeSensor ?.[_active]];
          },
          Function .prototype,
          "bool",
@@ -17991,7 +18053,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ?.[_cycleInterval] ?? 0];
+            return [timeSensor ?.getMetaData ("Interactivity/cycleInterval") [0] ?? 0];
          },
          Function .prototype,
          "float",
@@ -18008,7 +18070,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor [_cycleInterval] : NaN];
+            if (!timeSensor)
+               return [0];
+
+            return [timeSensor ._fraction_changed .getValue ()
+               * (timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 0)];
          },
          Function .prototype,
          "float",
@@ -18025,7 +18091,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor ._cycleInterval .getValue () : NaN];
+            if (!timeSensor)
+               return [0];
+
+            const reverse = timeSensor ._reverse .getValue () ? -1 : 1;
+
+            return [Math .max (timeSensor ._elapsedTime .getValue (), 0) * reverse];
          },
          Function .prototype,
          "float",
@@ -18034,6 +18105,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
    },
    set_nodes__ ()
    {
+      this .world = null;
+
+      this .animations .length = 0;
+
       this .transformNodes .clear ();
       this .parents        .clear ();
       this .pointers       .clear ();
@@ -18041,125 +18116,140 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
 
       for (const node of this ._nodes)
       {
-         const _node = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNode, node);
+         const innerNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNode, node);
 
-         if (!_node)
+         if (!innerNode)
             continue;
 
-         const matrixNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode, node);
-
-         if (matrixNode)
-         {
-            const nodeIndex = +matrixNode .getMetaData ("Interactivity/node", new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1));
-
-            if (nodeIndex >= 0)
-            {
-               this .transformNodes .set (nodeIndex, _node);
-
-               for (const child of matrixNode ._children)
-               {
-                  const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode, child);
-
-                  if (childNode)
-                     this .parents .set (childNode, nodeIndex);
-               }
-            }
-         }
-
-         const pointers = _node .getMetaData ("Interactivity/pointer", new (external_X_ITE_X3D_Fields_default()).MFString ());
+         const pointers = innerNode .getMetaData ("Interactivity/pointer");
 
          for (const pointer of pointers)
-            this .pointers .set (pointer, _node);
+            this .pointers .set (pointer, innerNode);
+
+         const type = innerNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case (external_X_ITE_X3D_X3DConstants_default()).TimeSensor:
+               {
+                  const animationIndex = innerNode .getMetaData ("Interactivity/animation") [0] ?? -1;
+
+                  if (animationIndex >= 0)
+                     this .animations [animationIndex] = innerNode;
+
+                  break;
+               }
+               case (external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode:
+               {
+                  const nodeIndex = innerNode .getMetaData ("Interactivity/node") [0] ?? -1;
+
+                  if (nodeIndex >= 0)
+                  {
+                     this .transformNodes .set (nodeIndex, innerNode);
+
+                     for (const child of innerNode ._children)
+                     {
+                        const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode, child);
+
+                        if (childNode)
+                           this .parents .set (childNode, nodeIndex);
+                     }
+                  }
+
+                  break;
+               }
+               default:
+                  continue;
+            }
+
+            break;
+         }
       }
 
-      // Register material pointers.
+      // Add special animation pointer.
 
-      const numMaterials = Array .from (this .pointers .keys (),
-            key => key .match (/^\/materials\/(\d+)\//) ?.[1] ?? -1)
+      this .set_animations__ ();
+
+      // Determine number of special pointers.
+
+      const numScenes = Array .from (this .pointers .keys (),
+            key => key .match (/^\/scenes\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
-      // Returns the number of material nodes.
-      this .engine .registerJsonPointer (
-         "/materials.length",
-         () => [numMaterials],
-         Function .prototype,
-         "int",
-         true
-      );
+      const numCameras = Array .from (this .pointers .keys (),
+            key => key .match (/^\/cameras\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
-      // Register meshes pointers.
+      const numMaterials = Array .from (this .pointers .keys (),
+            key => key .match (/^\/materials\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       const numMeshes = Array .from (this .pointers .keys (),
-            key => key .match (/^\/meshes\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/meshes\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       const numPrimitives = Array .from (this .pointers .keys (),
-            key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
-
-      // Returns the material index of the mesh.
-      this .engine .registerJsonPointer (
-         `/meshes/${numMeshes}/primitives/${numPrimitives}/material`,
-         (pointer) =>
-         {
-            return this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  materialNode  = this .pointers .get (pointer),
-                  materialIndex = +materialNode .getMetaData ("Interactivity/material", new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1));
-
-               return [`/materials/${materialIndex}`];
-            });
-         },
-         Function .prototype,
-         "ref",
-         true
-      );
-
-      // Register node pointers.
 
       const numNodes = Array .from (this .pointers .keys (),
-            key => key .match (/^\/nodes\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/nodes\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
-      // Returns the parent node of the node.
+      const nums = {
+         scenes: numScenes,
+         cameras: numCameras,
+         materials: numMaterials,
+         meshes: numMeshes,
+         nodes: numNodes,
+      };
+
+      for (const [name, num] of Object .entries (nums))
+      {
+         // Returns the number of scenes, cameras ...
+         this .engine .registerJsonPointer (
+            `/${name}.length`,
+            () => [num],
+            Function .prototype,
+            "int",
+            true
+         );
+      }
+
+      // Register scene pointers.
+
+      // Returns the index of the current scene.
       this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/parent`,
-         (pointer) =>
+         "/scene",
+         () =>
          {
-            return this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  nodeIndex       = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-                  parentNodeIndex = this .getParentNodeIndex (nodeIndex);
+            const scenes = this .pointers .get ("/scenes");
 
-               if (parentNodeIndex !== undefined)
-                  return [`/nodes/${parentNodeIndex}`];
-
-               return [undefined];
-            });
+            return [scenes ._whichChoice .getValue ()];
          },
-         Function .prototype,
-         "ref",
-         true
+         (pointer, value) =>
+         {
+            const scenes = this .pointers .get ("/scenes");
+
+            return [scenes ._whichChoice .setValue (value)];
+         },
+         "int",
+         false
       );
 
-      // Returns the number of child nodes.
       this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/children.length`,
+         `/scenes/${numScenes}/nodes.length`,
          (pointer) =>
          {
             return this .cache .getOrInsertComputed (pointer, () =>
             {
                const
-                  nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-                  node      = this .transformNodes .get (nodeIndex);
+                  sceneIndex = +pointer .match (/^\/scenes\/(\d+)\//) [1],
+                  scene      = this .pointers .get (`/scenes/${sceneIndex}`);
 
-               const numChildren = node ?._children
-                  .reduce ((count, child) => count + !!child ?.getValue () .getType ()
-                     .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode), 0);
-
-               return [numChildren];
+               return [scene ?._children .length ?? 0];
             });
          },
          Function .prototype,
@@ -18167,29 +18257,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
          true
       );
 
-      // Returns the child node of the node.
       this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/children/${numNodes}`,
+         `/scenes/${numScenes}/nodes/${numNodes}`,
          (pointer) =>
          {
             return this .cache .getOrInsertComputed (pointer, () =>
             {
                const
-                  match      = pointer .match (/^\/nodes\/(\d+)\/children\/(\d+)/),
-                  nodeIndex  = +match [1],
-                  childIndex = +match [2],
-                  node       = this .transformNodes .get (nodeIndex);
+                  node      = this .pointers .get (pointer),
+                  nodeIndex = node .getMetaData ("Interactivity/node") [0] ?? -1;
 
-               const children = node ._children .flatMap (child => child ?.getValue ())
-                  .filter (childNode => childNode ?.getType ()
-                     .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode));
-
-               const
-                  childNode      = children [childIndex],
-                  childNodeIndex = +childNode ?.getMetaData ("Interactivity/node", new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1));
-
-               if (childNodeIndex >= 0)
-                  return [`/nodes/${childNodeIndex}`];
+               if (nodeIndex >= 0)
+                  return [`/nodes/${nodeIndex}`];
 
                return [undefined];
             });
@@ -18199,97 +18278,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
          true
       );
 
-      this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/matrix`,
-         (pointer) =>
-         {
-            // if (DEVELOPMENT)
-            //    console .log ("get", pointer);
-
-            const node = this .pointers .get (pointer);
-
-            return [... node .getMatrix ()];
-         },
-         Function .prototype,
-         "float4x4",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/globalMatrix`,
-         (pointer) =>
-         {
-            // if (DEVELOPMENT)
-            //    console .log ("get", pointer);
-
-            const
-               node      = this .pointers .get (pointer),
-               nodeIndex = +node .getMetaData ("Interactivity/node", new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1));
-
-            return [... this .getModelMatrix (nodeIndex, this .Matrix4 .assign ((external_X_ITE_X3D_Matrix4_default()).IDENTITY))];
-         },
-         Function .prototype,
-         "float4x4",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/mesh`,
-         (pointer) =>
-         {
-            return this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-                  node      = this .transformNodes .get (nodeIndex),
-                  meshIndex = +node .getMetaData ("Interactivity/mesh", new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1));
-
-               if (meshIndex >= 0)
-                  return [`/meshes/${meshIndex}`];
-
-               return [undefined];
-            });
-         },
-         Function .prototype,
-         "ref",
-         true
-      );
-
-      // // Register pointers for the node weights.
-
-      // this .engine .registerJsonPointer (
-      //    `/nodes/${numNodes}/weights.length`,
-      //    (pointer) =>
-      //    {
-      //       return this .cache .getOrInsertComputed (pointer, () =>
-      //       {
-      //          const
-      //             nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-      //             weights   = this .pointers .get (`/nodes/${nodeIndex}/weights`);
-
-      //          return [weights ?._value .length];
-      //       });
-      //    },
-      //    Function .prototype,
-      //    "int",
-      //    true
-      // );
-
-      // this .engine .registerJsonPointer (
-      //    `/nodes/${numNodes}/weights`,
-      //    (pointer) =>
-      //    {
-      //       console .log (pointer)
-      //    },
-      //    (pointer, value) =>
-      //    {
-      //       console .log (pointer)
-      //    },
-      //    "float",
-      //    false
-      // );
-
-      // console .log (this .engine .resolveJsonPtr ("/nodes/947/weights/0") ?.getterCallback ("/nodes/947/weights/0"));
+      // Register camera pointers.
 
       // Register pointers for the active camera.
 
@@ -18485,13 +18474,263 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
          true
       );
 
-      // Register common node pointers.
+      // Register mesh pointers.
 
-      const nums = {
-         materials: numMaterials,
-         meshes: numMeshes,
-         nodes: numNodes,
-      };
+      // Returns the number of mesh primitives.
+      this .engine .registerJsonPointer (
+         `/meshes/${numMeshes}/primitives.length`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+
+               const
+                  meshIndex     = +pointer .match (/^\/meshes\/(\d+)\//) [1],
+                  regex         = new RegExp (`^\\/meshes\\/${meshIndex}\\/primitives\\/(\\d+)`),
+                  numPrimitives = Array .from (this .pointers .keys (), key => key .match (regex) ?.[1] ?? -1)
+                     .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+               return [numPrimitives];
+            });
+         },
+         Function .prototype,
+         "int",
+         true
+      );
+
+      // Returns the material index of the mesh.
+      this .engine .registerJsonPointer (
+         `/meshes/${numMeshes}/primitives/${numPrimitives}/material`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  materialNode  = this .pointers .get (pointer),
+                  materialIndex = materialNode .getMetaData ("Interactivity/material") [0] ?? -1;
+
+               return [`/materials/${materialIndex}`];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      // Register node pointers.
+
+      // Returns the parent node of the node.
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/parent`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  nodeIndex       = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+                  parentNodeIndex = this .getParentNodeIndex (nodeIndex);
+
+               if (parentNodeIndex !== undefined)
+                  return [`/nodes/${parentNodeIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      // Returns the number of child nodes.
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/children.length`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+                  node      = this .transformNodes .get (nodeIndex);
+
+               const numChildren = node ?._children
+                  .reduce ((count, child) => count + !!child ?.getValue () .getType ()
+                     .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode), 0);
+
+               return [numChildren ?? 0];
+            });
+         },
+         Function .prototype,
+         "int",
+         true
+      );
+
+      // Returns the child node of the node.
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/children/${numNodes}`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  match      = pointer .match (/^\/nodes\/(\d+)\/children\/(\d+)/),
+                  nodeIndex  = +match [1],
+                  childIndex = +match [2],
+                  node       = this .transformNodes .get (nodeIndex);
+
+               const children = node ._children .flatMap (child => child ?.getValue ())
+                  .filter (childNode => childNode ?.getType ()
+                     .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode));
+
+               const
+                  childNode      = children [childIndex],
+                  childNodeIndex = childNode ?.getMetaData ("Interactivity/node") [0] ?? -1;
+
+               if (childNodeIndex >= 0)
+                  return [`/nodes/${childNodeIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/matrix`,
+         (pointer) =>
+         {
+            // if (DEVELOPMENT)
+            //    console .log ("get", pointer);
+
+            const node = this .pointers .get (pointer);
+
+            return [... this .getMatrix (node)];
+         },
+         Function .prototype,
+         "float4x4",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/globalMatrix`,
+         (pointer) =>
+         {
+            // if (DEVELOPMENT)
+            //    console .log ("get", pointer);
+
+            const
+               node      = this .pointers .get (pointer),
+               nodeIndex = node .getMetaData ("Interactivity/node") [0] ?? -1;
+
+            return [... this .getModelMatrix (nodeIndex, this .Matrix4 .set ())];
+         },
+         Function .prototype,
+         "float4x4",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/camera`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node        = this .pointers .get (pointer),
+                  cameraIndex = node .getMetaData ("Interactivity/camera") [0] ?? -1;
+
+               if (cameraIndex >= 0)
+                  return [`/cameras/${cameraIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/mesh`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+                  node      = this .transformNodes .get (nodeIndex),
+                  meshIndex = node .getMetaData ("Interactivity/mesh") [0] ?? -1;
+
+               if (meshIndex >= 0)
+                  return [`/meshes/${meshIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/extensions/KHR_lights_punctual/light`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node       = this .pointers .get (pointer),
+                  lightIndex = node .getMetaData ("Interactivity/light") [0] ?? -1;
+
+               if (lightIndex >= 0)
+                  return [`/extensions/KHR_lights_punctual/lights/${lightIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      // // Register pointers for the node weights.
+
+      // this .engine .registerJsonPointer (
+      //    `/nodes/${numNodes}/weights.length`,
+      //    (pointer) =>
+      //    {
+      //       return this .cache .getOrInsertComputed (pointer, () =>
+      //       {
+      //          const
+      //             nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+      //             weights   = this .pointers .get (`/nodes/${nodeIndex}/weights`);
+
+      //          return [weights ?._value .length];
+      //       });
+      //    },
+      //    Function .prototype,
+      //    "int",
+      //    true
+      // );
+
+      // this .engine .registerJsonPointer (
+      //    `/nodes/${numNodes}/weights`,
+      //    (pointer) =>
+      //    {
+      //       console .log (pointer)
+      //    },
+      //    (pointer, value) =>
+      //    {
+      //       console .log (pointer)
+      //    },
+      //    "float",
+      //    false
+      // );
+
+      // console .log (this .engine .getPathValue ("/nodes/5/KHR_lights_punctual/light/range"));
+
+      // Register common node pointers.
 
       const pointers = new Map (Array .from (this .pointers, ([pointer, node]) =>
       {
@@ -18508,13 +18747,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
          this .registerJsonPointer (pointer, node);
 
       // DEBUG
-      // console .log (this .engine .resolveJsonPtr ("/extensions/KHR_interactivity/activeCamera/perspective/yfov") ?.getterCallback ("/extensions/KHR_interactivity/activeCamera/perspective/yfov"));
+      // console .log (this .engine .getPathValue ("/nodes/75/translation"));
    },
    registerJsonPointer (pointer, node)
    {
       // Register getter and setter for the property.
 
-      if (/(?:^\/meshes\/)/ .test (pointer))
+      if (/^\/(?:scenes\/)|(?:scenes|cameras|materials|meshes)\/\d+$|\/(?:scenes|camera|material)$/ .test (pointer))
          return;
 
       const
@@ -18532,43 +18771,46 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
             // if (DEVELOPMENT)
             //    console .log ("get", pointer);
 
-            const [baseColor, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  node      = this .pointers .get (pointer),
-                  field     = node .getField (external_X_ITE_X3D_GLTFPointerAliases_default().getAlias (pointer, node)),
-                  baseColor = external_X_ITE_X3D_GLTFPointerAliases_default().isBaseColor (node, field);
+            const [node, field, flags] = this .cache
+               .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
 
-               return [baseColor, field, node ._transparency];
-            });
+            if (!node)
+               return;
 
             switch (field .getType ())
             {
                case (external_X_ITE_X3D_X3DConstants_default()).SFBool:
+                  return flags === SOLID_FLAG ? [!field .getValue ()] : [field .getValue ()];
                case (external_X_ITE_X3D_X3DConstants_default()).SFDouble:
                case (external_X_ITE_X3D_X3DConstants_default()).SFFloat:
                case (external_X_ITE_X3D_X3DConstants_default()).SFInt32:
                case (external_X_ITE_X3D_X3DConstants_default()).SFTime:
                   return [field .getValue ()];
                case (external_X_ITE_X3D_X3DConstants_default()).SFColor:
-                  return baseColor ? [... field, 1 - transparency .getValue ()] : [... field];
+               {
+                  switch (flags)
+                  {
+                     case BASE_COLOR_FLAG:
+                        return [... field, 1 - node ._transparency .getValue ()];
+                     case SPECULAR_COLOR_FLAG:
+                        return [... this .Vector3 .set (... field) .multiply (node ._specularStrength .getValue ())];
+                     default:
+                        return [... field];
+                  }
+               }
                case (external_X_ITE_X3D_X3DConstants_default()).SFRotation:
                   return [... field .getValue () .getQuaternion (this .Quaternion)];
                default:
                   return [... field];
             }
-         } : () => [ ],
+         } : Function .prototype,
          field .isWritable () ? (pointer, value) =>
          {
-            const [baseColor, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  node      = this .pointers .get (pointer),
-                  field     = node .getField (external_X_ITE_X3D_GLTFPointerAliases_default().getAlias (pointer, node)),
-                  baseColor = external_X_ITE_X3D_GLTFPointerAliases_default().isBaseColor (node, field);
+            const [node, field, flags] = this .cache
+               .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
 
-               return [baseColor, field, node ._transparency];
-            });
+            if (!node)
+               return;
 
             // if (DEVELOPMENT)
             //    console .log ("set", pointer, field .getName (), value);
@@ -18576,6 +18818,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
             switch (field .getType ())
             {
                case (external_X_ITE_X3D_X3DConstants_default()).SFBool:
+                  field .setValue (flags === SOLID_FLAG ? !value : value);
+                  break;
                case (external_X_ITE_X3D_X3DConstants_default()).SFDouble:
                case (external_X_ITE_X3D_X3DConstants_default()).SFFloat:
                case (external_X_ITE_X3D_X3DConstants_default()).SFInt32:
@@ -18586,8 +18830,30 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
                {
                   field .setValue (this .Color3 .set (... value));
 
-                  if (baseColor)
-                     transparency .setValue (1 - value [3]);
+                  switch (flags)
+                  {
+                     case BASE_COLOR_FLAG:
+                     {
+                        field .setValue (this .Color3 .set (... value));
+                        node ._transparency .setValue (1 - value [3]);
+                        break;
+                     }
+                     case SPECULAR_COLOR_FLAG:
+                     {
+                        const specularStrength = Math .max (... value, 1);
+
+                        this .Vector3 .set (... value) .divide (specularStrength);
+
+                        field .setValue (this .Color3 .set (... this .Vector3));
+                        node ._specularStrength .setValue (specularStrength);
+                        break;
+                     }
+                     default:
+                     {
+                        field .setValue (this .Color3 .set (... value));
+                        break;
+                     }
+                  }
 
                   break;
                }
@@ -18626,59 +18892,71 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
          !field .isWritable () // read-only
       );
    },
+   getFieldFromPointer (pointer)
+   {
+      const node = this .pointers .get (pointer);
+
+      if (!node)
+         return [ ];
+
+      const field = node .getField (external_X_ITE_X3D_GLTFPointerAliases_default().getAlias (pointer, node));
+
+      let flags;
+
+      if (external_X_ITE_X3D_GLTFPointerAliases_default().isBaseColor (node, field))
+         flags = BASE_COLOR_FLAG;
+      else if (external_X_ITE_X3D_GLTFPointerAliases_default().isSpecularColor (node, field))
+         flags = SPECULAR_COLOR_FLAG;
+      else if (field .getName () === "solid")
+         flags = SOLID_FLAG;
+
+      return [node, field, flags];
+   },
    set_pointing__ ()
    {
       const
          browser     = this .getBrowser (),
          hit         = browser .getHit (),
-         shapeParent = hit .shapeParent,
-         parentIndex = +shapeParent ?.getMetaData ("Interactivity/node", new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
-         nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
+         parentNode  = hit .parentNode,
+         parentIndex = parentNode ?.getMetaData ("Interactivity/node") [0];
 
       // if (DEVELOPMENT)
-      //    console .log (hit .type, nodeIndex);
+      //    browser .println (hit .type, parentIndex);
 
       switch (hit .type)
       {
          case (external_X_ITE_X3D_PointingType_default()).MOVE:
          {
-            this .engine .hoverOn (nodeIndex, 0);
-
-            for (const sensor of hit .sensors .keys ())
-            {
-               if (sensor .getType () .at (-1) === (external_X_ITE_X3D_X3DConstants_default()).HoverabilityExtension)
-                  hit .sensors .delete (sensor);
-            }
-
+            this .engine .hoverOn (parentIndex, 0);
             break;
          }
          case (external_X_ITE_X3D_PointingType_default()).RELEASE:
          {
-            if (!shapeParent)
+            if (parentIndex === undefined)
                break;
+
+            // Prevent dblclick.
+            hit .dblclick = false;
 
             const selectionPoint = this .Matrix4
                .assign (hit .modelViewMatrix)
                .inverse ()
-               .multRight (shapeParent .getMatrix ())
+               .multRight (parentNode .getMatrix ())
                .multVecMatrix (hit .point .copy ());
 
             const selectionRayOrigin = this .Matrix4
                .multVecMatrix (hit .ray .point .copy ());
 
-            this .engine .select (nodeIndex, 0, [... selectionPoint], [... selectionRayOrigin]);
+            this .engine .select (parentIndex, 0, [... selectionPoint], [... selectionRayOrigin]);
             break;
          }
       }
    },
    getWorld ()
    {
-      return this .world ??= (() =>
-      {
-         return {
-            animations: new Array (this .animations .length),
-         };
-      })();
+      return this .world ??= {
+         animations: new Array (this .animations .length),
+      };
    },
    startAnimation (animationIndex, startTime, stopTime, speed, endCallback)
    {
@@ -18688,8 +18966,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
          return;
 
       const
-         currentTime    = this .getBrowser () .getCurrentTime (),
-         cycleInterval  = timeSensor [_cycleInterval],
+         currentTime    = Date .now () / 1_000,
+         cycleInterval  = timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 1,
          signedDuration = (stopTime - startTime) % cycleInterval;
 
       if (startTime < 0 || startTime > cycleInterval)
@@ -18708,7 +18986,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
       // if (DEVELOPMENT)
       //    console .log ("start", animationIndex, startTime, stopTime, cycleInterval, startTime === stopTime)
 
-      timeSensor ._cycleInterval = cycleInterval * speed;
+      timeSensor ._cycleInterval = cycleInterval / speed;
       timeSensor ._reverse       = reverse;
       timeSensor ._range [0]     = startTime / cycleInterval;
       timeSensor ._startTime     = currentTime;
@@ -18757,7 +19035,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
       // if (DEVELOPMENT)
       //    console .log ("stop", animationIndex)
 
-      timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+      timeSensor ._stopTime = Date .now () / 1_000;
 
       timeSensor [_doneCallback] = undefined;
    },
@@ -18771,10 +19049,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
       if (!timeSensor [_active])
          return;
 
-      if (stopTime >= timeSensor [_cycleInterval])
+      const cycleInterval = timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 1;
+
+      if (stopTime >= cycleInterval)
          return;
 
-      timeSensor ._range [2] = stopTime / timeSensor [_cycleInterval];
+      timeSensor ._range [2] = stopTime / cycleInterval;
 
       timeSensor [_doneCallback] = stopCallback;
 
@@ -18791,13 +19071,26 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
 
       while ((node = this .transformNodes .get (nodeIndex)))
       {
-         modelMatrix .multRight (node .getMatrix ());
+         modelMatrix .multRight (this .getMatrix (node));
 
          nodeIndex = this .parents .get (node);
       }
 
       return modelMatrix;
    },
+   getMatrix: (() =>
+   {
+      const matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+
+      return function (node)
+      {
+         return matrix .setTransform (node ._translation .getValue (),
+                                      node ._rotation .getValue (),
+                                      node ._scale .getValue (),
+                                      node ._scaleOrientation .getValue (),
+                                      node ._center .getValue ());
+      };
+   })(),
 });
 
 Object .defineProperties (BehaviorEngine,
@@ -18806,12 +19099,12 @@ Object .defineProperties (BehaviorEngine,
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",   new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",    new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "graph",      new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "graphs",     new (external_X_ITE_X3D_Fields_default()).MFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "animations", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "nodes",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "version",  new (external_X_ITE_X3D_Fields_default()).SFString ("2.1")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "graph",    new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "graphs",   new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "nodes",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -19536,25 +19829,25 @@ const X3DInteractivitySensorNode_default_ = X3DInteractivitySensorNode;
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function HoverabilityExtension (executionContext)
 {
    X_ITE_X3DInteractivitySensorNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HoverabilityExtension);
-
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "isActive", new (external_X_ITE_X3D_Fields_default()).SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (HoverabilityExtension .prototype, X_ITE_X3DInteractivitySensorNode .prototype),
 {
-   push (renderObject, sensors)
+   push ()
    {
       const type = this .getBrowser () .getHit () .type;
 
       if (type !== (external_X_ITE_X3D_PointingType_default()).MOVE)
          return true;
-
-      X_ITE_X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
 
       return this ._hoverable .getValue ();
    },
@@ -19571,6 +19864,7 @@ Object .defineProperties (HoverabilityExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "hoverable",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isOver",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -20269,21 +20563,16 @@ materialInfo=getTransmissionInfo(materialInfo);
 #if defined(X3D_VOLUME_MATERIAL_EXT)
 materialInfo=getVolumeInfo(materialInfo);
 #endif
-#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-materialInfo=getDiffuseTransmissionInfo(materialInfo);
-#endif
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 materialInfo=getScatterInfo(materialInfo);vec3 singleScatter=multiToSingleScatter(materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy);
 #endif
 materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.,1.);materialInfo.alphaRoughness=materialInfo.perceptualRoughness*materialInfo.perceptualRoughness;vec3 f_specular_dielectric=vec3(0);vec3 f_diffuse=vec3(0);vec3 f_dielectric_brdf_ibl=vec3(0);float albedoSheenScaling=1.;
-#if defined(X3D_USE_IBL)||defined(X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined(X3D_USE_IBL)
 f_diffuse=getDiffuseLight(n)*baseColor.rgb;
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 albedoSheenScaling=1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotV,materialInfo.sheenRoughnessFactor);
 #endif
-#if defined(X3D_USE_IBL)
 vec3 f_dielectric_fresnel_ibl=getIBLGGXFresnel(n,v,materialInfo.perceptualRoughness,materialInfo.f0_dielectric,materialInfo.specularWeight);frontColor+=mix(f_diffuse,f_specular_dielectric,f_dielectric_fresnel_ibl)*albedoSheenScaling;
-#endif
 #endif
 #if defined(X3D_LIGHTING)
 for(int i=0;i<X3D_NUM_LIGHTS;++i){x3d_LightSourceParameters light=x3d_LightSource[i];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}if(distanceToLight<=light.radius||light.radius<0.){vec3 l=normalize(pointToLight);vec3 h=normalize(l+v);float NdotL=clamp(dot(n,l),0.,1.);float VdotH=clamp(dot(v,h),0.,1.);vec3 dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH));vec3 lightIntensity=getLightIntensity(light,l,distanceToLight);vec3 l_diffuse=vec3(0);vec3 l_specular_dielectric=vec3(0);vec3 l_dielectric_brdf=vec3(0);l_diffuse=lightIntensity*NdotL*BRDF_lambertian(baseColor.rgb);
@@ -20300,6 +20589,19 @@ return vec4(frontColor,x3d_ScatterMaterialIdEXT);}`
 const SubsurfaceScattering2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 vec3 multiToSingleScatter(const in vec3 multiscatterColor,const in float scatterStrength,const in float scatterAnisotropy){vec3 rhoMs=multiscatterColor*scatterStrength;vec3 s=4.09712+4.20863*rhoMs-sqrt(9.59217+41.6808*rhoMs+17.7126*rhoMs*rhoMs);s=clamp(s,0.,1.);vec3 zeroInput=vec3(equal(rhoMs,vec3(0)));s=mix(s,vec3(1),zeroInput);vec3 rhoSs=(1.-s*s)/(1.-scatterAnisotropy*s*s);return clamp(rhoSs,0.,1.);}
+#if defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined(X3D_USE_IBL)
+vec3 getDiffuseLight(const in vec3 n);
+#endif
+const int SCATTER_VOLUME_STEPS=16;float henyeyGreenstein(const in float g,const in float cosTheta){float gSq=g*g;float denom=1.+gSq-2.*g*cosTheta;return(1.-gSq)/(4.*M_PI*pow(denom,1.5));}vec3 getVolumeSingleScattering(vec3 v,vec3 n,float ior,vec3 attenuationColor,float attenuationDistance,vec3 multiscatterColor,float scatterStrength,float scatterAnisotropy,vec3 frontWorldPos,float thicknessMap,mat4 modelMatrix){vec3 outgoingDir=v;vec3 refractedDir=refract(-outgoingDir,n,1./ior);if(dot(refractedDir,refractedDir)<1e-4)refractedDir=-outgoingDir;float modelScale=length(modelMatrix[0].xyz);float cosRay=1.;float chordLength=thicknessMap*modelScale;vec3 sigma_t=vec3(0);if(attenuationDistance>0.){vec3 attenuation=max(attenuationColor,vec3(1e-4));sigma_t=max(-log(attenuation)/attenuationDistance,vec3(0));}vec3 sigma_s=sigma_t*multiToSingleScatter(multiscatterColor,scatterStrength,scatterAnisotropy);float stepLength=chordLength/float(SCATTER_VOLUME_STEPS);vec3 scattered=vec3(0);for(int i=1;i<=SCATTER_VOLUME_STEPS;++i){float t=(float(i)-.5)*stepLength;vec3 samplePos=frontWorldPos+refractedDir*t;vec3 inscatter=vec3(0);
+#if defined(X3D_LIGHTING)
+for(int l=0;l<X3D_NUM_LIGHTS;++l){x3d_LightSourceParameters light=x3d_LightSource[l];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}vec3 lightIntensity=getLightIntensity(light,normalize(pointToLight),distanceToLight);float lightDist=max(length(pointToLight),1e-4);vec3 lightDir=-pointToLight/lightDist;float phase=henyeyGreenstein(scatterAnisotropy,dot(lightDir,outgoingDir));inscatter+=lightIntensity*phase;}
+#endif
+#if defined(X3D_USE_IBL)
+inscatter+=getDiffuseLight(n)/M_PI;
+#endif
+inscatter*=sigma_s;vec3 transmittance=exp(-sigma_t*t*(1.+cosRay));scattered+=inscatter*transmittance*stepLength;}return scattered;}
+#endif
 #if!defined(X3D_SCATTER_PASS)
 uniform vec3 x3d_ScatterSamplesEXT[X3D_SCATTER_SAMPLES_COUNT_EXT];uniform float x3d_ScatterMinRadiusEXT;uniform sampler2D x3d_ScatterSamplerEXT;uniform sampler2D x3d_ScatterDepthSamplerEXT;const float M_1_PI=1./M_PI;vec3 burley_setup(const in vec3 radius,const in vec3 albedo){vec3 a=albedo-.8;vec3 s=1.9-albedo+3.5*(a*a);vec3 l=.25*M_1_PI*radius;return l/s;}vec3 burley_eval(const in vec3 d,const in float r){vec3 exp_r_3_d=exp(-r/(3.*d));vec3 exp_r_d=exp_r_3_d*exp_r_3_d*exp_r_3_d;return(exp_r_d+exp_r_3_d)/(4.*d);}vec3 getSubsurfaceScattering(const in vec3 vertex,const in mat4 projectionMatrix,const in float attenuationDistance,const in vec3 diffuseColor,const in vec3 multiscatterColor,const in float scatterStrength,const in float scatterAnisotropy,const in vec3 singleScatter,const in vec4 fragCoord){vec3 multiScatter=scatterStrength*multiscatterColor;vec3 scatterDistance=attenuationDistance*mix(multiScatter,singleScatter,abs(scatterAnisotropy));float maxColor=max3(scatterDistance);vec3 vMaxColor=max(vec3(maxColor),vec3(.00001));vec2 texelSize=1./vec2(x3d_Viewport.zw);mat4 invProjectionMatrix=inverse(projectionMatrix);vec2 uv=fragCoord.xy*texelSize;vec4 centerSample=textureLod(x3d_ScatterSamplerEXT,uv,0.);float centerDepth=textureLod(x3d_ScatterDepthSamplerEXT,uv,0.).r;centerDepth=centerDepth*2.-1.;vec2 clipUV=uv*2.-1.;vec4 clipSpacePosition=vec4(clipUV.xy,centerDepth,1.);vec4 upos=invProjectionMatrix*clipSpacePosition;vec3 fragViewPosition=upos.xyz/upos.w;upos=invProjectionMatrix*vec4(clipUV.x+texelSize.x,clipUV.y,centerDepth,1.);vec3 offsetViewPosition=upos.xyz/upos.w;float mPerPixel=distance(fragViewPosition,offsetViewPosition);float maxRadiusPixels=maxColor/mPerPixel;if(maxRadiusPixels<=1.)return centerSample.rgb*diffuseColor;centerDepth=fragViewPosition.z;vec3 totalWeight=vec3(0);vec3 totalDiffuse=vec3(0);vec3 clampedScatterDistance=max(vec3(x3d_ScatterMinRadiusEXT),scatterDistance/maxColor)*maxColor;vec3 d=burley_setup(clampedScatterDistance,vec3(1));for(int i=0;i<X3D_SCATTER_SAMPLES_COUNT_EXT;++i){vec3 scatterSample=x3d_ScatterSamplesEXT[i];float fabAngle=scatterSample.x;float r=scatterSample.y*maxRadiusPixels*texelSize.x;float rcpPdf=scatterSample.z;vec2 sampleCoords=vec2(cos(fabAngle),sin(fabAngle))*r;vec2 sampleUV=uv+sampleCoords;vec4 textureSample=textureLod(x3d_ScatterSamplerEXT,sampleUV,0.);if(centerSample.w!=textureSample.w)continue;float sampleDepth=textureLod(x3d_ScatterDepthSamplerEXT,sampleUV,0.).r;sampleDepth=sampleDepth*2.-1.;vec2 sampleClipUV=sampleUV*2.-1.;vec4 sampleUpos=invProjectionMatrix*vec4(sampleClipUV.xy,sampleDepth,1.);vec3 sampleViewPosition=sampleUpos.xyz/sampleUpos.w;float sampleDistance=distance(sampleViewPosition,fragViewPosition);vec3 weight=burley_eval(d,sampleDistance)*rcpPdf;totalWeight+=weight;totalDiffuse+=weight*textureSample.rgb;}totalWeight=max(totalWeight,vec3(.0001));return totalDiffuse/totalWeight*diffuseColor;}
 #endif
@@ -20504,25 +20806,25 @@ const ScatterMaterialExtension_default_ = ScatterMaterialExtension;
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function SelectabilityExtension (executionContext)
 {
    X_ITE_X3DInteractivitySensorNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).SelectabilityExtension);
-
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "isOver", new (external_X_ITE_X3D_Fields_default()).SFBool (),);
 }
 
 Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X_ITE_X3DInteractivitySensorNode .prototype),
 {
-   push (renderObject, sensors)
+   push ()
    {
       const type = this .getBrowser () .getHit () .type;
 
       if (type !== (external_X_ITE_X3D_PointingType_default()).PRESS && type !== (external_X_ITE_X3D_PointingType_default()).RELEASE)
          return true;
-
-      X_ITE_X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
 
       return this ._selectable .getValue ();
    },
@@ -20538,6 +20840,7 @@ Object .defineProperties (SelectabilityExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description", new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "selectable",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isOver",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,

@@ -1,3 +1,11 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@latest/dist/x_ite-sog-parser-2.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-4.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-123.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@latest/dist/x_ite-off-parser.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-vrml1-parser@latest/dist/x_ite-vrml1-parser.min.js";
+
+const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
+
 class Playground
 {
    autoUpdate = true;
@@ -10,13 +18,18 @@ class Playground
 
    constructor ()
    {
-      // Also change version in playground.md!
-      require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@0.54.0/min/vs" }});
+      require .config ({ paths: { "vs": `https://cdn.jsdelivr.net/npm/monaco-editor${MONACO_VERSION}/min/vs` }});
       require (["vs/editor/editor.main"], () => this .setup ());
    }
 
    async setup ()
    {
+      // Console
+
+      this .redirectConsoleMessages ();
+
+      console .info (X3D .getBrowser () .getWelcomeMessage ());
+
       // Handle color scheme changes.
       // Must be done at first.
 
@@ -53,7 +66,19 @@ class Playground
          fullSize: false,
       });
 
+      const
+         searchParams = new URL (location) .searchParams,
+         url          = searchParams .get ("url") ?? new URL ("playground.x3d", import .meta .url);
+
+      if (searchParams .get ("play") === "false")
+         browser .endUpdate ();
+
+      if (searchParams .has ("fullSize"))
+         this .localStorage .fullSize = searchParams .get ("fullSize") === "true";
+
+      this .addX3DEncoding ();
       this .addVRMLEncoding ();
+      this .addGLSL ();
       this .updateToolbar ();
 
       browser .contextMenu .userMenu = () => this .updateUserMenu ();
@@ -62,25 +87,24 @@ class Playground
 
       // Handle url parameter.
 
-      const url = new URL (location) .searchParams .get ("url")
-         ?? "/x_ite/assets/playground/playground.x3d";
+      browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, () =>
+      {
+         browser .removeBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT);
+
+         browser .baseURL = browser .getWorldURL ();
+
+         const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
+
+         this .updateLanguage (encoding);
+
+         model .setValue (browser .currentScene [`to${encoding}String`] ());
+      });
 
       browser .baseURL = url;
 
-      browser .endUpdate ();
-
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-      const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
-
-      monaco .editor .setModelLanguage (model, encoding .toLowerCase ());
-
-      this .updateLanguage (encoding);
-
-      model .setValue (browser .currentScene [`to${encoding}String`] ());
       model .onDidChangeContent (event => this .onDidChangeContent (event));
-
-      browser .beginUpdate ();
 
       // Keyboard shortcuts.
 
@@ -89,7 +113,10 @@ class Playground
 
    changeColorScheme ()
    {
-      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
+      const html = document .querySelector ("html");
+
+      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches
+         || html .getAttribute ("data-bs-theme") === "dark") && (html .getAttribute ("data-bs-theme") !== "light");
 
       monaco .editor .setTheme (darkMode ? "vs-dark" : "vs-light");
    }
@@ -135,59 +162,69 @@ class Playground
 
       fileReader .addEventListener ("load", async () =>
       {
-         await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
+         const
+            blob = new Blob ([fileReader .result], { type: "application/octet-stream" }),
+            url  = URL .createObjectURL (blob);
+
+         await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+         URL .revokeObjectURL (url);
 
          this .model .setValue (this .browser .currentScene .toXMLString ());
-         monaco .editor .setModelLanguage (this .model, "xml");
          this .updateLanguage ("XML");
       });
 
-      fileReader .readAsDataURL (file);
+      fileReader .readAsArrayBuffer (file);
    }
 
    async applyChanges ()
    {
       const
-         browser         = this .browser,
-         editor          = this .editor,
-         model           = this .model,
-         activeViewpoint = browser .activeViewpoint ?.getValue (),
-         text            = editor .getValue (),
-         url             = encodeURI (`data:,${text}`);
+         browser              = this .browser,
+         editor               = this .editor,
+         activeViewpoint      = browser .getActiveViewpoint (),
+         activeNavigationInfo = browser .getActiveNavigationInfo (),
+         text                 = editor .getValue (),
+         url                  = encodeURI (`data:,${text}`);
 
       $("#refresh-button") .addClass ("selected");
 
-      if (activeViewpoint)
+      // If there is no active layer, then active viewpoint is null.
+      const
+         userPosition         = activeViewpoint ?.getUserPosition () .copy (),
+         userOrientation      = activeViewpoint ?.getUserOrientation () .copy (),
+         userCenterOfRotation = activeViewpoint ?.getUserCenterOfRotation () .copy (),
+         fieldOfViewScale     = activeViewpoint ?.getFieldOfViewScale (),
+         nearDistance         = activeViewpoint ?.getNearDistance (activeNavigationInfo),
+         farDistance          = activeViewpoint ?.getFarDistance (activeNavigationInfo);
+
+      try
       {
-         var
-            userPosition         = activeViewpoint .getUserPosition () .copy (),
-            userOrientation      = activeViewpoint .getUserOrientation () .copy (),
-            userCenterOfRotation = activeViewpoint .getUserCenterOfRotation () .copy (),
-            fieldOfViewScale     = activeViewpoint .getFieldOfViewScale (),
-            nearDistance         = activeViewpoint .getNearDistance (),
-            farDistance          = activeViewpoint .getFarDistance ();
+         await browser .loadURL (new X3D .MFString (url));
+
+         // If there is no active layer, then active viewpoint is null.
+         const activeViewpoint = browser .getActiveViewpoint ();
+
+         if (activeViewpoint && userPosition)
+         {
+            activeViewpoint .setUserPosition (userPosition);
+            activeViewpoint .setUserOrientation (userOrientation);
+            activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
+            activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
+            activeViewpoint .setNearDistance (nearDistance);
+            activeViewpoint .setFarDistance (farDistance);
+         }
+
+         this .changed = false;
+
+         this .updateLanguage (browser .currentScene .encoding);
+
+         $("#refresh-button") .removeClass ("selected");
       }
-
-      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-      if (activeViewpoint && browser .activeViewpoint)
+      catch (error)
       {
-         const activeViewpoint = browser .activeViewpoint .getValue ();
-
-         activeViewpoint .setUserPosition (userPosition);
-         activeViewpoint .setUserOrientation (userOrientation);
-         activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
-         activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
-         activeViewpoint .setNearDistance (nearDistance);
-         activeViewpoint .setFarDistance (farDistance);
+         console .error (error);
       }
-
-      monaco .editor .setModelLanguage (model, browser .currentScene .encoding .toLowerCase ());
-
-      this .changed = false;
-
-      $("#refresh-button") .removeClass ("selected");
-      this .updateLanguage (browser .currentScene .encoding);
    }
 
    updateToolbar ()
@@ -211,9 +248,13 @@ class Playground
          ".vrml",
          ".gltf",
          ".glb",
+         ".vrm",
          ".obj",
          ".stl",
          ".ply",
+         ".sog",
+         ".spz",
+         ".off",
          ".svg",
          ".svgz",
       ];
@@ -229,7 +270,7 @@ class Playground
          .appendTo (toolbar);
 
       $("<button></button>")
-         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), OBJ, STL, PLY, SVG).")
+         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SOG, SPZ, OFF, SVG).")
          .addClass ("material-symbols-outlined")
          .text ("file_open")
          .on ("click", () =>
@@ -314,7 +355,7 @@ class Playground
       $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
       this .fullSizeButton = $("<button></button>")
-         .attr ("title", "View browser in full size.")
+         .attr ("title", "Maximize browser.")
          .addClass ("material-symbols-outlined")
          .text ("fullscreen")
          .on ("click", () =>
@@ -339,7 +380,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toXMLString ());
-            monaco .editor .setModelLanguage (model, "xml");
             this .updateLanguage ("XML");
          })
          .appendTo (right);
@@ -354,7 +394,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toVRMLString ());
-            monaco .editor .setModelLanguage (model, "vrml");
             this .updateLanguage ("VRML");
          })
          .appendTo (right);
@@ -369,7 +408,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toJSONString ());
-            monaco .editor .setModelLanguage (model, "json");
             this .updateLanguage ("JSON");
          })
          .appendTo (right);
@@ -379,6 +417,10 @@ class Playground
    {
       $(".language") .removeClass ("selected");
       $(`.language.${encoding}`) .addClass ("selected");
+
+      const language = { XML: "x3d", VRML: "x3dv", JSON: "json" } [encoding];
+
+      monaco .editor .setModelLanguage (this .model, language);
    }
 
    setFullSize (fullSize)
@@ -419,30 +461,6 @@ class Playground
          canvas  = this .canvas;
 
       return {
-         "antialiased": {
-            name: "Antialiased",
-            type: "checkbox",
-            selected: browser .getBrowserOption ("Antialiased"),
-            events: {
-               click ()
-               {
-                  canvas .attr ("antialiased", !browser .getBrowserOption ("Antialiased"));
-               },
-            },
-         },
-         "pixelated": {
-            name: "Pixelated",
-            type: "checkbox",
-            selected: this .pixelated,
-            events: {
-               click: () =>
-               {
-                  this .pixelated = !this .pixelated;
-
-                  canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
-               },
-            },
-         },
          "content-scale": {
             name: "Content Scale",
             items: {
@@ -486,9 +504,33 @@ class Playground
                      click () { canvas .attr ("contentScale", "auto"); },
                   },
                },
+               "separator0": "--------",
+               "antialiased": {
+                  name: "Antialiased",
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("Antialiased"),
+                  events: {
+                     click ()
+                     {
+                        canvas .attr ("antialiased", String (!browser .getBrowserOption ("Antialiased")));
+                     },
+                  },
+               },
+               "pixelated": {
+                  name: "Pixelated",
+                  type: "checkbox",
+                  selected: this .pixelated,
+                  events: {
+                     click: () =>
+                     {
+                        this .pixelated = !this .pixelated;
+
+                        canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
+                     },
+                  },
+               },
             },
          },
-         "separator0": "--------",
          "oit": {
             name: "Order Independent Transparency",
             type: "checkbox",
@@ -496,7 +538,7 @@ class Playground
             events: {
                click ()
                {
-                  canvas .attr ("orderIndependentTransparency", !browser .getBrowserOption ("OrderIndependentTransparency"));
+                  canvas .attr ("orderIndependentTransparency", String (!browser .getBrowserOption ("OrderIndependentTransparency")));
                },
             },
          },
@@ -507,26 +549,199 @@ class Playground
             events: {
                click ()
                {
-                  canvas .attr ("logarithmicDepthBuffer", !browser .getBrowserOption ("LogarithmicDepthBuffer"));
+                  canvas .attr ("logarithmicDepthBuffer", String (!browser .getBrowserOption ("LogarithmicDepthBuffer")));
                },
             },
          },
       };
    }
 
+   redirectConsoleMessages ()
+   {
+      const output = (log, command) =>
+      {
+         return (... args) =>
+         {
+            log .apply (console, args);
+
+            this .addConsoleMessage (command, args .map (String) .join (" "));
+         };
+      }
+
+      for (const command of ["debug", "log", "info", "warn", "error"])
+         console [command] = output (console [command], command);
+   }
+
+   CONSOLE_MAX = 1000;
+
+   excludes = [
+      /No suitable|of an UNKNOWN touch/,
+   ];
+
+   #messageTime = 0;
+
+   addConsoleMessage (level, message)
+   {
+      if (this .excludes .some (exclude => exclude .test (message)))
+         return;
+
+      const
+         console = $(".console"),
+         text    = $("<p></p>") .addClass (level) .text (message);
+
+      if (performance .now () - this .#messageTime > 1000)
+         console .append ($("<p></p>") .addClass ("splitter"));
+
+      this .#messageTime = performance .now ();
+
+      console .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
+      console .append (text);
+      console .scrollTop (console .prop ("scrollHeight"));
+   }
+
+   addX3DEncoding ()
+   {
+      monaco .languages .setMonarchTokensProvider ("x3d",
+      {
+         defaultToken: '',
+         tokenPostfix: '.xml',
+
+         ignoreCase: true,
+
+         // Useful regular expressions
+         qualifiedName: /(?:[\w\.\-]+:)?[\w\.\-]+/,
+
+         tokenizer: {
+            root: [
+               [/[^<&]+/, ''],
+
+               { include: '@whitespace' },
+
+               // Standard opening tag
+               [/(<)(@qualifiedName)/, [{ token: 'delimiter' }, { token: 'tag', next: '@tag' }]],
+
+               // Standard closing tag
+               [
+                  /(<\/)(@qualifiedName)(\s*)(>)/,
+                  [{ token: 'delimiter' }, { token: 'tag' }, '', { token: 'delimiter' }]
+               ],
+
+               // Meta tags - instruction
+               [/(<\?)(@qualifiedName)/, [{ token: 'delimiter' }, { token: 'metatag', next: '@tag' }]],
+
+               // Meta tags - declaration
+               [/(<\!)(@qualifiedName)/, [{ token: 'delimiter' }, { token: 'metatag', next: '@tag' }]],
+
+               // CDATA
+               [/(<\!\[CDATA\[)\s*((?:ecmascript|javascript|vrmlscript):|data:(?:text|application)\/javascript,)/, [
+                  { token: 'string' },
+                  { token: 'comment', next: '@cdataEmbedded', nextEmbedded: 'text/javascript' },
+               ]],
+
+               // CDATA
+               [/(<\!\[CDATA\[)\s*(data:x-shader\/x-(?:vertex|fragment),)/, [
+                  { token: 'string' },
+                  { token: 'comment', next: '@cdataEmbedded', nextEmbedded: 'x-shader/x-vertex' },
+               ]],
+
+               // CDATA
+               [/<\!\[CDATA\[/, { token: 'delimiter.cdata', next: '@cdata' }],
+
+               [/&\w+;/, 'string.escape']
+            ],
+
+            cdataEmbedded: [
+               [/[^\]]+/, ''],
+               [/\]\]>/, { token: 'string', next: '@pop', nextEmbedded: '@pop' }],
+               [/\]/, '']
+            ],
+
+            cdata: [
+               [/[^\]]+/, ''],
+               [/\]\]>/, { token: 'delimiter.cdata', next: '@pop' }],
+               [/\]/, '']
+            ],
+
+            tag: [
+               [/[ \t\r\n]+/, ''],
+               [/(@qualifiedName)(\s*=\s*)("[^"]*"|'[^']*')/, ['attribute.name', '', 'attribute.value']],
+               [
+                  /(@qualifiedName)(\s*=\s*)("[^">?\/]*|'[^'>?\/]*)(?=[\?\/]\>)/,
+                  ['attribute.name', '', 'attribute.value']
+               ],
+               [/(@qualifiedName)(\s*=\s*)("[^">]*|'[^'>]*)/, ['attribute.name', '', 'attribute.value']],
+               [/@qualifiedName/, 'attribute.name'],
+               [/\?>/, { token: 'delimiter', next: '@pop' }],
+               [/(\/)(>)/, [{ token: 'tag' }, { token: 'delimiter', next: '@pop' }]],
+               [/>/, { token: 'delimiter', next: '@pop' }]
+            ],
+
+            whitespace: [
+               [/[ \t\r\n]+/, ''],
+               [/<!--/, { token: 'comment', next: '@comment' }]
+            ],
+
+            comment: [
+               [/[^<\-]+/, 'comment.content'],
+               [/-->/, { token: 'comment', next: '@pop' }],
+               [/<!--/, 'comment.content.invalid'],
+               [/[<\-]/, 'comment.content']
+            ]
+         }
+      });
+
+      monaco .languages .register ({
+         id: "x3d",
+         extensions: [".x3d"],
+         aliases: ["X3D"],
+         mimetypes: ["model/x3d+xml"],
+      });
+
+      monaco .languages .setLanguageConfiguration ("x3d", {
+         comments: {
+            blockComment: ['<!--', '-->']
+         },
+         brackets: [['<', '>']],
+         autoClosingPairs: [
+            { open: '<', close: '>' },
+            { open: "'", close: "'" },
+            { open: '"', close: '"' }
+         ],
+         surroundingPairs: [
+            { open: '<', close: '>' },
+            { open: "'", close: "'" },
+            { open: '"', close: '"' }
+         ],
+         onEnterRules: [
+            {
+               beforeText: new RegExp(`<([_:\\w][_:\\w-.\\d]*)([^/>]*(?!/)>)[^<]*$`, 'i'),
+               afterText: /^<\/([_:\w][_:\w-.\d]*)\s*>$/i,
+               action: {
+                  indentAction: monaco .languages .IndentAction .IndentOutdent
+               }
+            },
+            {
+               beforeText: new RegExp(`<(\\w[\\w\\d]*)([^/>]*(?!/)>)[^<]*$`, 'i'),
+               action: { indentAction: monaco .languages .IndentAction .Indent }
+            }
+         ]
+      });
+   }
+
    addVRMLEncoding ()
    {
-      const browser = this .browser;
+      const { browser } = this;
 
-      monaco .languages .setMonarchTokensProvider ("vrml",
+      monaco .languages .setMonarchTokensProvider ("x3dv",
       {
          defaultToken: "invalid",
-         tokenPostfix: ".vrml",
+         tokenPostfix: ".x3dv",
          keywords: [
-            "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS",
+            "PROFILE", "COMPONENT", "UNIT", "META", "EXTERNPROTO", "PROTO", "IS", "DEF", "USE", "ROUTE", "TO", "IMPORT", "EXPORT", "AS", "DESCRIPTION",
          ],
          profiles: Array .from (browser .supportedProfiles, ({name}) => name),
-         components: Array .from (browser .supportedComponents, ({name}) => name),
+         components: Array .from (browser .supportedComponents, ({name}) => name)
+            .filter (name => !name .match (/^(WebXR|X_ITE)$/)),
          nodes: Array .from (browser .concreteNodes, ({typeName}) => typeName),
          accessTypes: [
             // X3D
@@ -534,10 +749,8 @@ class Playground
             // VRML
             "field", "eventIn", "eventOut", "exposedField",
          ],
-         // fieldTypes: Array .from (browser .fieldTypes, ({typeName}) => typeName),
-         fieldTypes: [
-            "SFBool", "SFColor", "SFColorRGBA", "SFDouble", "SFFloat", "SFImage", "SFInt32", "SFMatrix3d", "SFMatrix3f", "SFMatrix4d", "SFMatrix4f", "SFNode", "SFRotation", "SFString", "SFTime", "SFVec2d", "SFVec2f", "SFVec3d", "SFVec3f", "SFVec4d", "SFVec4f", "MFBool", "MFColor", "MFColorRGBA", "MFDouble", "MFFloat", "MFImage", "MFInt32", "MFMatrix3d", "MFMatrix3f", "MFMatrix4d", "MFMatrix4f", "MFNode", "MFRotation", "MFString", "MFVec2d", "MFVec2f", "MFVec3d", "MFVec3f", "MFVec4d", "MFVec4f",
-         ],
+         fieldTypes: Array .from (browser .fieldTypes, ({typeName}) => typeName)
+            .filter (typeName => typeName .match (/^[SM]F/)), // Filter legacy VrmlMatrix type.
          id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/,
          escapes: /\\(?:[abfnrtv\\"'`]|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
          tokenizer: {
@@ -545,96 +758,280 @@ class Playground
                [/[,:.]/, "delimiter"],
                [/TRUE|FALSE|NULL/, "constant"],
                [/PROTO|EXTERNPROTO/, "regexp", "@typeName"],
-               [/DEF|USE|AS|ROUTE|TO|EXPORT/, "regexp", "@name"],
-               [/(IMPORT)(\s+)(@id)(\s*)(\.)(\s*)(@id)/, ["regexp", "", "type.identifier", "", "delimiter", "", "type.identifier"]],
-               [/@id(?=\s*\{)/, "keyword"], // type names
+               [/UNIT|DEF|USE|ROUTE|TO|EXPORT|IMPORT|AS/, "regexp", "@name"],
+               [/@id(?=\s*\{)/, "type.identifier"], // type names
                [/@id/, {
                   cases: {
                      "@keywords": "regexp",
                      "@profiles": "keyword",
                      "@components": "keyword",
-                     "@nodes": "keyword",
+                     "@nodes": "type.identifier",
                      "@accessTypes": "regexp",
                      "@fieldTypes": "type.identifier",
                      "@default": "attribute.name", // field names
                   },
                }],
+               [/#\/\*/, { token: "comment", bracket: "@open", next: "@blockComment" }],
                [/#.*/, "comment"],
                [/[{}\[\]]/, "@brackets"],
                [/[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/, "number.float"],
                [/0[xX][\da-fA-F]+/, "number.hex"],
                [/[+-]?\d+/, "number"],
-               [/"/,  { token: "string.quote", bracket: "@open", next: "@string" } ],
+               [/(")((?:ecmascript|javascript|vrmlscript):|data:(?:text|application)\/javascript,)/, [
+                  { token: "string.quote", bracket: "@open" },
+                  { token: "comment", next: "@stringEmbeddedJavaScript" },
+               ]],
+               [/(")(data:x-shader\/(?:x-vertex|x-fragment),)/, [
+                  { token: "string.quote", bracket: "@open" },
+                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "x-shader/x-vertex" },
+               ]],
+               [/"/, { token: "string.quote", bracket: "@open", next: "@string" }],
             ],
             typeName: [
-               [/@id/, "keyword", "@pop"],
+               [/@id/, "type.identifier", "@pop"],
             ],
             name: [
-               [/@id/, "type.identifier", "@pop"],
+               [/@id/, "constant", "@pop"],
+            ],
+            blockComment: [
+               [/[^#\/*]+/, "comment"],
+               [/\*\/#/, "comment", "@pop"],
+               [/[#\/*]/, "comment"],
+            ],
+            stringEmbeddedJavaScript: [
+               [/[^\\"'`]+/, { token: "@rematch", next: "@stringEmbeddedJavaScriptCode", nextEmbedded: "text/javascript" }],
+               [/`/,         "string", "@string_backtick"],
+               [/@escapes/,  "string.escape"],
+               [/\\./,       "string.escape.invalid"],
+               [/(?<!\\)"/,  { token: "string.quote", bracket: "@close", next: "@pop" }],
+            ],
+            stringEmbeddedJavaScriptCode: [
+               [/[^\\"'`]+/,  "string"],
+               [/\\".*?\\"/, { token: "string",   next: "@pop", nextEmbedded: "@pop" }],
+               [/'.*?'/,     { token: "string",   next: "@pop", nextEmbedded: "@pop" }],
+               [/`/,         { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+               [/@escapes/,  { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+               [/\\./,       { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+               [/(?<!\\)"/,  { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+            ],
+            string_backtick: [
+               [/[^`]+/, "string"],
+               [/`/,     "string", "@pop"],
+            ],
+            stringEmbedded: [
+               [/[^\\"]+/,  "string"],
+               [/@escapes/, "string.escape"],
+               [/\\./,      "string.escape.invalid"],
+               [/(?<!\\)"/, { token: "string.quote", bracket: "@close", next: "@pop", nextEmbedded: "@pop" }],
             ],
             string: [
                [/[^\\"]+/,  "string"],
                [/@escapes/, "string.escape"],
                [/\\./,      "string.escape.invalid"],
-               [/"/,        { token: "string.quote", bracket: "@close", next: "@pop" } ]
+               [/"/,        { token: "string.quote", bracket: "@close", next: "@pop" }],
             ],
          },
       });
 
       monaco .languages .register ({
-         id: "vrml",
+         id: "x3dv",
          extensions: [".x3dv"],
          aliases: ["VRML"],
          mimetypes: ["model/x3d+vrml"],
       });
 
-      monaco .languages .setLanguageConfiguration ("vrml",
+      monaco .languages .setLanguageConfiguration ("x3dv",
       {
+         comments: {
+            lineComment: "#",
+            blockComment: ["#/*", "*/#"],
+         },
          brackets: [["{", "}"], ["[", "]"], ["(", ")"]],
          autoClosingPairs: [
-         { open: "{", close: "}" },
-         { open: "[", close: "]" },
-         { open: "(", close: ")" },
-         { open: "\"", close: "\"" },
-         { open: "'", close: "'" },
+            { open: "{", close: "}" },
+            { open: "[", close: "]" },
+            { open: "(", close: ")" },
+            { open: "\"", close: "\"" },
+            { open: "'", close: "'" },
          ],
       });
+   }
+
+   addGLSL ()
+   {
+      const conf = {
+         comments: {
+            lineComment: "//",
+            blockComment: ["/*", "*/"],
+         },
+         brackets: [
+            ["{", "}"],
+            ["[", "]"],
+            ["(", ")"],
+         ],
+         autoClosingPairs: [
+            { open: "[", close: "]" },
+            { open: "{", close: "}" },
+            { open: "(", close: ")" },
+            { open: "'", close: "'", notIn: ["string", "comment"] },
+            { open: '"', close: '"', notIn: ["string"] },
+         ],
+         surroundingPairs: [
+            { open: "{", close: "}" },
+            { open: "[", close: "]" },
+            { open: "(", close: ")" },
+            { open: '"', close: '"' },
+            { open: "'", close: "'" },
+         ]
+      };
+
+      const keywords = [
+         "break", "case", "const", "continue", "discard", "do", "else", "flat", "for", "highp", "if", "in", "inout", "invariant", "lowp", "mediump", "out", "precision", "return", "smooth", "struct", "switch", "uniform", "while",
+      ];
+
+      const types = [
+         "bool", "bvec2", "bvec3", "bvec4", "float", "int", "ivec2", "ivec3", "ivec4", "mat2", "mat2x2", "mat2x3", "mat2x4", "mat3", "mat3x2", "mat3x3", "mat3x4", "mat4", "mat4x2", "mat4x3", "mat4x4", "sampler2D", "sampler3D", "samplerCube", "uint", "uvec2", "uvec3", "uvec4", "vec2", "vec3", "vec4", "void",
+      ];
+
+      const functions = [
+         "abs", "acos", "acosh", "all", "any", "asin", "asinh", "atan", "atanh", "ceil", "clamp", "cos", "cosh", "cross ", "degrees", "determinant", "dFdx", "dFdy", "distance", "dot", "equal", "exp", "exp2", "faceforward", "floatBitsToInt", "floatBitsToUint", "floor", "fract", "fwidth", "greaterThan", "greaterThanEqual", "intBitsToFloat", "inverse", "inversesqrt", "isinf", "isnan", "length", "lessThan ", "lessThanEqual", "log", "log2", "main", "matrixCompMult", "max", "min", "mix", "mod", "modf", "normalize", "not", "notEqual", "outerProduct", "packUnorm2x16", "pow", "radians", "reflect", "refract", "round", "roundEven", "sign", "sin", "sinh", "smoothstep", "sqrt", "step", "tan", "tanh", "texelFetch", "texelFetchOffset", "texture", "textureGrad", "textureGradOffset", "textureLod", "textureLodOffset", "textureProj", "textureProjGrad", "textureProjLod", "textureProjLodOffset", "textureSize", "transpose", "trunc", "uintBitsToFloat",
+      ];
+
+      const constants = [
+         "false", "true",
+      ];
+
+      const builtins = [
+         "gl_ClipDistance", "gl_CullDistance", "gl_FragCoord", "gl_FragDepth", "gl_FrontFacing", "gl_GlobalInvocationID", "gl_HelperInvocation", "gl_InstanceID", "gl_InvocationID", "gl_Layer", "gl_LocalInvocationID", "gl_LocalInvocationIndex", "gl_NumSamples", "gl_NumWorkGroups", "gl_PatchVerticesIn", "gl_PointCoord", "gl_PointSize", "gl_Position", "gl_PrimitiveID", "gl_PrimitiveIDIn", "gl_SampleID", "gl_SampleMask", "gl_SampleMaskIn", "gl_SamplePosition", "gl_TessCoord", "gl_TessLevelInner", "gl_TessLevelOuter", "gl_VertexID", "gl_ViewportIndex", "gl_WorkGroupID", "gl_WorkGroupSize",
+      ];
+
+      const language = {
+         tokenPostfix: ".glsl",
+         // Set defaultToken to invalid to see what you do not tokenize yet
+         defaultToken: "invalid",
+         keywords,
+         types,
+         functions,
+         constants,
+         builtins,
+         operators: [
+            "=",
+            ">",
+            "<",
+            "!",
+            "~",
+            "?",
+            ":",
+            "==",
+            "<=",
+            ">=",
+            "!=",
+            "&&",
+            "||",
+            "++",
+            "--",
+            "+",
+            "-",
+            "*",
+            "/",
+            "&",
+            "|",
+            "^",
+            "%",
+            "<<",
+            ">>",
+            ">>>",
+            "+=",
+            "-=",
+            "*=",
+            "/=",
+            "&=",
+            "|=",
+            "^=",
+            "%=",
+            "<<=",
+            ">>=",
+            ">>>=",
+         ],
+         symbols: /[=><!~?:&|+\-*\/\^%]+/,
+         escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+         integersuffix: /([uU](ll|LL|l|L)|(ll|LL|l|L)?[uU]?)/,
+         floatsuffix: /[fFlL]?/,
+         encoding: /u|u8|U|L/,
+
+         tokenizer: {
+            root: [
+               // data:mime-type,
+               [/data:x-shader\/x-(?:vertex|fragment),/, "string"],
+
+               // x3d_SpecialVariable
+               [/x3d_\w+/, "keyword"],
+
+               // identifiers and keywords
+
+               [/[a-zA-Z_]\w*/,
+               {
+                  cases: {
+                     "@keywords": { token: "keyword.$0" },
+                     "@types": { token: "type.identifier" },
+                     "@functions": { token: "attribute.name" },
+                     "@constants": { token: "constant" },
+                     "@builtins": { token: "regexp" },
+                     "@default": "identifier",
+                  }
+               }],
+
+               // Version
+               [/#version\s+\d+\s+es/, "keyword.directive"],
+
+               // Preprocessor directive (#define)
+               [/^\s*#\s*\w+/, "keyword.directive"],
+
+               // whitespace
+               { include: "@whitespace" },
+
+               // delimiters and operators
+               [/[{}()\[\]]/, "@brackets"],
+               [/@symbols/,
+               {
+                  cases: {
+                     "@operators": "operator",
+                     "@default": "",
+                  }
+               }],
+
+               // numbers
+               [/\d*\d+[eE]([\-+]?\d+)?(@floatsuffix)/, "number.float"],
+               [/\d*\.\d+([eE][\-+]?\d+)?(@floatsuffix)/, "number.float"],
+               [/0[xX][0-9a-fA-F']*[0-9a-fA-F](@integersuffix)/, "number.hex"],
+               [/0[0-7']*[0-7](@integersuffix)/, "number.octal"],
+               [/0[bB][0-1']*[0-1](@integersuffix)/, "number.binary"],
+               [/\d[\d']*\d(@integersuffix)/, "number"],
+               [/\d(@integersuffix)/, "number"],
+
+               // delimiter: after number because of .\d floats
+               [/[;,.]/, "delimiter"],
+            ],
+
+            comment: [
+               [/[^\/*]+/, "comment"],
+               [/\/\*/, "comment", "@push"],
+               ["\\*/", "comment", "@pop"],
+               [/[\/*]/, "comment"],
+            ],
+
+            whitespace: [
+               [/[ \t\r\n]+/, "white"],
+               [/\/\*/, "comment", "@comment"],
+               [/\/\/.*$/, "comment"],
+            ],
+         }
+      };
+
+      monaco .languages .register ({ id: "glsl", mimetypes: ["x-shader/x-vertex", "x-shader/x-fragment"] });
+      monaco .languages .setMonarchTokensProvider ("glsl", language);
+      monaco .languages .setLanguageConfiguration ("glsl", conf);
    }
 }
 
 Playground .run ();
-
-(() =>
-{
-   function output (log, classes)
-   {
-      let c;
-
-      return function (... args)
-      {
-         const
-            text     = args .join (" ") + "\n",
-            element  = $("<span></span>") .addClass (classes) .text (text),
-            console  = c ??= $(".console"),
-            children = console .children ();
-
-         if (text .match (/No suitable|of an UNKNOWN touch/))
-            return;
-
-         log .apply (this, args);
-
-         children .slice (0, Math .max (children .length - 200, 0)) .remove ();
-
-         console .append (element);
-         console .scrollTop (console .prop ("scrollHeight"));
-      }
-   }
-
-   console .log   = output (console .log,   "log");
-   console .info  = output (console .info,  ["info", "blue"]);
-   console .warn  = output (console .warn,  ["warn", "yellow"]);
-   console .error = output (console .error, ["error", "red"]);
-   console .debug = output (console .debug, "debug");
-
-   console .info (X3D .getBrowser () .getWelcomeMessage ());
-})();

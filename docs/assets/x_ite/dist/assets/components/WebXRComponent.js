@@ -1,4 +1,4 @@
-/* X_ITE v16.7.1 */
+/* X_ITE v16.8.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -460,26 +460,14 @@ Object .assign (X3DWebXRContext .prototype,
             return;
 
          const
-            gl             = this .getContext (),
-            mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-            session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local");
+            gl   = this .getContext (),
+            mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
 
          await gl .makeXRCompatible ();
 
-         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
+         const session = await navigator .xr .requestSession (mode);
 
-         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
-         session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
-         session .addEventListener ("end", () => this .xrStopSession ());
-
-         this [_referenceSpace] = referenceSpace;
-         this [_visible]        = true;
-         this [_inputSources]   = new Set ();
-         this [_inputRay]       = new (external_X_ITE_X3D_ScreenLine_default()) (this, 4, 2, 0.9);
-         this [_inputPoint]     = new Rendering_ScreenPoint (this);
-
-         Object .assign (this [_gamepads], { action: true });
+         this .setSession (session);
 
          this [_pose] = {
             cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -487,9 +475,22 @@ Object .assign (X3DWebXRContext .prototype,
             views: [ ],
          };
 
+         this [_referenceSpace] = await session .requestReferenceSpace ("local");;
+         this [_visible]        = true;
+         this [_inputSources]   = new Set ();
+         this [_inputRay]       = new (external_X_ITE_X3D_ScreenLine_default()) (this, 4, 2, 0.9);
+         this [_inputPoint]     = new Rendering_ScreenPoint (this);
+
+         Object .assign (this [_gamepads], { action: true });
+
          this .xrUpdateBaseLayer ({ }, session);
-         this .setSession (session);
          this .buttonReleaseEvent (NaN, NaN);
+
+         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
+
+         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
+         session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
+         session .addEventListener ("end", () => this .xrStopSession ());
 
          // Browser Options
 
