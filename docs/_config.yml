@@ -21,6 +21,8 @@ tagline: Ready for X3Dv4.1 and WebXR! # it will display as the sub-title
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser and VRML Viewer — View and Manipulate X3D, VRML, glTF and Other 3D Sources in HTML
 
+x_ite_latest_version: latest # the latest version of X_ITE, used in the playground page
+
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://create3000.github.io"
