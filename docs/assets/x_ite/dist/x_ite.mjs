@@ -1,7 +1,7 @@
 /* X_ITE v16.8.1 */
 var __webpack_modules__ = ({
 
-/***/ 169
+/***/ 303
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 667
+/***/ 821
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 919
+/***/ 189
 (module) {
 
 /**
@@ -20262,13 +20262,14 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, Base_X3D
 
       const browser = this .getBrowser ();
 
-      this ._MaxTextureSize       = browser .getMaxTextureSize ();
-      this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
-      this ._MaxLights            = browser .getMaxLights ();
       this ._ColorDepth           = browser .getColorDepth ();
-      this ._TextureMemory        = browser .getTextureMemory ();
       this ._MaxAnisotropicDegree = browser .getMaxAnisotropicDegree ();
+      this ._MaxLights            = browser .getMaxLights ();
+      this ._MaxRenderbufferSize  = browser .getMaxRenderbufferSize ();
       this ._MaxSamples           = browser .getMaxSamples ();
+      this ._MaxTextureSize       = browser .getMaxTextureSize ();
+      this ._TextureMemory        = browser .getTextureMemory ();
+      this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
 
       this .set_pixelsPerPoint__ ();
    },
@@ -20298,18 +20299,19 @@ Object .defineProperties (RenderingProperties,
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "Shading",                new x_ite_Fields .SFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxTextureSize",         new x_ite_Fields .SFInt32 ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "TextureUnits",           new x_ite_Fields .SFInt32 ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxLights",              new x_ite_Fields .SFInt32 ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "Antialiased",            new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "ColorDepth",             new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxLights",              new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxTextureSize",         new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "Shading",                new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "TextureMemory",          new x_ite_Fields .SFDouble ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "TextureUnits",           new x_ite_Fields .SFInt32 ()),
          // non-standard fields
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "ContentScale",           new x_ite_Fields .SFDouble (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "LogarithmicDepthBuffer", new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxAnisotropicDegree",   new x_ite_Fields .SFFloat (1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxSamples",             new x_ite_Fields .SFInt32 (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxRenderbufferSize",    new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxSamples",             new x_ite_Fields .SFInt32 ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "Multisampling",          new x_ite_Fields .SFInt32 (4)),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "PixelsPerPoint",         new x_ite_Fields .SFDouble (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "SoundDestinations",      new x_ite_Fields .SFInt32 ()),
@@ -31236,7 +31238,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(919);
+/* provided dependency */ var libtess = __webpack_require__(189);
 
 
 const Triangle3 =
@@ -31672,9 +31674,10 @@ function TextureBuffer ({ browser, width, height, float = false, mipMaps = false
 {
    const gl = browser .getContext ();
 
-   this .context = gl;
-   this .width   = width;
-   this .height  = height;
+   this .context      = gl;
+   this .width        = width;
+   this .height       = height;
+   this .internalType = float ? gl .FLOAT : gl .UNSIGNED_BYTE;
 
    Object .defineProperty (this, "array",
    {
@@ -31784,9 +31787,9 @@ Object .assign (TextureBuffer .prototype,
    },
    readPixels ()
    {
-      const { context: gl, array, width, height } = this;
+      const { context: gl, array, width, height, internalType } = this;
 
-      gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+      gl .readPixels (0, 0, width, height, gl .RGBA, internalType, array);
 
       return array;
    },
@@ -31872,11 +31875,11 @@ const RenderPass =
 {
    // Bits
    NONE:               0b00,
-   VOLUME_SCATTER_BIT: 0b01,
+   SCATTER_BIT: 0b01,
    TRANSMISSION_BIT:   0b10,
    // Keys
    RENDER_KEY:         0,
-   VOLUME_SCATTER_KEY: 1,
+   SCATTER_KEY: 1,
    TRANSMISSION_KEY:   2,
 };
 
@@ -33137,10 +33140,10 @@ Object .assign (X3DRenderObject .prototype,
       {
          const
             { renderContext, viewport, modelViewMatrix, shapeNode, hAnimNode, clipPlanes } = shapes [s],
+            { geometryType, targetsNode } = shapeNode .getGeometryContext (),
             appearanceNode      = shapeNode .getAppearance (),
-            geometryContext     = shapeNode .getGeometryContext (),
             depthModeNode       = appearanceNode .getDepthMode (),
-            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
             shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
             id                  = browser .addPointingShape (renderContext);
 
@@ -33160,6 +33163,7 @@ Object .assign (X3DRenderObject .prototype,
 
          depthModeNode       ?.enable (gl);
          stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
+         targetsNode         ?.setShaderUniforms (gl, shaderNode);
          hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
          shapeNode .displaySimple (gl, renderContext, shaderNode);
@@ -33382,9 +33386,9 @@ Object .assign (X3DRenderObject .prototype,
       {
          const
             { renderContext, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
+            { geometryType, targetsNode } = shapeNode .getGeometryContext (),
             appearanceNode      = shapeNode .getAppearance (),
-            geometryContext     = shapeNode .getGeometryContext (),
-            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
             shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
 
          // Cannot change viewport here, because the viewport is special here.
@@ -33400,6 +33404,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
          stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
+         targetsNode         ?.setShaderUniforms (gl, shaderNode);
          hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
          shapeNode .displaySimple (gl, renderContext, shaderNode);
@@ -33489,16 +33494,16 @@ Object .assign (X3DRenderObject .prototype,
          {
             // Render to volume scatter buffer.
 
-            if (this .renderPasses & Rendering_RenderPass .VOLUME_SCATTER_BIT)
+            if (this .renderPasses & Rendering_RenderPass .SCATTER_BIT)
             {
                browser .resetShapeId ();
 
-               this .renderPass = Rendering_RenderPass .VOLUME_SCATTER_KEY;
+               this .renderPass = Rendering_RenderPass .SCATTER_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
-               const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
+               const volumeScatterBuffer = browser .getScatterBuffer ();
 
-               this .drawShapes (Rendering_RenderPass .VOLUME_SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (Rendering_RenderPass .SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             // Render to transmission buffer.
@@ -36025,6 +36030,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       key += this .hasTangents   ? 1 : 0;
       key += this .hasNormals    ? 1 : 0;
 
+      // Handle morphTargets.
+      key += this .targetsNode ?.getKey () ?? "[]";
+
       this .geometryKey = key;
    },
    updateRenderFunctions ()
@@ -36403,6 +36411,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    {
       return this .coordNode;
    },
+   getTargets ()
+   {
+      return this .targetsNode;
+   },
    set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
@@ -36483,6 +36495,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
+   set_targets__ ()
+   {
+      this .targetsNode ?._key .removeInterest ("updateGeometryKey", this);
+
+      this .targetsNode = Base_X3DCast (Base_X3DConstants .MorphTargets, this ._targets);
+
+      this .targetsNode ?._key .addInterest ("updateGeometryKey", this);
+   },
 });
 
 Object .defineProperties (X3DGeometryNode, Core_X3DNode .getStaticProperties ("X3DGeometryNode", "Rendering", 1));
@@ -36532,14 +36552,6 @@ function GeometryContext (options = { })
 
 Object .assign (GeometryContext .prototype,
 {
-   getTextureCoordinateMapping ()
-   {
-      return this .textureCoordinateMapping;
-   },
-   getTextureCoordinate ()
-   {
-      return this .textureCoordinateNode;
-   },
    getCoord ()
    {
       return null;
@@ -36844,7 +36856,7 @@ function X3DBackgroundNode (executionContext)
 
    this [Rendering_RenderPass .RENDER_KEY]         = this;
    this [Rendering_RenderPass .TRANSMISSION_KEY]   = this;
-   this [Rendering_RenderPass .VOLUME_SCATTER_KEY] = null;
+   this [Rendering_RenderPass .SCATTER_KEY] = null;
 
 }
 
@@ -42420,7 +42432,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._thickness               = this .numberValue (KHR_materials_volume .thicknessFactor, 0);
       extension ._thicknessTexture        = this .textureInfo (KHR_materials_volume .thicknessTexture);
       extension ._thicknessTextureMapping = this .textureMapping (KHR_materials_volume .thicknessTexture);
-      extension ._attenuationDistance     = this .numberValue (KHR_materials_volume .attenuationDistance, 1_000_000);
+      extension ._attenuationDistance     = this .numberValue (KHR_materials_volume .attenuationDistance, 0); // 0 means infinite distance.
 
       const attenuationColor = new Numbers_Color3 ();
 
@@ -42627,7 +42639,7 @@ function eventsProcessed ()
       }
 
       // meshNodes are Shape, InstancedShape, Switch from variants, or GaussianSplats nodes.
-      const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
+      const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing, mesh .extras);
 
       // Name Shape nodes.
 
@@ -42650,7 +42662,7 @@ function eventsProcessed ()
 
       return mesh .meshNodes = meshNodes;
    },
-   primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing)
+   primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing, extras)
    {
       if (!Array .isArray (primitives))
          return [ ];
@@ -42658,17 +42670,16 @@ function eventsProcessed ()
       const meshNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes);
+         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, extras, meshNodes);
 
       return meshNodes;
    },
-   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes)
+   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, extras, meshNodes)
    {
       if (!(primitive instanceof Object))
          return;
 
       this .attributesObject (primitive .attributes);
-      this .targetsArray     (primitive .targets);
 
       if (primitive .extensions ?.KHR_gaussian_splatting)
          return this .khrGaussianSplatting (primitive, meshNodes);
@@ -42679,7 +42690,7 @@ function eventsProcessed ()
       this .primitiveExtensionsObject (primitive .extensions, primitive);
 
       const
-         shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
+         shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing, extras),
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       meshNodes .push (primitive .meshNode = variantsNode ?? shapeNode);
@@ -42765,11 +42776,6 @@ function eventsProcessed ()
                break;
          }
       }
-   },
-   targetsArray (targets)
-   {
-      if (!Array .isArray (targets))
-         return;
    },
    primitiveExtensionsObject (extensions, primitive)
    {
@@ -43943,14 +43949,14 @@ function eventsProcessed ()
          }
       }
    },
-   createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
+   createShape (primitive, weights, skin, EXT_mesh_gpu_instancing, extras)
    {
       const
          scene     = this .getScene (),
          shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
       primitive .appearanceNode ??= this .materialObject (primitive);
-      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
+      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin, extras);
 
       shapeNode ._appearance = primitive .appearanceNode;
       shapeNode ._geometry   = primitive .geometryNode;
@@ -44091,81 +44097,80 @@ function eventsProcessed ()
          }
       }
    },
-   createGeometry (primitive, weights, skin)
+   createGeometry (primitive, weights, skin, extras)
    {
       switch (primitive .mode)
       {
          case 0: // POINTS
          {
-            return this .createPointSet (primitive, weights, skin);
+            return this .createPointSet (primitive, weights, skin, extras);
          }
          case 1: // LINES
          {
             if (primitive .indices)
-               return this .createIndexedLineSet (primitive, weights, skin, 1);
+               return this .createIndexedLineSet (primitive, weights, skin, 1, extras);
 
-            return this .createLineSet (primitive, weights, skin);
+            return this .createLineSet (primitive, weights, skin, extras);
          }
          case 2: // LINE_LOOP
          {
-            return this .createIndexedLineSet (primitive, weights, skin, 2);
+            return this .createIndexedLineSet (primitive, weights, skin, 2, extras);
          }
          case 3: // LINE_STRIP
          {
-            return this .createIndexedLineSet (primitive, weights, skin, 3);
+            return this .createIndexedLineSet (primitive, weights, skin, 3, extras);
          }
          default:
          case 4: // TRIANGLES
          {
             if (primitive .indices)
-               return this .createIndexedTriangleSet (primitive, weights, skin);
+               return this .createIndexedTriangleSet (primitive, weights, skin, extras);
 
-            return this .createTriangleSet (primitive, weights, skin);
+            return this .createTriangleSet (primitive, weights, skin, extras);
          }
          case 5: // TRIANGLE_STRIP
          {
             if (primitive .indices)
-               return this .createIndexedTriangleStripSet (primitive, weights, skin);
+               return this .createIndexedTriangleStripSet (primitive, weights, skin, extras);
 
-            return this .createTriangleStripSet (primitive, weights, skin);
+            return this .createTriangleStripSet (primitive, weights, skin, extras);
          }
          case 6: // TRIANGLE_FAN
          {
             if (primitive .indices)
-               return this .createIndexedTriangleFanSet (primitive, weights, skin);
+               return this .createIndexedTriangleFanSet (primitive, weights, skin, extras);
 
-            return this .createTriangleFanSet (primitive, weights, skin);
+            return this .createTriangleFanSet (primitive, weights, skin, extras);
          }
       }
    },
-   createPointSet ({ attributes, material, targets }, weights, skin)
+   createPointSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("PointSet", false);
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedLineSet ({ attributes, indices, material, targets }, weights, skin, mode)
+   createIndexedLineSet ({ attributes, indices, material, targets }, weights, skin, mode, extras)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
       switch (mode)
       {
@@ -44237,32 +44242,30 @@ function eventsProcessed ()
          }
       }
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createLineSet ({ attributes, material, targets }, weights, skin)
+   createLineSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("LineSet", false);
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleSet ({ attributes, indices, material, targets }, weights, skin)
+   createIndexedTriangleSet ({ attributes, indices, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -44272,19 +44275,18 @@ function eventsProcessed ()
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleSet ({ attributes, material, targets }, weights, skin)
+   createTriangleSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -44293,19 +44295,18 @@ function eventsProcessed ()
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleStripSet ({ attributes, indices, material, targets }, weights, skin)
+   createIndexedTriangleStripSet ({ attributes, indices, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -44315,19 +44316,18 @@ function eventsProcessed ()
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleStripSet ({ attributes, material, targets }, weights, skin)
+   createTriangleStripSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -44336,9 +44336,9 @@ function eventsProcessed ()
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
@@ -44349,14 +44349,13 @@ function eventsProcessed ()
             geometryNode ._stripCount = [coord .point .length];
       }
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleFanSet ({ attributes, indices, material, targets }, weights, skin)
+   createIndexedTriangleFanSet ({ attributes, indices, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -44366,19 +44365,18 @@ function eventsProcessed ()
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleFanSet ({ attributes, material, targets }, weights, skin)
+   createTriangleFanSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -44387,9 +44385,9 @@ function eventsProcessed ()
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
@@ -44400,8 +44398,7 @@ function eventsProcessed ()
             geometryNode ._fanCount = [coord .point .length];
       }
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
@@ -44444,21 +44441,27 @@ function eventsProcessed ()
    })(),
    createMultiTextureCoordinate (texCoords, material)
    {
-      const
-         appearanceNode = this .materialObject ({ material }),
-         materialNode   = appearanceNode ._material .getValue ();
+      if (material)
+      {
+         const
+            appearanceNode = this .materialObject ({ material }),
+            materialNode   = appearanceNode ._material .getValue ();
 
-      if (!this .hasTextures (materialNode))
-         return null;
+         if (!this .hasTextures (materialNode))
+            return null;
+      }
 
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-         .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
-         .sort ((a, b) => a [1] - b [1])
-         .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
-         .filter (node => node);
+      const textureCoordinateNodes = material
+         ? Array .from (material .texCoordMappings .entries ())
+            .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
+            .sort ((a, b) => a [1] - b [1])
+            .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
+            .filter (node => node)
+         : texCoords .map (texCoord => this .createTextureCoordinate (texCoord, ""))
+            .filter (node => node);
 
       switch (textureCoordinateNodes .length)
       {
@@ -44477,7 +44480,6 @@ function eventsProcessed ()
                textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
 
             textureCoordinateNode ._texCoord = textureCoordinateNodes;
-
             textureCoordinateNode .setup ();
 
             return texCoords .textureCoordinateNode = textureCoordinateNode;
@@ -44503,7 +44505,7 @@ function eventsProcessed ()
 
       return texCoord [mapping] = textureCoordinateNode;
    },
-   createNormal (normal, targets, weights)
+   createNormal (normal)
    {
       if (normal ?.type !== "VEC3")
          return null;
@@ -44517,36 +44519,15 @@ function eventsProcessed ()
 
       normalNode ._vector = normal .array;
 
-      if (Array .isArray (targets) && Array .isArray (weights))
-      {
-         normal .field = normalNode ._vector .copy ();
-
-         const vectors = this .applyMorphTargets (normalNode ._vector, targets, "NORMAL", weights);
-
-         normalNode ._vector .length = 0;
-
-         for (const vector of vectors)
-            normalNode ._vector .push (vector);
-      }
-      else
-      {
-         normal .field = normalNode ._vector;
-      }
-
       normalNode .setup ();
 
       return normal .normalNode = normalNode;
    },
-   createTangent (tangent, normal)
+   createTangent (tangent, type = "VEC4")
    {
-      // When the base mesh primitive does not specify normals, client implementations
-      // MUST calculate flat normals for each morph target; the provided tangents and
-      // their displacements (if present) MUST be ignored.
+      // Morph tangents are VEC3.
 
-      if (normal ?.type !== "VEC3")
-         return null;
-
-      if (tangent ?.type !== "VEC4")
+      if (tangent ?.type !== type)
          return null;
 
       if (tangent .tangentNode)
@@ -44556,13 +44537,17 @@ function eventsProcessed ()
          scene       = this .getScene (),
          tangentNode = scene .createNode ("Tangent", false);
 
-      tangentNode ._vector = tangent .array;
+      const e = [ ];
+
+      tangentNode ._vector = tangent .type === "VEC3"
+         ? tangent .array .flatMap ((v, i, a) => i % 3 ? e : [v, a [i + 1], a [i + 2], 0])
+         : tangent .array;
 
       tangentNode .setup ();
 
       return tangent .tangentNode = tangentNode;
    },
-   createCoordinate (position, targets, weights)
+   createCoordinate (position)
    {
       if (position ?.type !== "VEC3")
          return null;
@@ -44576,25 +44561,88 @@ function eventsProcessed ()
 
       coordinateNode ._point = position .array;
 
-      if (Array .isArray (targets) && Array .isArray (weights))
-      {
-         position .field = coordinateNode ._point .copy ();
-
-         const points = this .applyMorphTargets (coordinateNode ._point, targets, "POSITION", weights);
-
-         coordinateNode ._point .length = 0;
-
-         for (const point of points)
-            coordinateNode ._point .push (point);
-      }
-      else
-      {
-         position .field = coordinateNode ._point;
-      }
-
       coordinateNode .setup ();
 
       return position .coordinateNode = coordinateNode;
+   },
+   targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras)
+   {
+      this .targetsArray (geometryNode, targets, weights, extras);
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
+   },
+   targetsArray (geometryNode, targets, weights, extras)
+   {
+      if (!Array .isArray (targets))
+         return;
+
+      if (!targets .length)
+         return;
+
+      const
+         scene            = this .getScene (),
+         morphTargetsNode = scene .createNode ("MorphTargets", false);
+
+      if (Array .isArray (weights))
+         morphTargetsNode ._weights = weights;
+      else
+         morphTargetsNode ._weights .length = targets .length;
+
+      for (const [i, target] of targets .entries ())
+      {
+         const
+            scene             = this .getScene (),
+            morphTargetNode   = scene .createNode ("MorphTarget", false),
+            name              = this .sanitizeName (extras ?.targetNames ?.[i]),
+            texCoords         = [ ],
+            displacementNodes = [ ];
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), morphTargetNode);
+
+         morphTargetNode ._description = extras ?.targetNames ?.[i] ?? "";
+
+         for (const [key, accessorIndex] of Object .entries (target))
+         {
+            const accessor = this .accessors [accessorIndex];
+
+            switch (true)
+            {
+               case /TEXCOORD_\d+/ .test (key):
+                  texCoords .push (accessor);
+                  continue;
+            }
+
+            switch (key)
+            {
+               case "COLOR_0":
+                  displacementNodes .push (this .createColor (accessor));
+                  continue;
+               case "TEXCOORD_0":
+                  continue;
+               case "TANGENT":
+                  displacementNodes .push (this .createTangent (accessor, "VEC3"));
+                  continue;
+               case "NORMAL":
+                  displacementNodes .push (this .createNormal (accessor));
+                  continue;
+               case "POSITION":
+                  displacementNodes .push (this .createCoordinate (accessor));
+                  continue;
+            }
+         }
+
+         displacementNodes .push (this .createMultiTextureCoordinate (texCoords));
+
+         morphTargetNode ._displacements = displacementNodes .filter (node => node);
+         morphTargetNode .setup ();
+
+         morphTargetsNode ._targets .push (morphTargetNode);
+      }
+
+      morphTargetsNode .setup ();
+
+      geometryNode ._targets = morphTargetsNode;
    },
    attributesJointsArray (skin, joints, weights)
    {
@@ -44733,8 +44781,6 @@ function eventsProcessed ()
    },
    createInterpolator (timeSensorNode, node, target, interpolation, times, keyValues, cycleInterval)
    {
-      const scene = this .getScene ();
-
       switch (target .path)
       {
          case "pointer":
@@ -44754,69 +44800,37 @@ function eventsProcessed ()
          case "weights":
          {
             const
-               node              = this .nodes [target .node],
-               mesh              = this .meshes [node .mesh],
-               primitives        = mesh ?.primitives,
-               interpolatorNodes = [ ];
+               scene      = this .getScene (),
+               node       = this .nodes [target .node],
+               mesh       = this .meshes [node .mesh],
+               primitives = mesh ?.primitives;
 
             if (!Array .isArray (primitives))
-               return null;
+               return [ ];
 
-            for (const { meshNode, targets, attributes } of primitives)
+            let interpolatorNode;
+
+            for (const { meshNode } of primitives)
             {
-               const geometryNode = meshNode ._geometry .getValue ();
+               const
+                  geometryNode = meshNode ._geometry .getValue (),
+                  targetsNode  = geometryNode ?._targets .getValue ();
 
-               if (!geometryNode || !geometryNode ._coord .getValue ())
+               if (!targetsNode)
                   continue;
 
-               if (attributes ["POSITION"] ?.field .length !== geometryNode ._coord .point .length)
-                  continue;
-
-               const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
-
-               if (!coordinateInterpolatorNode)
-                  continue;
-
-               if (coordinateInterpolatorNode ._key .length < 2)
-                  continue;
-
-               if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length !== geometryNode ._coord .point .length)
-                  continue;
-
-               interpolatorNodes .push (coordinateInterpolatorNode);
-
-               scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
-               scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
+               if (interpolatorNode)
+               {
+                  scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+                  scene .addRoute (interpolatorNode, "value_changed", targetsNode, "weights");
+               }
+               else
+               {
+                  interpolatorNode = this .createAnimationPointerInterpolator (timeSensorNode, targetsNode, targetsNode ._weights, interpolation, times, keyValues, cycleInterval, targetsNode ._weights .length);
+               }
             }
 
-            for (const { meshNode, targets, attributes } of primitives)
-            {
-               const geometryNode = meshNode ._geometry .getValue ();
-
-               if (!geometryNode || !geometryNode ._normal .getValue ())
-                  continue;
-
-               if (attributes ["NORMAL"] ?.field .length !== geometryNode ._normal .vector .length)
-                  continue;
-
-               const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
-
-               if (!normalInterpolatorNode)
-                  continue;
-
-               if (normalInterpolatorNode ._key .length < 2)
-                  continue;
-
-               if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length !== geometryNode ._normal .vector .length)
-                  continue;
-
-               interpolatorNodes .push (normalInterpolatorNode);
-
-               scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
-               scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
-            }
-
-            return interpolatorNodes;
+            return [interpolatorNode];
          }
          default:
          {
@@ -44834,7 +44848,7 @@ function eventsProcessed ()
          [Base_X3DConstants .SFVec3f, { typeName: "PositionInterpolator",   components: 3 }],
       ]);
 
-      return function (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval)
+      return function (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval, components)
       {
          if (!(node && field))
             return [ ];
@@ -44982,6 +44996,17 @@ function eventsProcessed ()
                const interpolatorNode = this .createNamedInterpolator (typeName, components, components ? interpolation : "LINEAR", times, keyValues .array, cycleInterval);
 
                scene .addNamedNode (scene .getUniqueName (helper.toUpperCaseFirst (field .getName ()) + suffix), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            case Base_X3DConstants .MFFloat:
+            {
+               const interpolatorNode = this .createNamedInterpolator ("CoordinateInterpolator1D", components, interpolation, times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${helper.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
 
                scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
                scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
@@ -45187,136 +45212,6 @@ function eventsProcessed ()
          }
       }
    },
-   createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
-   {
-      const accessor = accessors [key];
-
-      if (!accessor)
-         return null;
-
-      const
-         scene            = this .getScene (),
-         interpolatorNode = scene .createNode (typeName, false);
-
-      switch (interpolation)
-      {
-         case "STEP":
-         {
-            // Key
-
-            interpolatorNode ._key .push (times [0] / cycleInterval);
-
-            for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
-
-            // KeyValue
-
-            const w = Array .from (targets .keys (), i => weights [i]);
-
-            for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-               interpolatorNode ._keyValue .push (value);
-
-            for (let t = 1, length = times .length; t < length; ++ t)
-            {
-               const
-                  w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
-                  values = this .applyMorphTargets (accessor .field, targets, key, w);
-
-               for (const value of values)
-                  interpolatorNode ._keyValue .push (value);
-
-               for (const value of values)
-                  interpolatorNode ._keyValue .push (value);
-            }
-
-            // Finish
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-         default:
-         case "LINEAR":
-         {
-            // Key
-
-            interpolatorNode ._key = times .map (t => t / cycleInterval);
-
-            // KeyValue
-
-            for (const t of times .keys ())
-            {
-               const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
-
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-                  interpolatorNode ._keyValue .push (value);
-            }
-
-            // Finish
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-         case "CUBICSPLINE":
-         {
-            // Key
-
-            const
-               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
-
-            // KeyValue
-
-            for (const t of samples)
-            {
-               interpolatorNode ._key .push (t / cycleInterval);
-
-               const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
-
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-                  interpolatorNode ._keyValue .push (value);
-            }
-
-            // Finish
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-      }
-   },
-   applyMorphTargets: (() =>
-   {
-      const value = new Numbers_Vector3 ();
-
-      return function (array, targets, key, weights)
-      {
-         const vectors = Array .from (array, v => v .getValue () .copy ());
-
-         for (const [i, target] of targets .entries ())
-         {
-            const weight = weights [i];
-
-            if (!weight)
-               continue;
-
-            const accessor = this .accessors [target [key]];
-
-            if (accessor ?.type !== "VEC3")
-               continue;
-
-            const
-               array  = accessor .array,
-               length = array .length;
-
-            for (let a = 0, p = 0; a < length; a += 3, ++ p)
-               vectors [p] .add (value .set (array [a], array [a + 1], array [a + 2]) .multiply (weight));
-         }
-
-         return vectors;
-      };
-   })(),
    cubicSplineVector (time, times, values)
    {
       const
@@ -48538,7 +48433,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(919);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(189);
 
 
 
@@ -56249,6 +56144,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
       this ._normal   .addInterest ("set_normal__",   this);
       this ._tangent  .addInterest ("set_tangent__",  this);
       this ._coord    .addInterest ("set_coord__",    this);
+      this ._targets  .addInterest ("set_targets__",  this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
@@ -56257,6 +56153,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
       this .set_tangent__ ();
       this .set_normal__ ();
       this .set_coord__ ();
+      this .set_targets__ ();
    },
    checkVertexCount (numVertices, multiplier)
    {
@@ -56834,6 +56731,7 @@ Object .defineProperties (IndexedFaceSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",            new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",             new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",           new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -58492,9 +58390,9 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
    set_scatter__ ()
    {
-      this .set_renderPass__ (this .appearanceNode .isScatter (), Rendering_RenderPass .VOLUME_SCATTER_BIT);
+      this .set_renderPass__ (this .appearanceNode .isScatter (), Rendering_RenderPass .SCATTER_BIT);
 
-      this [Rendering_RenderPass .VOLUME_SCATTER_KEY] = this .appearanceNode .isScatter () ? this : null;
+      this [Rendering_RenderPass .SCATTER_KEY] = this .appearanceNode .isScatter () ? this : null;
    },
    set_renderPass__ (value, bit)
    {
@@ -59742,6 +59640,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
       this ._tangent  .addInterest ("set_tangent__",  this);
       this ._normal   .addInterest ("set_normal__",   this);
       this ._coord    .addInterest ("set_coord__",    this);
+      this ._targets  .addInterest ("set_targets__",  this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
@@ -59749,6 +59648,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
       this .set_tangent__ ();
       this .set_normal__ ();
       this .set_coord__ ();
+      this .set_targets__ ();
    },
    getPolylineIndices ()
    {
@@ -59871,6 +59771,7 @@ Object .defineProperties (IndexedLineSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",        new x_ite_Fields .SFNode ()), // experimental
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",        new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -65618,6 +65519,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    addPointingShape (pointingContext)
    {
+      // Support multiple layers.
+
       const id = ++ this [X3DPointingDeviceSensorContext_id];
 
       this [_pointingContexts] [id] = pointingContext;
@@ -65856,11 +65759,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    getPointingShader (numClipPlanes, shapeNode, hAnimNode)
    {
-      const { geometryType, hasNormals } = shapeNode .getGeometryContext ();
+      const { geometryType, hasNormals, targetsNode } = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += numClipPlanes; // Could be more than 9.
+      key += targetsNode ?.getKey () ?? "[]";
       key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
       key += geometryType;
@@ -65924,6 +65828,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (+appearanceNode .getTextureBits ())
          options .push ("X3D_TEXTURE");
 
+      geometryContext .targetsNode ?.getShaderOptions (options);
       hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = shapeNode .createPointingShader ?.(options) ?? this .createShader ({
@@ -66269,7 +66174,7 @@ Object .assign (MultiSampleFramebuffer .prototype,
       // // DEBUG start
       // if (DEVELOPMENT)
       // {
-      //    const volumeScatterBuffer = browser .getVolumeScatterBuffer ?.();
+      //    const volumeScatterBuffer = browser .getScatterBuffer ?.();
 
       //    if (volumeScatterBuffer)
       //    {
@@ -66506,6 +66411,12 @@ Object .assign (X3DRenderingContext .prototype,
               gl .getParameter (gl .GREEN_BITS) +
               gl .getParameter (gl .ALPHA_BITS));
    },
+   getMaxRenderbufferSize ()
+   {
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .MAX_RENDERBUFFER_SIZE);
+   },
    getViewport ()
    {
       return this ._viewport;
@@ -66569,17 +66480,18 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getDepthShader (normal, numClipPlanes, shapeNode, hAnimNode)
    {
-      const geometryContext = shapeNode .getGeometryContext ();
+      const { geometryType, targetsNode } = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += normal ? 1 : 0;
       key += numClipPlanes; // Could be more than 9.
+      key += targetsNode ?.getKey () ?? "[]";
       key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
-      key += geometryContext .geometryType;
+      key += geometryType;
 
-      if (geometryContext .geometryType >= 2)
+      if (geometryType >= 2)
       {
          key += "0.0.0";
       }
@@ -66587,7 +66499,7 @@ Object .assign (X3DRenderingContext .prototype,
       {
          const appearanceNode  = shapeNode .getAppearance ();
 
-         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+         key += appearanceNode .getStyleProperties (geometryType) ? 1 : 0;
          key += ".";
          key += appearanceNode .getTextureBits () .toString (16); // Textures for point and line.
          key += ".";
@@ -66636,6 +66548,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
+      geometryContext .targetsNode ?.getShaderOptions (options);
       hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = shapeNode .createDepthShader ?.(options) ?? this .createShader ({
@@ -66707,9 +66620,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    limitFramebufferSize (width, height)
    {
-      const
-         gl              = this .getContext (),
-         maxViewportDims = gl .getParameter (gl .MAX_VIEWPORT_DIMS);
+      const maxRenderbufferSize = this .getRenderingProperty ("MaxRenderbufferSize");
 
       let contentScale = this .getBrowserOption ("ContentScale");
 
@@ -66719,17 +66630,17 @@ Object .assign (X3DRenderingContext .prototype,
       width  *= contentScale,
       height *= contentScale;
 
-      if (width > maxViewportDims [0] || height > maxViewportDims [1])
+      if (width > maxRenderbufferSize || height > maxRenderbufferSize)
       {
          if (width > height)
          {
-            height = maxViewportDims [1] * height / width;
-            width  = maxViewportDims [0];
+            height = maxRenderbufferSize * height / width;
+            width  = maxRenderbufferSize;
          }
          else
          {
-            width  = maxViewportDims [0] * width / height;
-            height = maxViewportDims [1];
+            width  = maxRenderbufferSize * width / height;
+            height = maxRenderbufferSize;
          }
       }
 
@@ -67291,6 +67202,42 @@ finalColor+=getEmissiveColor();return vec4(finalColor,alpha);}
 ;
 
 /* harmony default export */ const Material2_glsl = (x_ite_Namespace .add ("Material2.glsl", Material2_glsl_default_));
+;// ./src/assets/shaders/webgl2/common/Morph2.glsl.js
+
+
+const targets = [
+   { name: "COLOR",    type: "vec4", fn: "Color",   components: "rgba" },
+   { name: "TANGENT",  type: "vec3", fn: "Tangent", components: "xyz" },
+   { name: "NORMAL",   type: "vec3", fn: "Normal",  components: "xyz" },
+   { name: "POSITION", type: "vec4", fn: "Vertex",  components: "xyz" },
+   ... Array .from ({ length: (/* inlined export .maxTexCoords */4) }, (_, i) =>
+   {
+      return { name: `TEXCOORD_${i}`, type: "vec4", fn: `TexCoord${i}`, components: "xyz" };
+   }),
+];
+
+const Morph2_glsl_default_ = () => /* glsl */ `
+#if defined(X3D_MORPH_TARGETS)
+uniform float x3d_MorphWeights[X3D_NUM_MORPH_WEIGHTS];uniform sampler2DArray x3d_MorphTargetsTexture;${targets.map(({name,type,fn,components})=>{return `
+#if defined(X3D_MORPH_TARGET_${name})
+${type}
+getTarget${fn} (in ${type}
+vector){int index=X3D_MORPH_TARGET_${name}_OFFSET+int(x3d_CoordIndex);for(int i=0;i<X3D_NUM_MORPH_WEIGHTS;++i){vec4 displacement=texelFetch(x3d_MorphTargetsTexture,index,i,0);vector.${components} +=x3d_MorphWeights[i]*displacement.${components};}return vector;}
+#else
+#define getTarget${fn}(vector)(vector)
+#endif
+`
+})
+.join ("\n")}
+
+#else
+
+${targets .map (({ fn }) => /* glsl */ `#define getTarget${fn}(vector)(vector)`).join("\n")}
+#endif
+`
+;
+
+/* harmony default export */ const Morph2_glsl = (x_ite_Namespace .add ("Morph2.glsl", Morph2_glsl_default_));
 ;// ./src/assets/shaders/webgl2/common/Normal2.glsl.js
 const Normal2_glsl_default_ = () => /* glsl */ `
 #if!defined(X3D_NORMALS)&&(defined(X3D_GEOMETRY_2D)||defined(X3D_GEOMETRY_3D))
@@ -67615,6 +67562,9 @@ const Utils2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_SKINNING)||defined(X3D_INSTANCING)
 vec4 texelFetch(const in sampler2D _sampler,const in int index,const in int lod){int x=textureSize(_sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(_sampler,p,lod);return t;}
 #endif
+#if defined(X3D_MORPH_TARGETS)
+vec4 texelFetch(const in sampler2DArray _sampler,const in int index,const in int z,const in int lod){int x=textureSize(_sampler,lod).x;ivec3 p=ivec3(index % x,index/x,z);vec4 t=texelFetch(_sampler,p,lod);return t;}
+#endif
 #if!defined(X3D_SKINNING)
 #define getSkinVertex(vertex,normal,tangent)(vertex)
 #define getSkinNormal(normal)(normal)
@@ -67631,6 +67581,9 @@ const Vertex2_glsl_default_ = () => /* glsl */ `
 uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;
+#endif
+#if defined(X3D_MORPH_TARGETS)||defined(X3D_SKINNING)
+in uint x3d_CoordIndex;
 #endif
 #if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
 in vec3 x3d_LineStipple;
@@ -67679,6 +67632,7 @@ out vec3 vertex;
 out vec3 localVertex;
 #endif
 #include<Utils>
+#include<Morph>
 #include<Skin>
 #include<Instancing>
 #include<PointSize>
@@ -67686,12 +67640,16 @@ out vec3 localVertex;
 #include<Logarithmic>
 void main(){vec4 tVertex=x3d_Vertex;
 #if defined(X3D_NORMALS)
-vec3 tNormal=x3d_Normal;vec3 tTangent=x3d_Tangent.xyz;tVertex=getInstanceVertex(getSkinVertex(tVertex,tNormal,tTangent));tNormal=getInstanceNormal(getSkinNormal(tNormal));
+vec3 tNormal=x3d_Normal;vec3 tTangent=x3d_Tangent.xyz;tNormal=getTargetNormal(tNormal);
 #if defined(X3D_TANGENTS)
-tTangent=getInstanceNormal(getSkinTangent(tTangent));
+tTangent=getTargetTangent(tTangent);
+#endif
+tVertex=getTargetVertex(tVertex);tVertex=getSkinVertex(tVertex,tNormal,tTangent);tVertex=getInstanceVertex(tVertex);tNormal=getSkinNormal(tNormal);tNormal=getInstanceNormal(tNormal);
+#if defined(X3D_TANGENTS)
+tTangent=getSkinTangent(tTangent);tTangent=getInstanceNormal(tTangent);
 #endif
 #else
-tVertex=getInstanceVertex(getSkinVertex(tVertex,vec3(0),vec3(0)));
+tVertex=getTargetVertex(tVertex);tVertex=getSkinVertex(tVertex,vec3(0),vec3(0));tVertex=getInstanceVertex(tVertex);
 #endif
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 localVertex=tVertex.xyz;
@@ -67713,13 +67671,14 @@ lengthSoFar=x3d_LineStipple.z;startPoint=x3d_LineStipple.xy;midPoint=x3d_LineSti
 fog();
 #endif
 #if defined(X3D_COLOR_MATERIAL)
-color=x3d_Color;
+color=clamp(getTargetColor(x3d_Color),vec4(0),vec4(1));
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 ${Array .from ({ length: (/* inlined export .maxTexCoords */4) }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
-texCoord${i} = getInstanceTexCoord (x3d_TexCoord${i}, gl_VertexID % 6);
+texCoord${i} = getTargetTexCoord${i} (x3d_TexCoord${i});
+texCoord${i} = getInstanceTexCoord (texCoord${i}, gl_VertexID % 6);
 #endif
 `) .join ("\n")}
 #endif
@@ -68023,6 +67982,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #include<BRDF>
 #include<MaterialInfo>
 #include<Punctual>
+#include<SubsurfaceScattering>
 #include<IBL>
 #include<Iridescence>
 #if defined(X3D_SCATTER_PASS)
@@ -68220,7 +68180,7 @@ l_color=mix(l_color,light.shadowColor,getShadowIntensity(i,light));
 color+=l_color;}}
 #endif
 #if defined(X3D_SCATTER_MATERIAL_EXT)&&defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)&&(defined(X3D_USE_IBL)||defined(X3D_LIGHTING))
-if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 singleScattering=getVolumeSingleScattering(v,n,materialInfo.ior,materialInfo.attenuationColor,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,vertex,materialInfo.thickness,modelViewMatrix);vec3 diffuseScattering=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);vec3 l_color=singleScattering+diffuseScattering;float iridescenceMask=1.;
+if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 singleScattering=getVolumeSingleScattering(v,n,materialInfo.ior,materialInfo.attenuationColor,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,vertex,materialInfo.thickness,modelViewMatrix);vec3 diffuseScattering=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);vec3 l_color=singleScattering+diffuseScattering;float iridescenceMask=1.;
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
 iridescenceMask-=materialInfo.iridescenceFactor;
 #endif
@@ -68258,7 +68218,6 @@ vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)||defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 vec3 getPunctualRadianceTransmission(const in vec3 n,const in vec3 v,const in vec3 l,const in float alphaRoughness,const in vec3 baseColor,const in float ior){float transmissionRoughness=applyIorToRoughness(alphaRoughness,ior);vec3 l_mirror=reflect(l,n);vec3 h=normalize(l_mirror+v);float D=D_GGX(abs(dot(n,h)),transmissionRoughness);float Vis=V_GGX(abs(dot(n,l_mirror)),abs(dot(n,v)),transmissionRoughness);return baseColor*D*Vis;}vec3 applyVolumeAttenuation(const in vec3 radiance,const in float transmissionDistance,const in vec3 attenuationColor,const in float attenuationDistance){if(attenuationDistance==0.){return radiance;}else{vec3 attenuationCoefficient=log(attenuationColor)/attenuationDistance;vec3 transmittance=exp(attenuationCoefficient*transmissionDistance);return transmittance*radiance;}}vec3 getVolumeTransmissionRay(const in vec3 n,const in vec3 v,const in float thickness,const in float ior,in mat4 modelMatrix){vec3 refractionVector=refract(-v,n,1./ior);vec3 modelScale;modelScale.x=length(modelMatrix[0].xyz);modelScale.y=length(modelMatrix[1].xyz);modelScale.z=length(modelMatrix[2].xyz);return refractionVector*thickness*modelScale;}
 #endif
-#include<SubsurfaceScattering>
 `
 ;
 
@@ -68306,7 +68265,7 @@ return color;}
 /* harmony default export */ const ToneMapping2_glsl = (x_ite_Namespace .add ("ToneMapping2.glsl", ToneMapping2_glsl_default_));
 ;// ./src/assets/shaders/webgl2/Default2.vs.js
 const Default2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;precision highp sampler2DArray;
 #include<Vertex>
 `
 ;
@@ -68348,7 +68307,11 @@ x3d_FragData0=vec4(vec3(gl_FragCoord.z),1.);
 /* harmony default export */ const Depth2_fs = (x_ite_Namespace .add ("Depth2.fs", Depth2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Depth2.vs.js
 const Depth2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp int;precision highp float;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;precision highp sampler2DArray;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
+#if defined(X3D_MORPH_TARGETS)||defined(X3D_SKINNING)
+in uint x3d_CoordIndex;
+#endif
+in vec4 x3d_Vertex;
 #if defined(X3D_CLIP_PLANES)
 out vec3 vertex;
 #endif
@@ -68359,14 +68322,15 @@ in vec3 x3d_Normal;
 out vec3 normal;
 #endif
 #include<Utils>
+#include<Morph>
 #include<Skin>
 #include<Instancing>
 #include<PointSize>
 void main(){vec4 tVertex=x3d_Vertex;
 #if defined(X3D_NORMALS)
-vec3 tNormal=x3d_Normal;tVertex=getInstanceVertex(getSkinVertex(tVertex,tNormal,vec3(0)));tNormal=getInstanceNormal(getSkinNormal(tNormal));
+vec3 tNormal=x3d_Normal;tNormal=getTargetNormal(tNormal);tVertex=getTargetVertex(tVertex);tVertex=getSkinVertex(tVertex,tNormal,vec3(0));tVertex=getInstanceVertex(tVertex);tNormal=getSkinNormal(tNormal);tNormal=getInstanceNormal(tNormal);
 #else
-tVertex=getInstanceVertex(getSkinVertex(tVertex,vec3(0),vec3(0)));
+tVertex=getTargetVertex(tVertex);tVertex=getSkinVertex(tVertex,vec3(0),vec3(0));tVertex=getInstanceVertex(tVertex);
 #endif
 tVertex=x3d_ModelViewMatrix*tVertex;
 #if defined(X3D_CLIP_PLANES)
@@ -68480,7 +68444,11 @@ x3d_FragData0=vec4(vertex,x3d_Id);x3d_FragData1=vec4(normal,0.);x3d_FragData2=te
 /* harmony default export */ const Pointing2_fs = (x_ite_Namespace .add ("Pointing2.fs", Pointing2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Pointing2.vs.js
 const Pointing2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp int;precision highp float;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;precision highp sampler2DArray;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
+#if defined(X3D_MORPH_TARGETS)||defined(X3D_SKINNING)
+in uint x3d_CoordIndex;
+#endif
+in vec4 x3d_Vertex;
 #if defined(X3D_NORMALS)
 in vec3 x3d_Normal;
 #else
@@ -68500,6 +68468,7 @@ out vec4 texCoord0;
 flat out float lengthSoFar;flat out vec2 startPoint;out vec2 midPoint;
 #endif
 #include<Utils>
+#include<Morph>
 #include<Skin>
 #include<Instancing>
 #include<PointSize>
@@ -68507,7 +68476,7 @@ void main(){
 #if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
 lengthSoFar=x3d_LineStipple.z;startPoint=x3d_LineStipple.xy;midPoint=x3d_LineStipple.xy;
 #endif
-vec4 tVertex=x3d_Vertex;tVertex=getInstanceVertex(getSkinVertex(tVertex,x3d_Normal,vec3(0)));tVertex=x3d_ModelViewMatrix*tVertex;vertex=tVertex.xyz;normal=getInstanceNormal(getSkinNormal(x3d_Normal));
+vec4 tVertex=x3d_Vertex;vec3 tNormal=x3d_Normal;tNormal=getTargetNormal(tNormal);tVertex=getTargetVertex(tVertex);tVertex=getSkinVertex(tVertex,tNormal,vec3(0));tVertex=getInstanceVertex(tVertex);tVertex=x3d_ModelViewMatrix*tVertex;tNormal=getSkinNormal(tNormal);tNormal=getInstanceNormal(tNormal);vertex=tVertex.xyz;normal=tNormal;
 #if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
 gl_PointSize=pointSize=max(getPointSize(vertex),2.);
 #else
@@ -68530,6 +68499,7 @@ precision highp int;precision highp float;precision highp sampler2D;precision hi
 /* harmony default export */ const Unlit2_fs = (x_ite_Namespace .add ("Unlit2.fs", Unlit2_fs_default_));
 ;// ./src/x_ite/Browser/Shaders/ShaderRegistry.js
 /* WebGL 2 */
+
 
 
 
@@ -68585,6 +68555,7 @@ const ShaderRegistry = {
          Line2: Line22_glsl,
          Logarithmic: Logarithmic2,
          Material: Material2_glsl,
+         Morph: Morph2_glsl,
          Normal: Normal2_glsl,
          OIT: OIT2,
          Perlin: Perlin2_glsl,
@@ -68706,7 +68677,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 const X3DProgrammableShaderObject_uniformLocation = Symbol .for ("X_ITE.X3DField.uniformLocation");
 
-function X3DProgrammableShaderObject (executionContext)
+function X3DProgrammableShaderObject (/* executionContext */)
 {
    this .addType (Base_X3DConstants .X3DProgrammableShaderObject);
 
@@ -68714,12 +68685,12 @@ function X3DProgrammableShaderObject (executionContext)
 
    // Private properties
 
-   this .attributeNames         = [ ];
-   this .uniformNames           = [ ];
-   this .environmentLightNodes  = [ ];
-   this .lightNodes             = [ ];
-   this .textureProjectorNodes  = [ ];
-   this .textures               = new Set ();
+   this .attributeNames        = [ ];
+   this .uniformNames          = [ ];
+   this .environmentLightNodes = [ ];
+   this .lightNodes            = [ ];
+   this .textureProjectorNodes = [ ];
+   this .textures              = new Set ();
 
    this .x3d_ClipPlane                  = [ ];
    this .x3d_EnvironmentLight           = [ ];
@@ -68867,18 +68838,21 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_NormalMatrix",
          "x3d_ViewMatrix",
          "x3d_CameraSpaceMatrix",
-         // ParticleSystem and Skinning
-         "x3d_TexCoordRamp",
-         "x3d_JointsTexture",
-         "x3d_DisplacementsTexture",
-         "x3d_DisplacementWeightsTexture",
-         "x3d_JointMatricesTexture",
          // Common
          "x3d_Id", // Pointing ID
          "x3d_AlphaCutoff",
          "x3d_Exposure",
          "x3d_LogarithmicFarFactor1_2",
          "x3d_MultiTextureColor",
+         // Morph Targets
+         "x3d_MorphWeights",
+         "x3d_MorphTargetsTexture",
+         // ParticleSystem and Skinning
+         "x3d_TexCoordRamp",
+         "x3d_JointsTexture",
+         "x3d_DisplacementsTexture",
+         "x3d_DisplacementWeightsTexture",
+         "x3d_JointMatricesTexture",
       ];
 
       for (const name of commonUniforms)
@@ -69559,8 +69533,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          const { renderObject, viewport, modelViewMatrix, fogNode, appearanceNode, hAnimNode, textureNode: geometryTextureNode, localObjects } = renderContext;
 
+         const { geometryType, textureCoordinateMapping, textureCoordinateNode, targetsNode } = geometryContext;
+
          const
-            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
             materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
             textureNode         = geometryTextureNode ?? appearanceNode .getTexture (),
             renderCount         = renderObject .getRenderCount ();
@@ -69657,17 +69633,17 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Material
 
-         materialNode .setShaderUniforms (gl, this, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
+         materialNode .setShaderUniforms (gl, this, appearanceNode .getTextureTransformMapping (), textureCoordinateMapping, front);
 
          // Texture
 
          textureNode ?.setShaderUniforms (gl, this .x3d_Texture [0], this);
+         appearanceNode .getTextureTransform () .setShaderUniforms (gl, this);
+         textureCoordinateNode .setShaderUniforms (gl, this);
 
-         appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
-         geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
+         // Morph Targets & Skinning
 
-         // Skinning
-
+         targetsNode ?.setShaderUniforms (gl, this);
          hAnimNode ?.setShaderUniforms (gl, this);
       };
    })(),
@@ -71962,6 +71938,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
                break;
          }
 
+         geometryContext .targetsNode ?.getShaderOptions (options);
          hAnimNode ?.getShaderOptions (options);
 
          const
@@ -72128,7 +72105,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
 
       switch (renderObject .getRenderPass ())
       {
-         case Rendering_RenderPass .VOLUME_SCATTER_KEY:
+         case Rendering_RenderPass .SCATTER_KEY:
          {
             options .push ("X3D_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
             break;
@@ -73967,7 +73944,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
    {
       browsers .delete (this);
 
-      this [X3DBrowserContext_tainted] = true;
+      this [X3DBrowserContext_tainted]        = true;
+      this [_renderCallback] = Function .prototype;
 
       this .getSession () .cancelAnimationFrame (this [_animFrame]);
 
@@ -79593,6 +79571,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointG
       this ._tangent  .addInterest ("set_tangent__",  this);
       this ._normal   .addInterest ("set_normal__",   this);
       this ._coord    .addInterest ("set_coord__",    this);
+      this ._targets  .addInterest ("set_targets__",  this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
@@ -79600,6 +79579,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointG
       this .set_tangent__ ();
       this .set_normal__ ();
       this .set_coord__ ();
+      this .set_targets__ ();
    },
    build ()
    {
@@ -79654,6 +79634,7 @@ Object .defineProperties (PointSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",  new x_ite_Fields .SFNode ()), // experimental
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",   new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",    new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "targets",  new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -79690,6 +79671,7 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeo
       this ._tangent  .addInterest ("set_tangent__",  this);
       this ._normal   .addInterest ("set_normal__",   this);
       this ._coord    .addInterest ("set_coord__",    this);
+      this ._targets  .addInterest ("set_targets__",  this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
@@ -79697,6 +79679,7 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeo
       this .set_tangent__ ();
       this .set_normal__ ();
       this .set_coord__ ();
+      this .set_targets__ ();
    },
    build ()
    {
@@ -79771,6 +79754,7 @@ Object .defineProperties (LineSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",     new x_ite_Fields .SFNode ()), // experimental
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",      new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",       new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "targets",     new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -79835,6 +79819,7 @@ Object .defineProperties (TriangleSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",         new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -81493,6 +81478,74 @@ const CoordinateInterpolator_default_ = CoordinateInterpolator;
 ;
 
 /* harmony default export */ const Interpolation_CoordinateInterpolator = (x_ite_Namespace .add ("CoordinateInterpolator", CoordinateInterpolator_default_));
+;// ./src/x_ite/Components/Interpolation/CoordinateInterpolator1D.js
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function CoordinateInterpolator1D (executionContext)
+{
+   Interpolation_X3DInterpolatorNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .CoordinateInterpolator1D);
+}
+
+Object .assign (Object .setPrototypeOf (CoordinateInterpolator1D .prototype, Interpolation_X3DInterpolatorNode .prototype),
+{
+   set_keyValue__ ()
+   {
+      // If there already was an set_fraction event in this frame, send a new value_changed to prevent glitches.
+      if (this ._set_fraction .getModificationTime () >= this .getBrowser () .getCurrentTime ())
+         this .set_fraction__ ();
+   },
+   interpolate (index0, index1, weight)
+   {
+      const keyValue = this ._keyValue .getValue ();
+
+      let size = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+
+      this ._value_changed .length = size;
+
+      const value_changed = this ._value_changed .getValue ();
+
+      index0 *= size;
+      index1  = index0 + (this ._key .length > 1 ? size : 0);
+
+      for (let i0 = 0; i0 < size; ++ i0)
+         value_changed [i0] = Math_Algorithm .lerp (keyValue [index0 + i0], keyValue [index1 + i0], weight);
+
+      this ._value_changed .addEvent ();
+   },
+});
+
+Object .defineProperties (CoordinateInterpolator1D,
+{
+   ... Core_X3DNode .getStaticProperties ("CoordinateInterpolator1D", "Interpolation", 5, "children", "4.1"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",      new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,   "set_fraction",  new x_ite_Fields .SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "key",           new x_ite_Fields .MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "keyValue",      new x_ite_Fields .MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "value_changed", new x_ite_Fields .MFFloat ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const CoordinateInterpolator1D_default_ = CoordinateInterpolator1D;
+;
+
+/* harmony default export */ const Interpolation_CoordinateInterpolator1D = (x_ite_Namespace .add ("CoordinateInterpolator1D", CoordinateInterpolator1D_default_));
 ;// ./src/x_ite/Components/Interpolation/CoordinateInterpolator2D.js
 
 
@@ -82444,12 +82497,14 @@ const SquadOrientationInterpolator_default_ = SquadOrientationInterpolator;
 
 
 
+
 const InterpolationComponent_default_ = {
    name: "Interpolation",
    concreteNodes:
    [
       Interpolation_ColorInterpolator,
       Interpolation_CoordinateInterpolator,
+      Interpolation_CoordinateInterpolator1D,
       Interpolation_CoordinateInterpolator2D,
       Interpolation_EaseInEaseOut,
       Interpolation_NormalInterpolator,
@@ -86518,6 +86573,7 @@ Object .defineProperties (IndexedTriangleFanSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",         new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -86588,6 +86644,7 @@ Object .defineProperties (IndexedTriangleSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",         new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -86712,6 +86769,7 @@ Object .defineProperties (IndexedTriangleStripSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",         new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -86721,6 +86779,357 @@ const IndexedTriangleStripSet_default_ = IndexedTriangleStripSet;
 ;
 
 /* harmony default export */ const Rendering_IndexedTriangleStripSet = (x_ite_Namespace .add ("IndexedTriangleStripSet", IndexedTriangleStripSet_default_));
+;// ./src/x_ite/Components/Rendering/MorphTarget.js
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function MorphTarget (executionContext)
+{
+   Core_X3DNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .MorphTarget);
+
+   // Private properties
+
+   this .geometricPropertyNodes = [ ];
+}
+
+Object .assign (Object .setPrototypeOf (MorphTarget .prototype, Core_X3DNode .prototype),
+{
+   initialize ()
+   {
+      Core_X3DNode .prototype .initialize .call (this);
+
+      this ._displacements .addInterest ("set_displacements__", this);
+
+      this .set_displacements__ ();
+   },
+   set_displacements__ ()
+   {
+      const geometricPropertyNodes = this .geometricPropertyNodes;
+
+      for (const geometricPropertyNode of geometricPropertyNodes)
+         geometricPropertyNode .removeInterest ("addNodeEvent", this);
+
+      geometricPropertyNodes .length = 0;
+
+      for (const node of this ._displacements)
+      {
+         const geometricPropertyNode = Base_X3DCast (Base_X3DConstants .X3DGeometricPropertyNode, node);
+
+         if (geometricPropertyNode)
+            geometricPropertyNodes .push (geometricPropertyNode);
+      }
+
+      for (const geometricPropertyNode of geometricPropertyNodes)
+         geometricPropertyNode .addInterest ("addNodeEvent", this);
+   },
+   getDisplacements (target)
+   {
+      for (const geometricPropertyNode of this .geometricPropertyNodes)
+      {
+         const type = geometricPropertyNode .getType ();
+
+         for (let t = type .length; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case Base_X3DConstants .X3DColorNode:
+                  geometricPropertyNode .addColors (target .COLOR);
+                  break;
+               case Base_X3DConstants .X3DSingleTextureCoordinateNode:
+                  geometricPropertyNode .addPoints (target .TEXCOORD_0);
+                  break;
+               case Base_X3DConstants .MultiTextureCoordinate:
+               {
+                  for (const [i, textureCoordinateNode] of geometricPropertyNode .getTextureCoordinates () .entries ())
+                  {
+                     const array = target [`TEXCOORD_${i}`];
+
+                     if (!array)
+                        break;
+
+                     textureCoordinateNode .addPoints (array);
+                  }
+
+                  break;
+               }
+               case Base_X3DConstants .Tangent:
+                  geometricPropertyNode .addVectors (target .TANGENT);
+                  break;
+               case Base_X3DConstants .Normal:
+                  geometricPropertyNode .addVectors (target .NORMAL);
+                  break;
+               case Base_X3DConstants .X3DCoordinateNode:
+                  geometricPropertyNode .addPoints (target .POSITION);
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
+
+      return target;
+   },
+});
+
+Object .defineProperties (MorphTarget,
+{
+   ... Core_X3DNode .getStaticProperties ("MorphTarget", "Rendering", 5, "targets", "4.1"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",      new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",   new x_ite_Fields .SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "displacements", new x_ite_Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const MorphTarget_default_ = MorphTarget;
+;
+
+/* harmony default export */ const Rendering_MorphTarget = (x_ite_Namespace .add ("MorphTarget", MorphTarget_default_));
+;// ./src/x_ite/Components/Rendering/MorphTargets.js
+
+
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function MorphTargets (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .MorphTargets);
+
+   this .addChildObjects (Base_X3DConstants .outputOnly, "key", new x_ite_Fields .SFTime ());
+
+   // Private properties
+
+   this .targets     = [ ];
+   this .targetNodes = [ ];
+}
+
+Object .assign (Object .setPrototypeOf (MorphTargets .prototype, Rendering_X3DGeometricPropertyNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+      // Textures
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      this .morphTargetsTexture = gl .createTexture ();
+
+      gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .morphTargetsTexture);
+
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+      gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGBA16F, 1, 1, 1, 0, gl .RGBA, gl .FLOAT, null);
+
+      // Events
+
+      this ._weights .addInterest ("set_weights__", this);
+      this ._targets .addInterest ("set_targets__", this);
+
+      this .set_weights__ ();
+      this .set_targets__ ();
+   },
+   set_weights__ ()
+   {
+      const numWeights = this ._weights .length;
+
+      if (numWeights === this .numWeights)
+         return;
+
+      this .numWeights = numWeights;
+
+      this ._key = Date .now () / 1000;
+   },
+   set_targets__ ()
+   {
+      const targetNodes = this .targetNodes;
+
+      for (const targetNode of targetNodes)
+         targetNode .removeInterest ("createTexture", this);
+
+      targetNodes .length = 0;
+
+      for (const node of this ._targets)
+      {
+         const targetNode = Base_X3DCast (Base_X3DConstants .MorphTarget, node);
+
+         if (targetNode)
+            targetNodes .push (targetNode);
+      }
+
+      for (const targetNode of targetNodes)
+         targetNode .addInterest ("createTexture", this);
+
+      this .createTexture ();
+   },
+   getKey ()
+   {
+      if (!this ._weights .length)
+         return "[]";
+
+      if (this ._weights .length !== this .targets .length)
+         return "[]";
+
+      let key = "";
+
+      key += "[";
+      key += this ._weights .length;
+      key += Object .values (this .targets [0]) .map (target => target .length) .join (",");
+      key += "]";
+
+      return key;
+   },
+   createTexture ()
+   {
+      // Update targets array.
+
+      const targets = this .targets;
+
+      targets .length = 0;
+
+      if (!this .targetNodes .length)
+         return;
+
+      for (const targetNode of this .targetNodes)
+      {
+         const target = targetNode .getDisplacements ({
+            COLOR: [ ],
+            ... Object .fromEntries (Array .from ({ length: (/* inlined export .maxTexCoords */4) }, (_, i) => [`TEXCOORD_${i}`, [ ]])),
+            TANGENT: [ ],
+            NORMAL: [ ],
+            POSITION: [ ],
+         });
+
+         target .NORMAL = this .createNormalArray (target .NORMAL);
+
+         targets .push (target);
+      }
+
+      // Update offsets array.
+
+      let o = 0;
+
+      const morphTargetOffsets = Object .values (targets [0]) .map (target => o += target .length / 4);
+
+      morphTargetOffsets .unshift (0);
+
+      this .morphTargetOffsets = morphTargetOffsets;
+
+      // Update texture.
+
+      const
+         size              = Math .ceil (Math .sqrt (morphTargetOffsets .at (-1))),
+         pageSize          = size * size * 4,
+         morphTargetsArray = new Float32Array (pageSize * targets .length);
+
+      for (const [i, target] of targets .entries ())
+         morphTargetsArray .set (Object .values (target) .flat () .slice (0, pageSize), pageSize * i);
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .morphTargetsTexture);
+      gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGBA16F, size, size, targets .length, 0, gl .RGBA, gl .FLOAT, morphTargetsArray);
+
+      // Propagate changes.
+
+      this ._key = Date .now () / 1000;
+   },
+   createNormalArray (normal)
+   {
+      const
+         length  = normal .length,
+         normal4 = [ ];
+
+      for (let i = 0; i < length; i += 3)
+         normal4 .push (normal [i], normal [i + 1], normal [i + 2], 0);
+
+      return normal4;
+   },
+   getShaderOptions (options)
+   {
+      if (!this ._weights .length)
+         return;
+
+      if (this ._weights .length !== this .targets .length)
+         return;
+
+      options .push (`X3D_MORPH_TARGETS`);
+      options .push (`X3D_NUM_MORPH_WEIGHTS ${this ._weights .length}`);
+
+      for (const [i, [name, array]] of Object .entries (this .targets [0]) .entries ())
+      {
+         if (!array .length)
+            continue;
+
+         options .push (`X3D_MORPH_TARGET_${name}`);
+         options .push (`X3D_MORPH_TARGET_${name}_OFFSET ${this .morphTargetOffsets [i]}`);
+      }
+   },
+   setShaderUniforms (gl, shaderObject)
+   {
+      gl .uniform1fv (shaderObject .x3d_MorphWeights, this ._weights .shrinkToFit ());
+
+      const
+         browser                 = this .getBrowser (),
+         morphTargetsTextureUnit = browser .popTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + morphTargetsTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .morphTargetsTexture);
+      gl .uniform1i (shaderObject .x3d_MorphTargetsTexture, morphTargetsTextureUnit);
+   },
+});
+
+Object .defineProperties (MorphTargets,
+{
+   ... Core_X3DNode .getStaticProperties ("MorphTargets", "Rendering", 5, "targets", "4.1"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "weights",  new x_ite_Fields .MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "targets",  new x_ite_Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const MorphTargets_default_ = MorphTargets;
+;
+
+/* harmony default export */ const Rendering_MorphTargets = (x_ite_Namespace .add ("MorphTargets", MorphTargets_default_));
 ;// ./src/x_ite/Components/Rendering/TriangleFanSet.js
 
 
@@ -86811,6 +87220,7 @@ Object .defineProperties (TriangleFanSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",         new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -86914,6 +87324,7 @@ Object .defineProperties (TriangleStripSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "targets",         new x_ite_Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -86924,6 +87335,8 @@ const TriangleStripSet_default_ = TriangleStripSet;
 
 /* harmony default export */ const Rendering_TriangleStripSet = (x_ite_Namespace .add ("TriangleStripSet", TriangleStripSet_default_));
 ;// ./src/x_ite/Components/RenderingComponent.js
+
+
 
 
 
@@ -86962,6 +87375,8 @@ const RenderingComponent_default_ = {
       Rendering_IndexedTriangleSet,
       Rendering_IndexedTriangleStripSet,
       Rendering_LineSet,
+      Rendering_MorphTarget,
+      Rendering_MorphTargets,
       Rendering_Normal,
       Rendering_PointSet,
       Rendering_Tangent,
@@ -92320,8 +92735,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(169);
-/* provided dependency */ var APNG = __webpack_require__(667);
+/* provided dependency */ var SuperGif = __webpack_require__(303);
+/* provided dependency */ var APNG = __webpack_require__(821);
 
 
 
@@ -94965,7 +95380,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(919);
+/* provided dependency */ var libtess_libtess = __webpack_require__(189);
 const libtess_default_ = libtess_libtess;
 ;
 
